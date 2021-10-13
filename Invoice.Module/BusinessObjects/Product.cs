@@ -15,8 +15,6 @@ namespace Invoice.Module.BusinessObjects
         public Product(Session session) : base(session)
         { }
 
-
-
         string notes;
         string gTIN;
         string productName;

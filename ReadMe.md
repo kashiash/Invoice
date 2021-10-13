@@ -324,7 +324,7 @@ public Customer Customer
 ...
 
 
-[Association,Aggregated]
+  [Association, DevExpress.Xpo.Aggregated]
 public XPCollection<InvoiceItem> Items
 {
     get
@@ -529,11 +529,45 @@ public decimal Brutto
 ...
 ```
 
-Podobnie robimy w fakturze z odpowiednimi polami. Dodajemy metodę która zsumuje nam pozycje faktury RecalculateTotals. Metoda ta będzie wywoływana z poziomu pozycji wtedy, gdy ją przeliczymy lub wtedy gdy zmianie ulegnie faktura powiązana z pozycją - np gdy pozycja zostanie podpięta do innej faktury lub zostanie usunięta.
+Podobnie robimy w fakturze z odpowiednimi polami. Dodajemy metodę która zsumuje nam pozycje faktury RecalculateTotals. Metoda ta będzie wywoływana z poziomu pozycji wtedy, gdy ją przeliczymy lub wtedy gdy zmianie ulegnie faktura powiązana z pozycją - np. gdy pozycja zostanie podpięta do innej faktury lub zostanie usunięta.
 
 
+![](invoices.png)
 
 
+I nasza aplikacja do fakturowania jest prawie gotowa. Patrząc na powyższy obrazek zostaje nam drobny niesmak, ze w miejscu w miejscu faktury widzimy identyfikator, zamiast bardziej czytelnej dla ludzi nazwy. Załatwi to dla nas atrybut XafDefaultProperty.
+
+```csharp
+...
+[XafDefaultProperty(nameof(InvoiceNumber))]
+public class Invoice : BaseObject
+{
+    public Invoice(Session session) : base(session)
+...
+}
+```
+
+Kolejny drobiazg do rozwiązania to numer faktury. Powinien być unikalny i nie może być pusty. Można zrobić żeby automatycznie się wyliczał lub wymusić na użytkowniku, aby wpisywał właściwą wartość. Tym razem zastosujemy drugie rozwiązanie (Wyliczaniem tego typu wartości zajmiemy się w dalszej części).  Xaf dostarcza nam dodatkowy moduł, który służy do weryfikacji poprawności danych i wystarczy, że dodamy dwie adnotacje:
+
+```csharp
+using DevExpress.Persistent.Validation;
+
+public class Invoice : BaseObject
+{
+...
+  
+    [RuleRequiredField]
+    [RuleUniqueValue]
+    public string InvoiceNumber
+    {
+        get => invoiceNumber;
+        set => SetPropertyValue(nameof(InvoiceNumber), ref invoiceNumber, value);
+    }
+...
+}
+```
+
+### Wydruk faktury
 
 
 
@@ -542,7 +576,7 @@ Podobnie robimy w fakturze z odpowiednimi polami. Dodajemy metodę która zsumuj
 
 * Różnice pomiędzy BaseObject,XpObject itp
 
-### Wydruk faktury
+
 
 
 ### Kontrolery i akcje

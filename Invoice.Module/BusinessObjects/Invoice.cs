@@ -1,6 +1,8 @@
-﻿using DevExpress.ExpressApp.Model;
+﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 namespace Invoice.Module.BusinessObjects
 {
     [DefaultClassOptions]
+    [XafDefaultProperty(nameof(InvoiceNumber))]
     public class Invoice : BaseObject
     {
         public Invoice(Session session) : base(session)
@@ -27,6 +30,8 @@ namespace Invoice.Module.BusinessObjects
         string invoiceNumber;
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        [RuleRequiredField]
+        [RuleUniqueValue]
         public string InvoiceNumber
         {
             get => invoiceNumber;
@@ -77,7 +82,7 @@ namespace Invoice.Module.BusinessObjects
         }
 
 
-        [Association, Aggregated]
+        [Association, DevExpress.Xpo.Aggregated]
         public XPCollection<InvoiceItem> Items
         {
             get
