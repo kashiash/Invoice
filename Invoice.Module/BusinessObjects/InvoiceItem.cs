@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace Invoice.Module.BusinessObjects
 {
-    [DefaultClassOptions]
+
     public class InvoiceItem : BaseObject
     {
         public InvoiceItem(Session session) : base(session)
         { }
 
 
+        Invoice invoice;
         decimal brutto;
         decimal vat;
         decimal netto;
@@ -29,6 +30,13 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Product), ref product, value);
         }
 
+
+        [Association]
+        public Invoice Invoice
+        {
+            get => invoice;
+            set => SetPropertyValue(nameof(Invoice), ref invoice, value);
+        }
 
         public decimal Quantity
         {

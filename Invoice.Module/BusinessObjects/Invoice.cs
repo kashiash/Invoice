@@ -47,9 +47,12 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(DueDate), ref dueDate, value);
         }
 
-
-
-
+        [Association,Aggregated]
+        public Customer Customer
+        {
+            get => customer;
+            set => SetPropertyValue(nameof(Customer), ref customer, value);
+        }
 
 
         public decimal Netto
@@ -72,7 +75,16 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Brutto), ref brutto, value);
         }
 
-        
+
+        [Association]
+        public XPCollection<InvoiceItem> Items
+        {
+            get
+            {
+                return GetCollection<InvoiceItem>(nameof(Items));
+            }
+        }
+
         [Size(SizeAttribute.Unlimited)]
         public string Notes
         {

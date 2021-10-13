@@ -15,33 +15,30 @@ Niekiedy powyższe rozwiązanie jest jedynym wyjściem aby stworzyć właściwy 
 
 Od lat powstają narzędzia, które próbują wyeliminować powtarzalne elementy systemu, które prawie zawsze robi się w podobny sposób niezależnie od tego czy jest to aplikacja do wystawiania faktur, czy program do diagnozowania i leczenia raka. Narzędzia tego typu zwane kiedyś RAD (Rapid Application Development) np. Power Builder, Clarion, Power Apps i wiele innych, w różnym stopniu pozwalały programistom na elastyczność podczas procesu tworzenia aplikacji. Jedne wymagały trzymania się konkretnych zasad i pozwalały na tworzenie aplikacji o dość ograniczonej funkcjonalności, inne pozwalały na większa elastyczność, nie mniej jednak bardzo często kończyło się na egzotycznych trikach by osiągnąć zamierzony cel. O skuteczności tych narzędzi świadczą systemy jakie powstały choćby w Polsce m.in. cała seria WaPro WF-MAG (KaPer,Gang,Fakir) czy Comarch ERP XL stworzone z wykorzystaniem Clarion’a, czy produkty rodziny Simple.ERP, tworzone za pomocą Power Builder’a i wiele innych. 
 Z czasem narzędzia te zaczęły tracić przewagę z powodu rozwoju języków obiektowych i pojawiania się bibliotek wspomagających programistów w każdym możliwym aspekcie ich pracy.
+
 Jednym z takich jest Devexpress eXpressApp Framework (XAF). (Niestety nie jest to narzędzie darmowe, ale dostępna jest wersja testowa, a efekt końcowy jest wart ceny licencji - w końcu to jedynie  miesięczna pensja junior developera).
 
 XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (XAF wspiera kilkanaście serwerów baz danych ). Komunikacja z baza danych jest poprzez ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych (nudne CRUD’y poszły się …)
+
 ListView wyświetlają  kolekcje danych, pozwalają je sortować i przeszukiwać z wykorzystaniem zaawansowanych metod filtrowania.
+
 DetailView pozwalają na prace z pojedynczym obiektem (rekordem danych) wyświetlając dane w odpowiednich edytorach. Wykorzystywane są do dodawania i edycji danych.
 DashboardView pozwala grupować wiele innych widoków na jednym oknie.
-W serii kilku artykułów postaram się pokazać proces tworzenia prostej aplikacji, która pozwoli nam na prowadzenie ewidencji klientów, wystawianie faktur czy ewidencjonowania wpłat za nie. Wiem, ze temat oklepany, już niejeden taki program zrobiliście, ale dzięki temu macie szanse porównać jaka ilość czasu trzeba poświęcić na zrobienie podobnej funkcjonalności z wykorzystaniem XAF.  (Jeśli artykuły spotkają się z zainteresowanie czytelników, możemy zmodyfikować czy rozwinąć zakres funkcjonalny powstającej aplikacji).
-Jednocześnie informuję że miejscami będę stosował pewne uproszczenia i proszę mnie nie linczować, jeśli gdzieś architektonicznie pójdę na skróty.
 
 #### Klasa Biznesowa
 
 Model biznesowy definiujemy za pomocą klas, dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji.
+
 Klasy możemy stworzyć na 3 sposoby:
 1.	Model First - Definiując klasy i powiązania w dedykowanym Edytorze Modelu (XPO Data Model Designer) i generując klasy na podstawie tego modelu.
 2.	Database First – importując struktury z istniejącej bazy danych do Edytora Modelu i następnie wygenerowanie klas.
 3.	Code First – Deklarując klasy bezpośrednio w kodzie.
-Osobiście preferuję wariant 3ci – czyli klasy definiowane bezpośrednio w kodzie.
+Osobiście preferuję wariant 3-ci – czyli klasy definiowane bezpośrednio w kodzie.
 
 Potrzebujemy następujące klasy i ich pola:
 
 ![AAAA](Diagram2.png)
 
-Klient (Symbol, NIP, Nazwa, Ulica, KodPocztowy, Miejscowość, Uwagi)
-Produkt(Symbol, GTIN, Nazwa, Uwagi)
-Faktura(Numer, Klient, DataFaktury, DataPlatnosci, WartoscNetto, WartoscBrutto, WartoscVat)
-
-Ze względu na estetykę końcowego kodu klasy zdefiniuję po pogańsku. Nazwy polsko-angielskie KlientListViewController trochę dziwnie wyglądają 😉.
 
 ##### Klient
 ```csharp
@@ -234,6 +231,70 @@ public class Product : BaseObject
            set => SetPropertyValue(nameof(Notes), ref notes, value);
        }
    }
+   
+   
+     public class InvoiceItem : BaseObject
+    {
+        public InvoiceItem(Session session) : base(session)
+        { }
+
+
+        Invoice invoice;
+        decimal brutto;
+        decimal vat;
+        decimal netto;
+        decimal unitPrice;
+        decimal quantity;
+        Product product;
+
+        public Product Product
+        {
+            get => product;
+            set => SetPropertyValue(nameof(Product), ref product, value);
+        }
+
+
+        [Association]
+        public Invoice Invoice
+        {
+            get => invoice;
+            set => SetPropertyValue(nameof(Invoice), ref invoice, value);
+        }
+
+        public decimal Quantity
+        {
+            get => quantity;
+            set => SetPropertyValue(nameof(Quantity), ref quantity, value);
+        }
+
+
+        public decimal UnitPrice
+        {
+            get => unitPrice;
+            set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
+        }
+
+
+        public decimal Netto
+        {
+            get => netto;
+            set => SetPropertyValue(nameof(Netto), ref netto, value);
+        }
+
+        public decimal Vat
+        {
+            get => vat;
+            set => SetPropertyValue(nameof(Vat), ref vat, value);
+        }
+
+        
+        public decimal Brutto
+        {
+            get => brutto;
+            set => SetPropertyValue(nameof(Brutto), ref brutto, value);
+        }
+
+    }
 ```
 
 
@@ -266,6 +327,19 @@ W klasie klienta dodajemy kolekcję do wyświetlania listy faktur
 
 ```csharp
 [Association]
+public XPCollection<Invoice> Invoices
+{
+    get
+    {
+        return GetCollection<Invoice>(nameof(Invoices));
+    }
+}
+```
+
+
+w fakturze dodajemy kolekcję Pozycji faktury i oznaczamy je odpowiednimi adnotacjami:
+```csharp
+[Association]
 public XPCollection<InvoiceItem> Items
 {
     get
@@ -274,5 +348,26 @@ public XPCollection<InvoiceItem> Items
     }
 }
 ```
+A w pozycji dodajemy powiązanie do faktury:
+
+```csharp
+[Association]
+public Invoice Invoice
+{
+    get => invoice;
+    set => SetPropertyValue(nameof(Invoice), ref invoice, value);
+}
+```
+
+
+Kompilujemy i uruchamiamy program. Do dyspozycji mamy wersje WinForms lub Blazor. W zależności od tego co wybierzemy naszym oczom pojawi się wersja Windowsowa:
+
+
+
+
+
+
+lub Webowa:
+
 
 

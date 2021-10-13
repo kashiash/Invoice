@@ -16,6 +16,7 @@ namespace Invoice.Module.BusinessObjects
         { }
 
 
+        string notes;
         string postalCode;
         string city;
         string street;
@@ -60,7 +61,7 @@ namespace Invoice.Module.BusinessObjects
             get => city;
             set => SetPropertyValue(nameof(City), ref city, value);
         }
-        
+
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
         public string PostalCode
         {
@@ -70,15 +71,21 @@ namespace Invoice.Module.BusinessObjects
 
 
         [Association]
-        public XPCollection<InvoiceItem> Items
+        public XPCollection<Invoice> Invoices
         {
             get
             {
-                return GetCollection<InvoiceItem>(nameof(Items));
+                return GetCollection<Invoice>(nameof(Invoices));
             }
         }
 
-
+        
+        [Size(SizeAttribute.Unlimited)]
+        public string Notes
+        {
+            get => notes;
+            set => SetPropertyValue(nameof(Notes), ref notes, value);
+        }
 
     }
 }
