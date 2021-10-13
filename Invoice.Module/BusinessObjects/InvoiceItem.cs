@@ -16,8 +16,6 @@ namespace Invoice.Module.BusinessObjects
         public InvoiceItem(Session session) : base(session)
         { }
 
-
-     
         Invoice invoice;
         decimal brutto;
         decimal vat;
@@ -38,7 +36,6 @@ namespace Invoice.Module.BusinessObjects
                     unitPrice = Product.UnitPrice;
                     vatRate = Product.VatRate;
                     RecalculateItem();
-
                 }
             }
         }
@@ -48,7 +45,16 @@ namespace Invoice.Module.BusinessObjects
         public Invoice Invoice
         {
             get => invoice;
-            set => SetPropertyValue(nameof(Invoice), ref invoice, value);
+            set
+            {
+                var oldInvoice = invoice;
+                bool modified = SetPropertyValue(nameof(Invoice), ref invoice, value);
+                if (!IsLoading && !IsSaving &&  modified)
+                {
+                    oldInvoice = oldInvoice ?? invoice;
+                    oldInvoice.RecalculateTotals(true);
+                }
+            }
         }
 
         [ImmediatePostData]

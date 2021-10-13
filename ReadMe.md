@@ -9,7 +9,7 @@ Standardowy proces tworzenia oprogramowania stawia przed programistami następuj
 Oczywiście niniejsze podejście ma tez swoje zalety:
 *	Każdy aspekt powstającego sytemu jest w pełni kontrolowany przez programistów. Nie są uzależnieni od ograniczeń czy nawet błędów zewnętrznych bibliotek. Wszystko co stworzyli mogą modyfikować i poprawiać w prostszy sposób.
 *	Programiści mogą optymalizować system wg własnych potrzeb, co jest trudne do osiągnięcia bazując na zewnętrznych rozwiązaniach.
-*	Aplikacje nie musza być tworzone wg zasad wymaganych przez zewnętrzne narzędzia/biblioteki.
+*	Aplikacje nie muszą być tworzone wg zasad wymaganych przez zewnętrzne narzędzia/biblioteki.
 
 Niekiedy powyższe rozwiązanie jest jedynym wyjściem aby stworzyć właściwy system, często jednak wykonujemy systemy w których pewne funkcjonalności powtarzają się i faktycznie robienie tego samego w kółko zaczyna być nużące.
 
@@ -528,6 +528,13 @@ public decimal Brutto
 
 ...
 ```
+
+Podobnie robimy w fakturze z odpowiednimi polami. Dodajemy metodę która zsumuje nam pozycje faktury RecalculateTotals. Metoda ta będzie wywoływana z poziomu pozycji wtedy, gdy ją przeliczymy lub wtedy gdy zmianie ulegnie faktura powiązana z pozycją - np gdy pozycja zostanie podpięta do innej faktury lub zostanie usunięta.
+
+
+
+
+
 
 
 ### Jak to wszystko działa ...

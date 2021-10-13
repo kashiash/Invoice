@@ -93,9 +93,33 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Notes), ref notes, value);
         }
 
-        internal void RecalculateTotals(bool v)
+        internal void RecalculateTotals(bool forceChangeEvents)
         {
-          //  throw new NotImplementedException();
+            decimal oldNetto = Netto;
+            decimal? oldVAT = Vat;
+            decimal? oldBrutto = Brutto;
+
+
+            decimal tmpNetto = 0m;
+            decimal tmpVAT = 0m;
+            decimal tmpBrutto = 0m;
+
+            foreach (var rec in Items)
+            {
+                tmpNetto += rec.Netto;
+                tmpVAT += rec.Vat;
+                tmpBrutto += rec.Brutto;
+            }
+            Netto = tmpNetto;
+            Vat = tmpVAT;
+            Brutto = tmpBrutto;
+
+            if (forceChangeEvents)
+            {
+                OnChanged(nameof(Netto), oldNetto, Netto);
+                OnChanged(nameof(Vat), oldVAT, Vat);
+                OnChanged(nameof(Brutto), oldBrutto, Brutto);
+            }
         }
     }
 }
