@@ -428,10 +428,45 @@ Kompilujemy i uruchamiamy program. Do dyspozycji mamy wersje WinForms lub Blazor
 
 ![](winform1.png)
 
-Jak widać dostajemy z autoamtu mozliwośc prostego wyszikiwania w liście w sposób znany choćby z programu Excel. Jak i bardzie zaawansowany edytor filtrów:
+Jak widać dostajemy z autoamtu możliwość prostego wyszukiwania w liście w sposób znany choćby z programu Excel. Jak i bardzie zaawansowany edytor filtrów:
 
 ![](filtr1.png)
 
 lub Webowa:
 
 ![](blazor1.png)
+
+
+Na powyższym zdjęciu widać ze musimy dopieścić formatowanie liczb i wyliczanie wartości pozycji i kompletnej faktury.
+Dlatego w pozycji faktury dodamy metodę, która pozwoli nam na wyliczenie wartości faktury, następnie na poziomie faktury dodamy kod, który będzie sumował pozycje. Tu pojawia się dylemat architektoniczny, który zawsze trzeba przeanalizować - czy chcemy dane wyliczać za każdym razem gdy potrzebna nam jest ta informacja, czy zapamiętywać w bazie danych. Zapamiętywanie danych w bazie danych ma więcej zalet niż wad - najistotniejsze jest to, że przy większej ilości danych jest szybciej. Dlatego tutaj też zastosujemy to rozwiązanie.
+
+W pierwszej kolejności metoda wyliczająca netto, vat i brutto po wpisaniu ilości.
+Żeby liczyć Vat, musimy uzupełnić aplikację o stawki vat, wiec dodajemy nowa klasę: VatRate:
+
+```csharp
+[DefaultClassOptions]
+public class VatRate : XPLiteObject
+{
+    public VatRate(Session session) : base(session)
+    { }
+
+
+    decimal rateValue;
+    string symbol;
+
+    [Size(3)]
+    public string Symbol
+    {
+        get => symbol;
+        set => SetPropertyValue(nameof(Symbol), ref symbol, value);
+    }
+
+    
+    public decimal Value
+    {
+        get => rateValue;
+        set => SetPropertyValue(nameof(Value), ref rateValue, value);
+    }
+}
+```
+
