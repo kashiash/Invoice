@@ -16,6 +16,7 @@ namespace Invoice.Module.BusinessObjects
         { }
 
 
+
         string notes;
         string gTIN;
         string productName;
@@ -44,7 +45,24 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(GTIN), ref gTIN, value);
         }
 
+
+        VatRate vatRate;
+        decimal unitPrice;
+
+        public decimal UnitPrice
+        {
+            get => unitPrice;
+            set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
+        }
+
         
+        public VatRate VatRate
+        {
+            get => vatRate;
+            set => SetPropertyValue(nameof(VatRate), ref vatRate, value);
+        }
+
+
         [Size(SizeAttribute.Unlimited)]
         public string Notes
         {

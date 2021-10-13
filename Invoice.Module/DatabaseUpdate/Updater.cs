@@ -38,7 +38,7 @@ namespace Invoice.Module.DatabaseUpdate
                 .RuleFor(o => o.City, f => f.Address.City())
                 .RuleFor(o => o.PostalCode, f => f.Address.ZipCode())
                 .RuleFor(o => o.Street, f => f.Address.StreetName());
-            cusFaker.Generate(100);
+            cusFaker.Generate(10);
 
 
             var prodFaker = new Faker<Product>("pl")
@@ -49,7 +49,7 @@ namespace Invoice.Module.DatabaseUpdate
                 .RuleFor(o => o.Symbol, f => f.Commerce.Product())
                 .RuleFor(o => o.GTIN, f => f.Commerce.Ean13());
 
-            prodFaker.Generate(100);
+            prodFaker.Generate(10);
 
 
             var customers = ObjectSpace.GetObjectsQuery<Customer>(true).ToList();

@@ -470,3 +470,67 @@ public class VatRate : XPLiteObject
 }
 ```
 
+Do klasy produktu dodajemy domyślne: Cenę jednostkową i stawkę Vat:
+
+```csharp
+VatRate vatRate;
+decimal unitPrice;
+
+public decimal UnitPrice
+{
+    get => unitPrice;
+    set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
+}
+
+
+public VatRate VatRate
+{
+    get => vatRate;
+    set => SetPropertyValue(nameof(VatRate), ref vatRate, value);
+}
+```
+
+W pozycji faktury Stawkę Vat:
+
+```csharp
+VatRate vatRate;
+public VatRate VatRate
+{
+    get => vatRate;
+    set => SetPropertyValue(nameof(VatRate), ref vatRate, value);
+}
+```
+
+
+### Wydruk faktury
+
+
+### Sprawdzianie klienta w GUS/Vies/US
+
+
+### Uruchomienie aplikacji w Docker
+
+
+
+### Uruchomienie aplikacji na Azure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="https://github.com/kashiash/Invoice" target="_blank">Kod zródłowy dostepny jest na GitHub</a>

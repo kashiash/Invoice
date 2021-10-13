@@ -16,6 +16,7 @@ namespace Invoice.Module.BusinessObjects
         { }
 
 
+     
         Invoice invoice;
         decimal brutto;
         decimal vat;
@@ -51,7 +52,12 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
         }
 
-
+        VatRate vatRate;
+        public VatRate VatRate
+        {
+            get => vatRate;
+            set => SetPropertyValue(nameof(VatRate), ref vatRate, value);
+        }
         public decimal Netto
         {
             get => netto;
@@ -69,6 +75,28 @@ namespace Invoice.Module.BusinessObjects
         {
             get => brutto;
             set => SetPropertyValue(nameof(Brutto), ref brutto, value);
+        }
+
+        private void PrzeliczPozycje()
+        {
+
+
+           Netto = Quantity * UnitPrice;
+            if (Product != null && Product.VatRate != null)
+            {
+                Brutto = Netto * (100 + Product.VatRate.Stawka) / 100;
+            }
+            else
+            {
+                WartoscBrutto = WartoscNetto;
+
+            }
+            WartoscVAT = WartoscBrutto - WartoscNetto;
+
+            if (Faktura != null)
+            {
+                Faktura.PrzeliczSumy(true);
+            }
         }
 
     }
