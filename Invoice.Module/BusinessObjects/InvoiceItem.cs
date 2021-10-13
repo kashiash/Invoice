@@ -1,4 +1,5 @@
-﻿using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
 using System;
@@ -92,19 +93,22 @@ namespace Invoice.Module.BusinessObjects
                 }
             }
         }
+
+        [ModelDefault("AllowEdit", "False")]
         public decimal Netto
         {
             get => netto;
             set => SetPropertyValue(nameof(Netto), ref netto, value);
         }
 
+        [ModelDefault("AllowEdit", "False")]
         public decimal Vat
         {
             get => vat;
             set => SetPropertyValue(nameof(Vat), ref vat, value);
         }
 
-        
+        [ModelDefault("AllowEdit", "False")]
         public decimal Brutto
         {
             get => brutto;

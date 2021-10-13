@@ -23,23 +23,11 @@ namespace Invoice.Module.DatabaseUpdate
         {
             base.UpdateDatabaseAfterUpdateSchema();
 
-           PrepareTestData();
+          // PrepareTestData();
             ObjectSpace.CommitChanges(); //Uncomment this line to persist created object(s).
         }
 
-        private VatRate NowaStawka(string symbol, decimal val)
-        {
-            var vat = ObjectSpace.FindObject<VatRate>(CriteriaOperator.Parse("Symbol = ?", symbol));
-            if (vat == null)
-            {
-                vat = ObjectSpace.CreateObject<VatRate>();
-                vat.Symbol = symbol;
-                vat.Value = val;
 
-
-            }
-            return vat;
-        }
         private void PrepareTestData()
         {
             var rates = ObjectSpace.GetObjectsQuery<VatRate>().ToList();
@@ -97,6 +85,19 @@ namespace Invoice.Module.DatabaseUpdate
                 .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M));
 
             var items = itemsFaker.Generate(orders.Count * 10);
+        }
+        private VatRate NowaStawka(string symbol, decimal val)
+        {
+            var vat = ObjectSpace.FindObject<VatRate>(CriteriaOperator.Parse("Symbol = ?", symbol));
+            if (vat == null)
+            {
+                vat = ObjectSpace.CreateObject<VatRate>();
+                vat.Symbol = symbol;
+                vat.Value = val;
+
+
+            }
+            return vat;
         }
 
         public override void UpdateDatabaseBeforeUpdateSchema()
