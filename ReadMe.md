@@ -370,4 +370,66 @@ Kompilujemy i uruchamiamy program. Do dyspozycji mamy wersje WinForms lub Blazor
 lub Webowa:
 
 
+Wiadomo, że program lepiej wygląda z danymi, wiec wygenerujemy nieco danych testowych wykorzystując pakiet Bogus.
 
+W pliku Updater.cs dodajemy kod który wywoła metody wpisujące dane testowe:
+
+
+```csharp
+public override void UpdateDatabaseAfterUpdateSchema()
+{
+    base.UpdateDatabaseAfterUpdateSchema();
+
+    PrepareTestData();
+    ObjectSpace.CommitChanges(); 
+}
+
+
+  private void PrepareTestData()
+        {
+            var cusFaker = new Faker<Customer>("pl")
+                .CustomInstantiator(f => ObjectSpace.CreateObject<Customer>())
+
+                .RuleFor(o => o.Notes, f => f.Company.CatchPhrase())
+                .RuleFor(o => o.CustomerName, f => f.Company.CompanyName())
+
+                .RuleFor(o => o.City, f => f.Address.City())
+                .RuleFor(o => o.PostalCode, f => f.Address.ZipCode())
+                .RuleFor(o => o.Street, f => f.Address.StreetName());
+            cusFaker.Generate(100);
+
+
+            var prodFaker = new Faker<Product>("pl")
+
+            .CustomInstantiator(f => ObjectSpace.CreateObject<Product>())
+                .RuleFor(o => o.ProductName, f => f.Commerce.ProductName())
+                .RuleFor(o => o.Notes, f => f.Commerce.ProductDescription())
+                .RuleFor(o => o.Symbol, f => f.Commerce.Product())
+                .RuleFor(o => o.GTIN, f => f.Commerce.Ean13());
+
+            prodFaker.Generate(100);
+
+
+            var customers = ObjectSpace.GetObjectsQuery<Customer>(true).ToList();
+
+
+            var orderFaker = new Faker<Invoice.Module.BusinessObjects.Invoice>("pl")
+            .CustomInstantiator(f => ObjectSpace.CreateObject<Invoice.Module.BusinessObjects.Invoice>())
+                .RuleFor(o => o.InvoiceNumber, f => f.Random.Int().ToString())
+                .RuleFor(o => o.InvoiceDate, f => f.Date.Past(20))
+                .RuleFor(o => o.DueDate, f => f.Date.Past(2))
+                .RuleFor(o => o.Customer, f => f.PickRandom(customers));
+            var orders = orderFaker.Generate(customers.Count * 10);
+
+            var products = ObjectSpace.GetObjectsQuery<Product>(true).ToList();
+
+            var itemsFaker = new Faker<InvoiceItem>()
+            .CustomInstantiator(f => ObjectSpace.CreateObject<InvoiceItem>())
+                .RuleFor(o => o.Invoice, f => f.PickRandom(orders))
+                .RuleFor(o => o.Product, f => f.PickRandom(products))
+
+                .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M))
+                .RuleFor(o => o.UnitPrice, f => f.Random.Decimal(0.01M, 100M));
+            var items = itemsFaker.Generate(orders.Count * 10);
+        }
+```

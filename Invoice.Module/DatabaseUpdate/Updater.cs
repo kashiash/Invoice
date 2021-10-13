@@ -23,11 +23,11 @@ namespace Invoice.Module.DatabaseUpdate
         {
             base.UpdateDatabaseAfterUpdateSchema();
 
-            PrzygotujDaneTestowe();
+            PrepareTestData();
             ObjectSpace.CommitChanges(); //Uncomment this line to persist created object(s).
         }
 
-        private void PrzygotujDaneTestowe()
+        private void PrepareTestData()
         {
             var cusFaker = new Faker<Customer>("pl")
                 .CustomInstantiator(f => ObjectSpace.CreateObject<Customer>())
@@ -42,6 +42,7 @@ namespace Invoice.Module.DatabaseUpdate
 
 
             var prodFaker = new Faker<Product>("pl")
+
             .CustomInstantiator(f => ObjectSpace.CreateObject<Product>())
                 .RuleFor(o => o.ProductName, f => f.Commerce.ProductName())
                 .RuleFor(o => o.Notes, f => f.Commerce.ProductDescription())
