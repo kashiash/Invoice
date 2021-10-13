@@ -79,68 +79,7 @@ namespace Invoice.Module.Services
                 deserializedResponse = JsonConvert.DeserializeObject<EntityResponse>(stringResponse);
             }
 
-            deserializedResponse = ReturnExceptionIfResultIsNull(stringResponse, deserializedResponse);
-
-            if (deserializedResponse.GetType() != typeof(ApiException))
-            {
-                MapAccountNumbersToBankAccountNumbers(deserializedResponse);
-            }
-
-            return deserializedResponse;
-        }
-
-        private void MapAccountNumbersToBankAccountNumbers(object response)
-        {
-            if (response is EntityListResponse entityListResponse)
-            {
-                MapEntityListResponse(entityListResponse);
-            }
-            else if (response is EntityResponse entityResponse)
-            {
-                MapEntityResponse(entityResponse);
-            }
-            else if (response is EntryListResponse entryListResponse)
-            {
-                MapEntryListResponse(entryListResponse);
-            }
-        }
-
-        private void MapEntityListResponse(EntityListResponse entityListResponse)
-        {
-            if (entityListResponse.Result.Subjects != null && entityListResponse.Result.Subjects.Count != 0)
-            {
-                entityListResponse.Result.Subjects
-                    .ForEach(subject => subject.AccountNumbers
-                    .ForEach(accountNumber => subject.BankAccountNumbers.Add(new AccountNumber { Number = accountNumber })));
-            }
-        }
-
-        private void MapEntityResponse(EntityResponse entityResponse)
-        {
-            if (entityResponse.Result.Subject != null)
-            {
-                var bankAccountNumbers = entityResponse.Result.Subject.BankAccountNumbers;
-
-                entityResponse.Result.Subject.AccountNumbers
-                    .ForEach(accountNumber => bankAccountNumbers.Add(new AccountNumber { Number = accountNumber }));
-            }
-        }
-
-        private void MapEntryListResponse(EntryListResponse entryListResponse)
-        {
-            if (entryListResponse.Result.Entries != null && entryListResponse.Result.Entries.Count != 0)
-            {
-                entryListResponse.Result.Entries
-                    .ForEach(entry =>
-                    {
-                        if (entry.Subjects != null && entry.Subjects.Count > 0)
-                        {
-                            entry.Subjects
-                            .ForEach(subject => subject.AccountNumbers
-                            .ForEach(accountNumber => subject.BankAccountNumbers.Add(new AccountNumber { Number = accountNumber })));
-                        }
-                    });
-            }
+            return ReturnExceptionIfResultIsNull(stringResponse, deserializedResponse);
         }
 
         private static object ReturnExceptionIfResultIsNull(string stringResponse, object deserializedResponse)

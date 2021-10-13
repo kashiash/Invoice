@@ -24,7 +24,6 @@ namespace Invoice.Module.ApiModels.VatPayers
         public DateTime? RemovalDate { get; set; }
         public string RemovalBasis { get; set; }
         public List<string> AccountNumbers { get; set; }
-        public List<AccountNumber> BankAccountNumbers { get; set; }
         public bool HasVirtualAccounts { get; set; }
     }
 }
