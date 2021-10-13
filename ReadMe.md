@@ -37,7 +37,7 @@ Osobiście preferuję wariant 3-ci – czyli klasy definiowane bezpośrednio w k
 
 Potrzebujemy następujące klasy i ich pola:
 
-![AAAA](Diagram2.png)
+![Diagram powiązań pomiędzy tabelami](Diagram2.png)
 
 
 ##### Klient
@@ -362,12 +362,14 @@ public Invoice Invoice
 
 Kompilujemy i uruchamiamy program. Do dyspozycji mamy wersje WinForms lub Blazor. W zależności od tego co wybierzemy naszym oczom pojawi się wersja Windowsowa:
 
+![](winform1.png)
 
+Jak widać dostajemy z autoamtu mozliwośc prostego wyszikiwania w liście w sposób znany choćby z programu Excel. Jak i bardzie zaawansowany edytor filtrów:
 
-
-
+![](filtr1.png)
 
 lub Webowa:
+
 
 
 Wiadomo, że program lepiej wygląda z danymi, wiec wygenerujemy nieco danych testowych wykorzystując pakiet Bogus.
