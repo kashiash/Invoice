@@ -566,6 +566,9 @@ public class Invoice : BaseObject
 ...
 }
 ```
+Teraz jeśli użytkownik będzie chciał zapisać takie dane otrzyma komunikat błędu:
+
+![](validationRequired1.png)
 
 ### Wydruk faktury
 

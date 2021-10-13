@@ -23,7 +23,7 @@ namespace Invoice.Module.DatabaseUpdate
         {
             base.UpdateDatabaseAfterUpdateSchema();
 
-          // PrepareTestData();
+            PrepareTestData();
             ObjectSpace.CommitChanges(); //Uncomment this line to persist created object(s).
         }
 
@@ -45,11 +45,11 @@ namespace Invoice.Module.DatabaseUpdate
 
                 .RuleFor(o => o.Notes, f => f.Company.CatchPhrase())
                 .RuleFor(o => o.CustomerName, f => f.Company.CompanyName())
-
+                .RuleFor(o => o.Segment, f => f.PickRandom<Segment>())
                 .RuleFor(o => o.City, f => f.Address.City())
                 .RuleFor(o => o.PostalCode, f => f.Address.ZipCode())
                 .RuleFor(o => o.Street, f => f.Address.StreetName());
-            cusFaker.Generate(10);
+            cusFaker.Generate(100);
 
 
             var prodFaker = new Faker<Product>("pl")
