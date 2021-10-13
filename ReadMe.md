@@ -359,19 +359,6 @@ public Invoice Invoice
 }
 ```
 
-
-Kompilujemy i uruchamiamy program. Do dyspozycji mamy wersje WinForms lub Blazor. W zależności od tego co wybierzemy naszym oczom pojawi się wersja Windowsowa:
-
-![](winform1.png)
-
-Jak widać dostajemy z autoamtu mozliwośc prostego wyszikiwania w liście w sposób znany choćby z programu Excel. Jak i bardzie zaawansowany edytor filtrów:
-
-![](filtr1.png)
-
-lub Webowa:
-
-
-
 Wiadomo, że program lepiej wygląda z danymi, wiec wygenerujemy nieco danych testowych wykorzystując pakiet Bogus.
 
 W pliku Updater.cs dodajemy kod który wywoła metody wpisujące dane testowe:
@@ -435,3 +422,16 @@ public override void UpdateDatabaseAfterUpdateSchema()
             var items = itemsFaker.Generate(orders.Count * 10);
         }
 ```
+
+
+Kompilujemy i uruchamiamy program. Do dyspozycji mamy wersje WinForms lub Blazor. W zależności od tego co wybierzemy naszym oczom pojawi się wersja Windowsowa:
+
+![](winform1.png)
+
+Jak widać dostajemy z autoamtu mozliwośc prostego wyszikiwania w liście w sposób znany choćby z programu Excel. Jak i bardzie zaawansowany edytor filtrów:
+
+![](filtr1.png)
+
+lub Webowa:
+
+![](blazor1.png)
