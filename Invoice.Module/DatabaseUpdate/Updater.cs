@@ -23,12 +23,35 @@ namespace Invoice.Module.DatabaseUpdate
         {
             base.UpdateDatabaseAfterUpdateSchema();
 
-           // PrepareTestData();
+           PrepareTestData();
             ObjectSpace.CommitChanges(); //Uncomment this line to persist created object(s).
         }
 
+        private VatRate NowaStawka(string symbol, decimal val)
+        {
+            var vat = ObjectSpace.FindObject<VatRate>(CriteriaOperator.Parse("Symbol = ?", symbol));
+            if (vat == null)
+            {
+                vat = ObjectSpace.CreateObject<VatRate>();
+                vat.Symbol = symbol;
+                vat.Value = val;
+
+
+            }
+            return vat;
+        }
         private void PrepareTestData()
         {
+            var rates = ObjectSpace.GetObjectsQuery<VatRate>().ToList();
+            if (rates.Count == 0)
+            {
+
+                rates.Add(NowaStawka("23%", 23M));
+                rates.Add(NowaStawka("0%", 0M));
+                rates.Add(NowaStawka("7%", 7M));
+                rates.Add(NowaStawka("ZW", 0M));
+            }
+
             var cusFaker = new Faker<Customer>("pl")
                 .CustomInstantiator(f => ObjectSpace.CreateObject<Customer>())
 
@@ -47,6 +70,8 @@ namespace Invoice.Module.DatabaseUpdate
                 .RuleFor(o => o.ProductName, f => f.Commerce.ProductName())
                 .RuleFor(o => o.Notes, f => f.Commerce.ProductDescription())
                 .RuleFor(o => o.Symbol, f => f.Commerce.Product())
+                .RuleFor(o => o.UnitPrice, f => f.Random.Decimal(0.01M, 100M))
+                   .RuleFor(o => o.VatRate, f => f.PickRandom(rates))
                 .RuleFor(o => o.GTIN, f => f.Commerce.Ean13());
 
             prodFaker.Generate(10);
@@ -69,9 +94,8 @@ namespace Invoice.Module.DatabaseUpdate
             .CustomInstantiator(f => ObjectSpace.CreateObject<InvoiceItem>())
                 .RuleFor(o => o.Invoice, f => f.PickRandom(orders))
                 .RuleFor(o => o.Product, f => f.PickRandom(products))
+                .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M));
 
-                .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M))
-                .RuleFor(o => o.UnitPrice, f => f.Random.Decimal(0.01M, 100M));
             var items = itemsFaker.Generate(orders.Count * 10);
         }
 

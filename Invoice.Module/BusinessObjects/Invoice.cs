@@ -47,7 +47,7 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(DueDate), ref dueDate, value);
         }
 
-        [Association,Aggregated]
+        [Association]
         public Customer Customer
         {
             get => customer;
@@ -76,7 +76,7 @@ namespace Invoice.Module.BusinessObjects
         }
 
 
-        [Association]
+        [Association, Aggregated]
         public XPCollection<InvoiceItem> Items
         {
             get
@@ -90,6 +90,11 @@ namespace Invoice.Module.BusinessObjects
         {
             get => notes;
             set => SetPropertyValue(nameof(Notes), ref notes, value);
+        }
+
+        internal void RecalculateTotals(bool v)
+        {
+          //  throw new NotImplementedException();
         }
     }
 }

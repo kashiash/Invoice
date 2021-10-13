@@ -311,14 +311,26 @@ W naszym przypadku mamy do czynienia z następującymi relacjami:
 * Faktura ma co najmniej jedna pozycję 1-N
 * Każda pozycja jest w relacji do Produktu. (Produkt może być na wielu pozycjach) 1-N.
 
-W fakturze do pola Customer dodajemy adnotację Association oraz Aggregated
+W fakturze do pola Customer dodajemy adnotację Association (aby wskazać ze po tej kolumnie jest powiązanie do kolekcji faktur w kliencie) oraz dodajemy kolekcję Pozycji faktury i oznaczamy je odpowiednimi adnotacjami:
 
 ```csharp
-[Association,Aggregated]
+[Association]
 public Customer Customer
 {
     get => customer;
     set => SetPropertyValue(nameof(Customer), ref customer, value);
+}
+
+...
+
+
+[Association,Aggregated]
+public XPCollection<InvoiceItem> Items
+{
+    get
+    {
+        return GetCollection<InvoiceItem>(nameof(Items));
+    }
 }
 ```
 
@@ -326,7 +338,10 @@ public Customer Customer
 W klasie klienta dodajemy kolekcję do wyświetlania listy faktur
 
 ```csharp
-[Association]
+
+
+
+[Association,Aggregated]
 public XPCollection<Invoice> Invoices
 {
     get
@@ -337,17 +352,6 @@ public XPCollection<Invoice> Invoices
 ```
 
 
-w fakturze dodajemy kolekcję Pozycji faktury i oznaczamy je odpowiednimi adnotacjami:
-```csharp
-[Association]
-public XPCollection<InvoiceItem> Items
-{
-    get
-    {
-        return GetCollection<InvoiceItem>(nameof(Items));
-    }
-}
-```
 A w pozycji dodajemy powiązanie do faktury:
 
 ```csharp
@@ -428,7 +432,7 @@ Kompilujemy i uruchamiamy program. Do dyspozycji mamy wersje WinForms lub Blazor
 
 ![](winform1.png)
 
-Jak widać dostajemy z autoamtu możliwość prostego wyszukiwania w liście w sposób znany choćby z programu Excel. Jak i bardzie zaawansowany edytor filtrów:
+Jak widać dostajemy z automatu możliwość prostego wyszukiwania w liście w sposób znany choćby z programu Excel. Jak i bardzie zaawansowany edytor filtrów:
 
 ![](filtr1.png)
 
@@ -501,8 +505,58 @@ public VatRate VatRate
 }
 ```
 
+W przypadku pozycji chcemy przeliczyć jej wartość jeśli zmieni się cena jednostkowa i/lub ilość. Tutaj wystarczy na seterze wywołać metodę przeliczająca jeśli zmieniła się wartość na polach: cena jednostkowa i ilość. Dodatkowo w przypadku zmiany produktu, należy podstawić nowa stawkę vat i cenę jednostkową:
+
+```csharp
+...
+[ImmediatePostData]
+public Product Product
+{
+    get => product;
+    set
+    {
+        bool modified = SetPropertyValue(nameof(Product), ref product, value);
+        if (modified && !IsLoading && !IsSaving && Product != null)
+        {
+            unitPrice = Product.UnitPrice;
+            vatRate = Product.VatRate;
+            RecalculateItem();
+
+        }
+    }
+}
+...
+
+[ImmediatePostData]
+public decimal Quantity
+{
+    get => quantity;
+    set
+    {
+        bool modified = SetPropertyValue(nameof(Quantity), ref quantity, value);
+        if (modified && !IsLoading && !IsSaving)
+        {
+            RecalculateItem();
+
+        }
+    }
+}
+        
+...       
+
+
+```
+
+
+### Jak to wszystko działa ...
+* Budowa klasy XpObject, Optimistic locking , GCRecord
+
+* Różnice pomiędzy BaseObject,XpObject itp
 
 ### Wydruk faktury
+
+
+### Kontrolery i akcje
 
 
 ### Sprawdzianie klienta w GUS/Vies/US
@@ -533,4 +587,3 @@ public VatRate VatRate
 
 
 
-<a href="https://github.com/kashiash/Invoice" target="_blank">Kod zródłowy dostepny jest na GitHub</a>

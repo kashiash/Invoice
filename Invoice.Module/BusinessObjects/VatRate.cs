@@ -1,4 +1,5 @@
-﻿using DevExpress.Xpo;
+﻿using DevExpress.Persistent.Base;
+using DevExpress.Xpo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Invoice.Module.BusinessObjects
 {
+    [DefaultClassOptions]
     public class VatRate : XPLiteObject
     {
         public VatRate(Session session) : base(session)
@@ -17,6 +19,7 @@ namespace Invoice.Module.BusinessObjects
         string symbol;
 
         [Size(3)]
+        [Key(false)]
         public string Symbol
         {
             get => symbol;

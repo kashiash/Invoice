@@ -25,10 +25,21 @@ namespace Invoice.Module.BusinessObjects
         decimal quantity;
         Product product;
 
+        [ImmediatePostData]
         public Product Product
         {
             get => product;
-            set => SetPropertyValue(nameof(Product), ref product, value);
+            set
+            {
+                bool modified = SetPropertyValue(nameof(Product), ref product, value);
+                if (modified && !IsLoading && !IsSaving && Product != null)
+                {
+                    unitPrice = Product.UnitPrice;
+                    vatRate = Product.VatRate;
+                    RecalculateItem();
+
+                }
+            }
         }
 
 
@@ -39,24 +50,47 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Invoice), ref invoice, value);
         }
 
+        [ImmediatePostData]
         public decimal Quantity
         {
             get => quantity;
-            set => SetPropertyValue(nameof(Quantity), ref quantity, value);
+            set
+            {
+                bool modified = SetPropertyValue(nameof(Quantity), ref quantity, value);
+                if (modified && !IsLoading && !IsSaving)
+                {
+                    RecalculateItem();
+                }
+            }
         }
 
-
+        [ImmediatePostData]
         public decimal UnitPrice
         {
             get => unitPrice;
-            set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
+            set
+            {
+                bool modified = SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
+                if (modified && !IsLoading && !IsSaving)
+                {
+                    RecalculateItem();
+                }
+            }
         }
 
         VatRate vatRate;
+        [ImmediatePostData]
         public VatRate VatRate
         {
             get => vatRate;
-            set => SetPropertyValue(nameof(VatRate), ref vatRate, value);
+            set
+            {
+                bool modified = SetPropertyValue(nameof(VatRate), ref vatRate, value);
+                if (modified && !IsLoading && !IsSaving)
+                {
+                    RecalculateItem();
+                }
+            }
         }
         public decimal Netto
         {
@@ -77,25 +111,25 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Brutto), ref brutto, value);
         }
 
-        private void PrzeliczPozycje()
+        private void RecalculateItem()
         {
 
 
            Netto = Quantity * UnitPrice;
             if (Product != null && Product.VatRate != null)
             {
-                Brutto = Netto * (100 + Product.VatRate.Stawka) / 100;
+                Brutto = Netto * (100 + Product.VatRate.Value) / 100;
             }
             else
             {
-                WartoscBrutto = WartoscNetto;
+                Brutto = Netto;
 
             }
-            WartoscVAT = WartoscBrutto - WartoscNetto;
+           Vat = Brutto - Netto;
 
-            if (Faktura != null)
+            if (Invoice != null)
             {
-                Faktura.PrzeliczSumy(true);
+                Invoice.RecalculateTotals(true);
             }
         }
 
