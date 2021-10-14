@@ -154,7 +154,7 @@ Potrzebujemy następujące klasy i ich pola:
     }
 ```
 
-W przypadku typów wyliczeniowych możemy wymusić aby XAF wyświetlał inne opisy niż wynika z nazw poszczególnych wartości typu.
+W przypadku typów wyliczeniowych możemy wymusić aby XAF wyświetlał inne opisy niż wynika z nazw poszczególnych wartości typu stosując atrybut *XafDisplayName*.
 
 ##### Produkt
 
@@ -358,10 +358,10 @@ XPO wspiera 3 typy relacji pomiędzy obiektami:
 
 W naszym przypadku mamy do czynienia z następującymi relacjami:
 
-* Klient może mieć dowolną liczbę faktur 1-M
-* Faktura ma co najmniej jedna pozycję 1-M
+* <a href="#faktury-klienta" target="_blank">Klient może mieć dowolną liczbę faktur 1-M</a>
+* <a href="#pozycje-faktury" target="_blank">Faktura ma co najmniej jedna pozycję 1-M</a>
 * Każda pozycja jest w relacji do Produktu. (Produkt może być na wielu pozycjach) 1-N.
-* Produkt może należeć do wielu grup M-M
+* <a href="#grupy-produktów" target="_blank">Produkt może należeć do wielu grup M-M</a>
 
 W fakturze do pola Customer dodajemy adnotację Association (aby wskazać ze po tej kolumnie jest powiązanie do kolekcji faktur w kliencie) oraz dodajemy kolekcję Pozycji faktury i oznaczamy je odpowiednimi adnotacjami:
 
@@ -418,6 +418,58 @@ public XPCollection<InvoiceItem> Items
     }
 }
 ```
+
+### Grupy produktów
+
+W przypadku powiązania produktów z grupami należy w obu klasach dodać kolekcje z obiektami drugiej klasy i oznaczyć je atrybutem Association z tą samą nazwą
+
+```csharp
+public class Product : BaseObject
+{      
+        ...
+        [Association("Product-Products")]
+        public XPCollection<ProductGroup> Groups
+        {
+            get
+            {
+                return GetCollection<ProductGroup>(nameof(Groups));
+            }
+        }
+        ...
+}    
+
+```
+Dodajemy brakująca klasę z grupa produktu:
+
+```csharp
+[DefaultClassOptions]
+public class ProductGroup : XPObject
+{
+    public ProductGroup(Session session) : base(session)
+    { }
+
+
+    string groupName;
+
+    [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+    public string GroupName
+    {
+        get => groupName;
+        set => SetPropertyValue(nameof(GroupName), ref groupName, value);
+    }
+
+    [Association("Product-Products")]
+    public XPCollection<Product> Products
+    {
+        get
+        {
+            return GetCollection<Product>(nameof(Products));
+        }
+    }
+
+}
+```
+
 
 Kompilujemy i uruchamiamy program. Do dyspozycji mamy wersje WinForms lub Blazor. W zależności od tego co wybierzemy naszym oczom pojawi się wersja Windowsowa:
 
