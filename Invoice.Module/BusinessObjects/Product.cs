@@ -53,7 +53,7 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
         }
 
-        
+
         public VatRate VatRate
         {
             get => vatRate;
@@ -68,5 +68,28 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Notes), ref notes, value);
         }
 
+        [Association("Product-Products")]
+        public XPCollection<ProductGroup> Groups
+        {
+            get
+            {
+                return GetCollection<ProductGroup>(nameof(Groups));
+            }
+        }
+
+        public string AppliedGroups
+        {
+            get
+            {
+                if (Groups != null)
+                {
+                    return string.Join(", ", Groups.Select(g => g.GroupName).ToArray());
+                }
+                else
+                {
+                    return "N/A";
+                }
+            }
+        }
     }
 }
