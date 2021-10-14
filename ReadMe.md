@@ -42,66 +42,104 @@ Potrzebujemy następujące klasy i ich pola:
 
 ##### Klient
 ```csharp
-[DefaultClassOptions]
-   public class Customer : XPObject
-   {
-       public Customer(Session session) : base(session)
-       { }
+ [DefaultClassOptions]
+    public class Customer : BaseObject
+    {
+        public Customer(Session session) : base(session)
+        { }
 
 
-       string postalCode;
-       string city;
-       string street;
-       string customerName;
-       string vatNumber;
-       string symbol;
+        Segment segment;
+        string notes;
+        string postalCode;
+        string city;
+        string street;
+        string customerName;
+        string vatNumber;
+        string symbol;
 
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string Symbol
-       {
-           get => symbol;
-           set => SetPropertyValue(nameof(Symbol), ref symbol, value);
-       }
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string Symbol
+        {
+            get => symbol;
+            set => SetPropertyValue(nameof(Symbol), ref symbol, value);
+        }
 
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string VatNumber
-       {
-           get => vatNumber;
-           set => SetPropertyValue(nameof(VatNumber), ref vatNumber, value);
-       }
-
-
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string CustomerName
-       {
-           get => customerName;
-           set => SetPropertyValue(nameof(CustomerName), ref customerName, value);
-       }
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string VatNumber
+        {
+            get => vatNumber;
+            set => SetPropertyValue(nameof(VatNumber), ref vatNumber, value);
+        }
 
 
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string Street
-       {
-           get => street;
-           set => SetPropertyValue(nameof(Street), ref street, value);
-       }
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string CustomerName
+        {
+            get => customerName;
+            set => SetPropertyValue(nameof(CustomerName), ref customerName, value);
+        }
 
 
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string City
-       {
-           get => city;
-           set => SetPropertyValue(nameof(City), ref city, value);
-       }
-       
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string PostalCode
-       {
-           get => postalCode;
-           set => SetPropertyValue(nameof(PostalCode), ref postalCode, value);
-       }
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string Street
+        {
+            get => street;
+            set => SetPropertyValue(nameof(Street), ref street, value);
+        }
 
-   }
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string City
+        {
+            get => city;
+            set => SetPropertyValue(nameof(City), ref city, value);
+        }
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string PostalCode
+        {
+            get => postalCode;
+            set => SetPropertyValue(nameof(PostalCode), ref postalCode, value);
+        }
+
+
+        
+        public Segment Segment
+        {
+            get => segment;
+            set => SetPropertyValue(nameof(Segment), ref segment, value);
+        }
+
+        [Association]
+        public XPCollection<Invoice> Invoices
+        {
+            get
+            {
+                return GetCollection<Invoice>(nameof(Invoices));
+            }
+        }
+
+        
+        [Size(SizeAttribute.Unlimited)]
+        public string Notes
+        {
+            get => notes;
+            set => SetPropertyValue(nameof(Notes), ref notes, value);
+        }
+
+    }
+
+    public enum Segment
+    { 
+        
+        Corporate= 2,
+        Consumer = 7,
+        [XafDisplayName("Home Office")]
+        HomeOffice = 0,
+        [XafDisplayName("Small Business")]
+        SmallBusiness =9
+    }
 ```
 
 
@@ -570,9 +608,16 @@ Teraz jeśli użytkownik będzie chciał zapisać takie dane otrzyma komunikat b
 
 ![](validationRequired1.png)
 
+
+W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyciu niewielkiej wprawy jestesmy napisać poniżej 2 godzin. 15 minut zajmie nam wydruk faktury, kolejne 10 dashbord jak poniżej. I mamy resztę dnia na korpo meetingi w teamsach czy innych zoomach.
+
 ### Wydruk faktury
 
+![](report1.png)
 
+### Dashboard
+
+![](dash1.png)
 
 ### Jak to wszystko działa ...
 * Budowa klasy XpObject, Optimistic locking , GCRecord
