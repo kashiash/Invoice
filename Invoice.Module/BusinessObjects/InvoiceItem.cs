@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Invoice.Module.BusinessObjects
 {
-
+    [VisibleInDashboards]
+    [VisibleInReports]
     public class InvoiceItem : BaseObject
     {
         public InvoiceItem(Session session) : base(session)

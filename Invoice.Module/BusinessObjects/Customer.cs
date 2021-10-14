@@ -1,4 +1,5 @@
-﻿using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
 using System;
@@ -16,6 +17,7 @@ namespace Invoice.Module.BusinessObjects
         { }
 
 
+        Segment segment;
         string notes;
         string postalCode;
         string city;
@@ -70,6 +72,13 @@ namespace Invoice.Module.BusinessObjects
         }
 
 
+        
+        public Segment Segment
+        {
+            get => segment;
+            set => SetPropertyValue(nameof(Segment), ref segment, value);
+        }
+
         [Association]
         public XPCollection<Invoice> Invoices
         {
@@ -87,5 +96,16 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Notes), ref notes, value);
         }
 
+    }
+
+    public enum Segment
+    { 
+        
+        Corporate= 2,
+        Consumer = 7,
+        [XafDisplayName("Home Office")]
+        HomeOffice = 0,
+        [XafDisplayName("Small Business")]
+        SmallBusiness =9
     }
 }

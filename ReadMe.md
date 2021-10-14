@@ -1,9 +1,9 @@
 # eXpressApp Framework przyjacielem programisty
 
-Proces tworzenia  oprogramowania składa się z różnych etapów, z których niektóre potrafimy robić dniami i nocami np. 3 doby na pizzy i redbulu, oraz takie które odkładamy jak się da i najchętniej delegujemy junior programmer’owi. W efekcie powstają smutne historię i w kolejnej firmie już nasz były junior, opowiada, że zajmował się cały czas np. nudnymi CRUD’ami, albo czymś jeszcze nudniejszym. 
+Proces tworzenia  oprogramowania składa się z różnych etapów, z których niektóre potrafimy robić dniami i nocami np. 3 doby na pizzy i redbulu, oraz takie które odkładamy jak się da i najchętniej delegujemy junior programmer’owi. W efekcie powstają smutne historie i w kolejnej firmie już nasz były junior, opowiada, że zajmował się cały czas np. nudnymi CRUD’ami, układał edytory na widokach albo czymś jeszcze nudniejszym. 
 
 Standardowy proces tworzenia oprogramowania stawia przed programistami następujące wyzwania:
-*	 Najprostsze czynności jak przeglądanie czy przechowywanie danych są czasochłonne. Programiści musza dbać o każdy aspekt tworzonej aplikacji – od zarządzania danymi na poziomie serwerów danych, po dostarczenie edytorów do każdego edytowanego pola.
+*	 Najprostsze czynności jak przeglądanie czy przechowywanie danych są czasochłonne. Programiści muszą dbać o każdy aspekt tworzonej aplikacji – od zarządzania danymi na poziomie serwerów danych, po dostarczenie edytorów do każdego edytowanego pola.
 *	Im bardziej złożony system, tym więcej kodu, tym więcej nieuchronnych błędów. Do celów testowych potrzeba znaczną ilość czasu i zasobów ludzkich.
 *	Utrzymanie tak stworzonego systemu nie jest trywialne. Nawet trzymając się wszelkich zasad programowania, wiele zadań będzie wymagało modyfikacji aplikacji w wielu miejscach. Jej rozbudowa jest kosztowna i koszt ten rośnie wraz ze złożonością systemu.
 Oczywiście niniejsze podejście ma tez swoje zalety:
@@ -18,11 +18,11 @@ Z czasem narzędzia te zaczęły tracić przewagę z powodu rozwoju języków ob
 
 Jednym z takich jest Devexpress eXpressApp Framework (XAF). (Niestety nie jest to narzędzie darmowe, ale dostępna jest wersja testowa, a efekt końcowy jest wart ceny licencji - w końcu to jedynie  miesięczna pensja junior developera).
 
-XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (XAF wspiera kilkanaście serwerów baz danych ). Komunikacja z baza danych jest poprzez ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych (nudne CRUD’y poszły się …)
+XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (XAF wspiera kilkanaście serwerów baz danych ). Komunikacja z baza danych jest poprzez ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych (nudne CRUD’y poszły się …).
 
-ListView wyświetlają  kolekcje danych, pozwalają je sortować i przeszukiwać z wykorzystaniem zaawansowanych metod filtrowania.
+**ListView** wyświetlają  kolekcje danych, pozwalają je sortować i przeszukiwać z wykorzystaniem zaawansowanych metod filtrowania.
 
-DetailView pozwalają na prace z pojedynczym obiektem (rekordem danych) wyświetlając dane w odpowiednich edytorach. Wykorzystywane są do dodawania i edycji danych.
+**DetailView** pozwalają na prace z pojedynczym obiektem (rekordem danych) wyświetlając dane w odpowiednich edytorach. Wykorzystywane są do dodawania i edycji danych.
 DashboardView pozwala grupować wiele innych widoków na jednym oknie.
 
 #### Klasa Biznesowa
@@ -42,66 +42,104 @@ Potrzebujemy następujące klasy i ich pola:
 
 ##### Klient
 ```csharp
-[DefaultClassOptions]
-   public class Customer : XPObject
-   {
-       public Customer(Session session) : base(session)
-       { }
+ [DefaultClassOptions]
+    public class Customer : BaseObject
+    {
+        public Customer(Session session) : base(session)
+        { }
 
 
-       string postalCode;
-       string city;
-       string street;
-       string customerName;
-       string vatNumber;
-       string symbol;
+        Segment segment;
+        string notes;
+        string postalCode;
+        string city;
+        string street;
+        string customerName;
+        string vatNumber;
+        string symbol;
 
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string Symbol
-       {
-           get => symbol;
-           set => SetPropertyValue(nameof(Symbol), ref symbol, value);
-       }
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string Symbol
+        {
+            get => symbol;
+            set => SetPropertyValue(nameof(Symbol), ref symbol, value);
+        }
 
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string VatNumber
-       {
-           get => vatNumber;
-           set => SetPropertyValue(nameof(VatNumber), ref vatNumber, value);
-       }
-
-
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string CustomerName
-       {
-           get => customerName;
-           set => SetPropertyValue(nameof(CustomerName), ref customerName, value);
-       }
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string VatNumber
+        {
+            get => vatNumber;
+            set => SetPropertyValue(nameof(VatNumber), ref vatNumber, value);
+        }
 
 
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string Street
-       {
-           get => street;
-           set => SetPropertyValue(nameof(Street), ref street, value);
-       }
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string CustomerName
+        {
+            get => customerName;
+            set => SetPropertyValue(nameof(CustomerName), ref customerName, value);
+        }
 
 
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string City
-       {
-           get => city;
-           set => SetPropertyValue(nameof(City), ref city, value);
-       }
-       
-       [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-       public string PostalCode
-       {
-           get => postalCode;
-           set => SetPropertyValue(nameof(PostalCode), ref postalCode, value);
-       }
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string Street
+        {
+            get => street;
+            set => SetPropertyValue(nameof(Street), ref street, value);
+        }
 
-   }
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string City
+        {
+            get => city;
+            set => SetPropertyValue(nameof(City), ref city, value);
+        }
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string PostalCode
+        {
+            get => postalCode;
+            set => SetPropertyValue(nameof(PostalCode), ref postalCode, value);
+        }
+
+
+        
+        public Segment Segment
+        {
+            get => segment;
+            set => SetPropertyValue(nameof(Segment), ref segment, value);
+        }
+
+        [Association]
+        public XPCollection<Invoice> Invoices
+        {
+            get
+            {
+                return GetCollection<Invoice>(nameof(Invoices));
+            }
+        }
+
+        
+        [Size(SizeAttribute.Unlimited)]
+        public string Notes
+        {
+            get => notes;
+            set => SetPropertyValue(nameof(Notes), ref notes, value);
+        }
+
+    }
+
+    public enum Segment
+    { 
+        
+        Corporate= 2,
+        Consumer = 7,
+        [XafDisplayName("Home Office")]
+        HomeOffice = 0,
+        [XafDisplayName("Small Business")]
+        SmallBusiness =9
+    }
 ```
 
 
@@ -566,10 +604,20 @@ public class Invoice : BaseObject
 ...
 }
 ```
+Teraz jeśli użytkownik będzie chciał zapisać takie dane otrzyma komunikat błędu:
+
+![](validationRequired1.png)
+
+
+W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyciu niewielkiej wprawy jesteśmy napisać poniżej 2 godzin. 15 minut zajmie nam wydruk faktury, kolejne 10 dashbord jak poniżej. I mamy resztę dnia na korpo meetingi w teamsach czy innych zoomach.
 
 ### Wydruk faktury
 
+![](report1.png)
 
+### Dashboard
+
+![](dash1.png)
 
 ### Jak to wszystko działa ...
 * Budowa klasy XpObject, Optimistic locking , GCRecord
@@ -601,85 +649,94 @@ W pliku Updater.cs dodajemy kod który wywoła metody wpisujące dane testowe:
 
 
 ```csharp
-public override void UpdateDatabaseAfterUpdateSchema()
+using Bogus;
+...
+public class Updater : ModuleUpdater
 {
-    base.UpdateDatabaseAfterUpdateSchema();
-
-    PrepareTestData();
-    ObjectSpace.CommitChanges(); 
-}
-
-private void PrepareTestData()
-{
-    var rates = ObjectSpace.GetObjectsQuery<VatRate>().ToList();
-    if (rates.Count == 0)
+    ...
+    
+    public override void UpdateDatabaseAfterUpdateSchema()
     {
-
-        rates.Add(NowaStawka("23%", 23M));
-        rates.Add(NowaStawka("0%", 0M));
-        rates.Add(NowaStawka("7%", 7M));
-        rates.Add(NowaStawka("ZW", 0M));
+        base.UpdateDatabaseAfterUpdateSchema();
+    
+        PrepareTestData();
+        ObjectSpace.CommitChanges(); 
     }
-
-    var cusFaker = new Faker<Customer>("pl")
-        .CustomInstantiator(f => ObjectSpace.CreateObject<Customer>())
-
-        .RuleFor(o => o.Notes, f => f.Company.CatchPhrase())
-        .RuleFor(o => o.CustomerName, f => f.Company.CompanyName())
-
-        .RuleFor(o => o.City, f => f.Address.City())
-        .RuleFor(o => o.PostalCode, f => f.Address.ZipCode())
-        .RuleFor(o => o.Street, f => f.Address.StreetName());
-    cusFaker.Generate(10);
-
-
-    var prodFaker = new Faker<Product>("pl")
-
-    .CustomInstantiator(f => ObjectSpace.CreateObject<Product>())
-        .RuleFor(o => o.ProductName, f => f.Commerce.ProductName())
-        .RuleFor(o => o.Notes, f => f.Commerce.ProductDescription())
-        .RuleFor(o => o.Symbol, f => f.Commerce.Product())
-        .RuleFor(o => o.UnitPrice, f => f.Random.Decimal(0.01M, 100M))
-           .RuleFor(o => o.VatRate, f => f.PickRandom(rates))
-        .RuleFor(o => o.GTIN, f => f.Commerce.Ean13());
-
-    prodFaker.Generate(10);
-
-
-    var customers = ObjectSpace.GetObjectsQuery<Customer>(true).ToList();
-
-
-    var orderFaker = new Faker<Invoice.Module.BusinessObjects.Invoice>("pl")
-    .CustomInstantiator(f => ObjectSpace.CreateObject<Invoice.Module.BusinessObjects.Invoice>())
-        .RuleFor(o => o.InvoiceNumber, f => f.Random.Int().ToString())
-        .RuleFor(o => o.InvoiceDate, f => f.Date.Past(20))
-        .RuleFor(o => o.DueDate, f => f.Date.Past(2))
-        .RuleFor(o => o.Customer, f => f.PickRandom(customers));
-    var orders = orderFaker.Generate(customers.Count * 10);
-
-    var products = ObjectSpace.GetObjectsQuery<Product>(true).ToList();
-
-    var itemsFaker = new Faker<InvoiceItem>()
-    .CustomInstantiator(f => ObjectSpace.CreateObject<InvoiceItem>())
-        .RuleFor(o => o.Invoice, f => f.PickRandom(orders))
-        .RuleFor(o => o.Product, f => f.PickRandom(products))
-        .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M));
-
-    var items = itemsFaker.Generate(orders.Count * 10);
-}
-private VatRate NowaStawka(string symbol, decimal val)
-{
-    var vat = ObjectSpace.FindObject<VatRate>(CriteriaOperator.Parse("Symbol = ?", symbol));
-    if (vat == null)
+    
+    private void PrepareTestData()
     {
-        vat = ObjectSpace.CreateObject<VatRate>();
-        vat.Symbol = symbol;
-        vat.Value = val;
-
-
+        var rates = ObjectSpace.GetObjectsQuery<VatRate>().ToList();
+        if (rates.Count == 0)
+        {
+    
+            rates.Add(NowaStawka("23%", 23M));
+            rates.Add(NowaStawka("0%", 0M));
+            rates.Add(NowaStawka("7%", 7M));
+            rates.Add(NowaStawka("ZW", 0M));
+        }
+    
+        var cusFaker = new Faker<Customer>("pl")
+            .CustomInstantiator(f => ObjectSpace.CreateObject<Customer>())
+    
+            .RuleFor(o => o.Notes, f => f.Company.CatchPhrase())
+            .RuleFor(o => o.CustomerName, f => f.Company.CompanyName())
+            .RuleFor(o => o.Segment, f => f.PickRandom<Segment>())
+            .RuleFor(o => o.City, f => f.Address.City())
+            .RuleFor(o => o.PostalCode, f => f.Address.ZipCode())
+            .RuleFor(o => o.Street, f => f.Address.StreetName());
+        cusFaker.Generate(10);
+    
+    
+        var prodFaker = new Faker<Product>("pl")
+    
+        .CustomInstantiator(f => ObjectSpace.CreateObject<Product>())
+            .RuleFor(o => o.ProductName, f => f.Commerce.ProductName())
+            .RuleFor(o => o.Notes, f => f.Commerce.ProductDescription())
+            .RuleFor(o => o.Symbol, f => f.Commerce.Product())
+            .RuleFor(o => o.UnitPrice, f => f.Random.Decimal(0.01M, 100M))
+               .RuleFor(o => o.VatRate, f => f.PickRandom(rates))
+            .RuleFor(o => o.GTIN, f => f.Commerce.Ean13());
+    
+        prodFaker.Generate(10);
+    
+    
+        var customers = ObjectSpace.GetObjectsQuery<Customer>(true).ToList();
+    
+    
+        var orderFaker = new Faker<Invoice.Module.BusinessObjects.Invoice>("pl")
+        .CustomInstantiator(f => ObjectSpace.CreateObject<Invoice.Module.BusinessObjects.Invoice>())
+            .RuleFor(o => o.InvoiceNumber, f => f.Random.Int().ToString())
+            .RuleFor(o => o.InvoiceDate, f => f.Date.Past(20))
+            .RuleFor(o => o.DueDate, f => f.Date.Past(2))
+            .RuleFor(o => o.Customer, f => f.PickRandom(customers));
+        var orders = orderFaker.Generate(customers.Count * 10);
+    
+        var products = ObjectSpace.GetObjectsQuery<Product>(true).ToList();
+    
+        var itemsFaker = new Faker<InvoiceItem>()
+        .CustomInstantiator(f => ObjectSpace.CreateObject<InvoiceItem>())
+            .RuleFor(o => o.Invoice, f => f.PickRandom(orders))
+            .RuleFor(o => o.Product, f => f.PickRandom(products))
+            .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M));
+    
+        var items = itemsFaker.Generate(orders.Count * 10);
     }
-    return vat;
-}
+    private VatRate NowaStawka(string symbol, decimal val)
+    {
+        var vat = ObjectSpace.FindObject<VatRate>(CriteriaOperator.Parse("Symbol = ?", symbol));
+        if (vat == null)
+        {
+            vat = ObjectSpace.CreateObject<VatRate>();
+            vat.Symbol = symbol;
+            vat.Value = val;
+    
+    
+        }
+        return vat;
+    }
+    ...
+    
+}    
 ```
 
 
