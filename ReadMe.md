@@ -29,6 +29,18 @@ DashboardView pozwala grupować wiele innych widoków na jednym oknie.
 
 Model biznesowy definiujemy za pomocą klas, dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji.
 
+
+#### Kontrolery
+
+
+#### Model
+
+
+#### Bierzemy się za program
+
+W skrócie: należy zdefiniować klasy, które odzwierciedlą tabele bazy danych używane przez nasza aplikację. Uzupełnić je o powiązania pomiędzy nimi w celu zamodelowania relacji. 
+Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS. Zmodyfikować w modelu domyślne widoki wg naszych upodobań - w końcu nie każdemu będzie się podobało to co domyślnie zaproponuje XAF.
+
 Klasy możemy stworzyć na 3 sposoby:
 1.	Model First - Definiując klasy i powiązania w dedykowanym Edytorze Modelu (XPO Data Model Designer) i generując klasy na podstawie tego modelu.
 2.	Database First – importując struktury z istniejącej bazy danych do Edytora Modelu i następnie wygenerowanie klas.
@@ -142,6 +154,7 @@ Potrzebujemy następujące klasy i ich pola:
     }
 ```
 
+W przypadku typów wyliczeniowych możemy wymusić aby XAF wyświetlał inne opisy niż wynika z nazw poszczególnych wartości typu.
 
 ##### Produkt
 
@@ -339,18 +352,21 @@ public class Product : BaseObject
 #### Relacje
 
 XPO wspiera 3 typy relacji pomiędzy obiektami: 
-*	jeden do wielu 1-N
+*	jeden do wielu 1-M
 *	Jeden do Jednego 1-1
-*	Wiele do Wielu N-M
+*	Wiele do Wielu M-M
 
 W naszym przypadku mamy do czynienia z następującymi relacjami:
 
-* Klient może mieć dowolną liczbę faktur 1-N
-* Faktura ma co najmniej jedna pozycję 1-N
+* Klient może mieć dowolną liczbę faktur 1-M
+* Faktura ma co najmniej jedna pozycję 1-M
 * Każda pozycja jest w relacji do Produktu. (Produkt może być na wielu pozycjach) 1-N.
+* Produkt może należeć do wielu grup M-M
 
 W fakturze do pola Customer dodajemy adnotację Association (aby wskazać ze po tej kolumnie jest powiązanie do kolekcji faktur w kliencie) oraz dodajemy kolekcję Pozycji faktury i oznaczamy je odpowiednimi adnotacjami:
 
+
+### Faktury klienta
 ```csharp
 [Association]
 public Customer Customer
@@ -360,18 +376,6 @@ public Customer Customer
 }
 
 ...
-
-
-  [Association, DevExpress.Xpo.Aggregated]
-public XPCollection<InvoiceItem> Items
-{
-    get
-    {
-        return GetCollection<InvoiceItem>(nameof(Items));
-    }
-}
-```
-
 
 W klasie klienta dodajemy kolekcję do wyświetlania listy faktur
 
@@ -389,6 +393,8 @@ public XPCollection<Invoice> Invoices
 }
 ```
 
+### Pozycje faktury
+
 
 A w pozycji dodajemy powiązanie do faktury:
 
@@ -400,9 +406,18 @@ public Invoice Invoice
     set => SetPropertyValue(nameof(Invoice), ref invoice, value);
 }
 ```
+W fakturze kolekcję pozycji:
 
-
-
+```csharp
+  [Association, DevExpress.Xpo.Aggregated]
+public XPCollection<InvoiceItem> Items
+{
+    get
+    {
+        return GetCollection<InvoiceItem>(nameof(Items));
+    }
+}
+```
 
 Kompilujemy i uruchamiamy program. Do dyspozycji mamy wersje WinForms lub Blazor. W zależności od tego co wybierzemy naszym oczom pojawi się wersja Windowsowa:
 
@@ -420,8 +435,8 @@ lub Webowa:
 Na powyższym zdjęciu widać ze musimy dopieścić formatowanie liczb i wyliczanie wartości pozycji i kompletnej faktury.
 Dlatego w pozycji faktury dodamy metodę, która pozwoli nam na wyliczenie wartości faktury, następnie na poziomie faktury dodamy kod, który będzie sumował pozycje. Tu pojawia się dylemat architektoniczny, który zawsze trzeba przeanalizować - czy chcemy dane wyliczać za każdym razem gdy potrzebna nam jest ta informacja, czy zapamiętywać w bazie danych. Zapamiętywanie danych w bazie danych ma więcej zalet niż wad - najistotniejsze jest to, że przy większej ilości danych jest szybciej. Dlatego tutaj też zastosujemy to rozwiązanie.
 
-W pierwszej kolejności metoda wyliczająca netto, vat i brutto po wpisaniu ilości.
-Żeby liczyć Vat, musimy uzupełnić aplikację o stawki vat, wiec dodajemy nowa klasę: VatRate:
+W pierwszej kolejności metoda wyliczająca netto, Vat i brutto po wpisaniu ilości.
+Żeby liczyć Vat, musimy uzupełnić aplikację o stawki Vat, wiec dodajemy nowa klasę: VatRate:
 
 ```csharp
 [DefaultClassOptions]
@@ -481,7 +496,7 @@ public VatRate VatRate
 }
 ```
 
-W przypadku pozycji chcemy przeliczyć jej wartość jeśli zmieni się cena jednostkowa i/lub ilość. Tutaj wystarczy na seterze wywołać metodę przeliczająca jeśli zmieniła się wartość na polach: cena jednostkowa i ilość. Dodatkowo w przypadku zmiany produktu, należy podstawić nowa stawkę vat i cenę jednostkową:
+W przypadku pozycji faktury chcemy przeliczyć jej wartość jeśli zmieni się cena jednostkowa i/lub ilość. Tutaj wystarczy wywołać metodę przeliczająca jeśli zmieniła się wartość na polach: cena jednostkowa i ilość. Dodatkowo w przypadku zmiany produktu, należy podstawić nową stawkę vat i cenę jednostkową:
 
 ```csharp
 ...
