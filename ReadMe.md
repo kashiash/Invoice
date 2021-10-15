@@ -1,4 +1,4 @@
-# eXpressApp Framework przyjacielem programisty
+# eXpressApp Framework przyjacielem "leniwego" programisty
 
 Proces tworzenia  oprogramowania składa się z różnych etapów, z których niektóre potrafimy robić dniami i nocami np. 3 doby na pizzy i redbulu, oraz takie które odkładamy jak się da i najchętniej delegujemy junior programmer’owi. W efekcie powstają smutne historie i w kolejnej firmie już nasz były junior, opowiada, że zajmował się cały czas np. nudnymi CRUD’ami, układał edytory na widokach albo czymś jeszcze nudniejszym. 
 
@@ -16,7 +16,7 @@ Niekiedy powyższe rozwiązanie jest jedynym wyjściem aby stworzyć właściwy 
 Od lat powstają narzędzia, które próbują wyeliminować powtarzalne elementy systemu, które prawie zawsze robi się w podobny sposób niezależnie od tego czy jest to aplikacja do wystawiania faktur, czy program do diagnozowania i leczenia raka. Narzędzia tego typu zwane kiedyś RAD (Rapid Application Development) np. Power Builder, Clarion, Power Apps i wiele innych, w różnym stopniu pozwalały programistom na elastyczność podczas procesu tworzenia aplikacji. Jedne wymagały trzymania się konkretnych zasad i pozwalały na tworzenie aplikacji o dość ograniczonej funkcjonalności, inne pozwalały na większa elastyczność, nie mniej jednak bardzo często kończyło się na egzotycznych trikach by osiągnąć zamierzony cel. O skuteczności tych narzędzi świadczą systemy jakie powstały choćby w Polsce m.in. cała seria WaPro WF-MAG (KaPer,Gang,Fakir) czy Comarch ERP XL stworzone z wykorzystaniem Clarion’a, czy produkty rodziny Simple.ERP, tworzone za pomocą Power Builder’a i wiele innych. 
 Z czasem narzędzia te zaczęły tracić przewagę z powodu rozwoju języków obiektowych i pojawiania się bibliotek wspomagających programistów w każdym możliwym aspekcie ich pracy.
 
-Jednym z takich jest <a href="https://docs.devexpress.com/eXpressAppFramework/112670/expressapp-framework" target="_blank">Devexpress eXpressApp Framework (XAF)</a>.  *Niestety nie jest to narzędzie darmowe, ale dostępna jest wersja testowa, a efekt końcowy jest wart ceny licencji - w końcu to jedynie  miesięczna pensja junior developera.*
+Jednym z takich jest <a href="https://docs.devexpress.com/eXpressAppFramework/112670/expressapp-framework" target="_blank">DevExpress eXpressApp Framework (XAF)</a>.  *Niestety nie jest to narzędzie darmowe, ale dostępna jest wersja testowa, a efekt końcowy jest wart ceny licencji - w końcu to jedynie  miesięczna pensja junior developera.*
 
 XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (<a href="https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo" target="_blank">XAF wspiera kilkanaście serwerów baz danych</a> ). Komunikacja z baza danych jest poprzez klasy ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych (nudne CRUD’y poszły się …).
 
@@ -47,17 +47,17 @@ W skrócie: należy zdefiniować klasy, które odzwierciedlą tabele bazy danych
 Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS. Zmodyfikować w modelu domyślne widoki wg naszych upodobań - w końcu nie każdemu będzie się podobało to co domyślnie zaproponuje XAF.
 
 1. Tworzymy nowy projekt w VS.
-2. Z dostępnych szblonów wybieramy DevExpress v21.2 XAF Template Gallery (c#) 
-3. Po wpisaniu nazwy projektu i zatwierdzeniu pojawi się okno XAF Solution Wizard, Klikamy Run wizard.
+2. Z dostępnych szablonów wybieramy DevExpress v21.2 XAF Template Gallery (c#) 
+3. Po wpisaniu nazwy projektu i zatwierdzeniu pojawi się okno XAF Solution Wizard Klikamy Run wizard.
 4. Wybieramy docelowe platformy - proponuję wybrać obie jednocześnie, dzięki temu uzyskamy aplikacje WinForms oraz Web Blazor.
-5. Na oknie z wyborem ORM wybieramy XPO. Jest to <a href="https://docs.devexpress.com/XPO/1998/express-persistent-objects" target="_blank">ORM dostarczany przez DevExpress</a> i zwykle pewne funkcjonalności w XAF pojawiają sie wcześniej dla XPO niż Entity Framework 
+5. Na oknie z wyborem ORM wybieramy XPO. Jest to <a href="https://docs.devexpress.com/XPO/1998/express-persistent-objects" target="_blank">ORM dostarczany przez DevExpress</a> i zwykle pewne funkcjonalności w XAF pojawiają się wcześniej dla XPO niż Entity Framework 
 
 Klasy możemy stworzyć na 3 sposoby:
 1.	Model First - Definiując klasy i powiązania w dedykowanym Edytorze Modelu (XPO Data Model Designer) i generując klasy na podstawie tego modelu.
 2.	Database First – importując struktury z istniejącej bazy danych do Edytora Modelu i następnie wygenerowanie klas.
 3.	Code First – Deklarując klasy bezpośrednio w kodzie.
 
-Osobiście preferuję wariant 3-ci – czyli klasy definiowane bezpośrednio w kodzie.
+Osobiście preferuję wariant 3-ci – czyli klasy definiowane bezpośrednio w kodzie. <a href="https://docs.devexpress.com/CodeRushForRoslyn/115802/coderush" target="_blank">W tym procesie wspomaga mnie CodeRush</a>, jest to rozszerzenie do VS wspomagające programistę w podstawowym procesie programowania, refaktoryzacji, debugowania czy testowania (odpowiednik ReSharpera od JetBrains). Używając <a href="https://community.devexpress.com/blogs/markmiller/archive/2018/04/25/coderush-cheat-sheet-v3.aspx" target="_blank">odpowiednich skrótów klawiszowych</a>, czyni proces kodowania zdecydowanie szybszy od robienia tego w Model Designerze.
 
 Potrzebujemy następujące klasy i ich pola:
 
@@ -375,7 +375,7 @@ W naszym przypadku mamy do czynienia z następującymi relacjami:
 * Każda pozycja jest w relacji do Produktu. (Produkt może być na wielu pozycjach) 1-N.
 * <a href="#grupy-produktów" target="_blank">Produkt może należeć do wielu grup M-M</a>
 
-W fakturze do pola Customer dodajemy adnotację Association (aby wskazać ze po tej kolumnie jest powiązanie do kolekcji faktur w kliencie) oraz dodajemy kolekcję Pozycji faktury i oznaczamy je odpowiednimi adnotacjami:
+W fakturze do pola Customer dodajemy adnotację *Association* (aby wskazać ze po tej kolumnie jest powiązanie do kolekcji faktur w kliencie) oraz dodajemy kolekcję Pozycji faktury i oznaczamy je odpowiednimi adnotacjami *Association* i *Aggregated*.
 
 
 ### Faktury klienta
@@ -433,7 +433,7 @@ public XPCollection<InvoiceItem> Items
 
 ### Grupy produktów
 
-W przypadku powiązania produktów z grupami należy w obu klasach dodać kolekcje z obiektami drugiej klasy i oznaczyć je atrybutem Association z tą samą nazwą
+W przypadku powiązania produktów z grupami należy w obu klasach dodać kolekcje z obiektami drugiej klasy i oznaczyć je atrybutem *Association* z tą samą nazwą
 
 ```csharp
 public class Product : BaseObject
@@ -499,8 +499,8 @@ lub Webowa:
 Na powyższym zdjęciu widać ze musimy dopieścić formatowanie liczb i wyliczanie wartości pozycji i kompletnej faktury.
 Dlatego w pozycji faktury dodamy metodę, która pozwoli nam na wyliczenie wartości faktury, następnie na poziomie faktury dodamy kod, który będzie sumował pozycje. Tu pojawia się dylemat architektoniczny, który zawsze trzeba przeanalizować - czy chcemy dane wyliczać za każdym razem gdy potrzebna nam jest ta informacja, czy zapamiętywać w bazie danych. Zapamiętywanie danych w bazie danych ma więcej zalet niż wad - najistotniejsze jest to, że przy większej ilości danych jest szybciej. Dlatego tutaj też zastosujemy to rozwiązanie.
 
-W pierwszej kolejności metoda wyliczająca netto, Vat i brutto po wpisaniu ilości.
-Żeby liczyć Vat, musimy uzupełnić aplikację o stawki Vat, wiec dodajemy nowa klasę: VatRate:
+W pierwszej kolejności metoda wyliczająca netto, VAT i brutto po wpisaniu ilości.
+Żeby liczyć VAT, musimy uzupełnić aplikację o stawki VAT, wiec dodajemy nowa klasę: VatRate:
 
 ```csharp
 [DefaultClassOptions]
@@ -560,7 +560,7 @@ public VatRate VatRate
 }
 ```
 
-W przypadku pozycji faktury chcemy przeliczyć jej wartość jeśli zmieni się cena jednostkowa i/lub ilość. Tutaj wystarczy wywołać metodę przeliczająca jeśli zmieniła się wartość na polach: cena jednostkowa i ilość. Dodatkowo w przypadku zmiany produktu, należy podstawić nową stawkę vat i cenę jednostkową:
+W przypadku pozycji faktury chcemy przeliczyć jej wartość jeśli zmieni się cena jednostkowa i/lub ilość. Tutaj wystarczy wywołać metodę przeliczająca jeśli zmieniła się wartość na polach: cena jednostkowa i ilość. Dodatkowo w przypadku zmiany produktu, należy podstawić nową stawkę VAT i cenę jednostkową:
 
 ```csharp
 ...
@@ -616,7 +616,7 @@ public VatRate VatRate
 ```
 
 
-Wyliczanie po zmianie wartości Netto na Brutto i na odwrót nie ma w tym przypadku sensu, ale warto zablokować użytkownikowi możliwość edycji tych pól. Najprościej jest to zrobić dodając do nich odpowiedni atrybut:
+Wyliczanie po zmianie wartości Netto na Brutto i na odwrót nie ma w tym przypadku sensu, ale warto zablokować użytkownikowi możliwość edycji tych pól. Najprościej jest to zrobić dodając do nich odpowiedni atrybut *ModelDefault*:
 
 ```csharp
 
@@ -652,7 +652,7 @@ Podobnie robimy w fakturze z odpowiednimi polami. Dodajemy metodę która zsumuj
 ![](invoices.png)
 
 
-I nasza aplikacja do fakturowania jest prawie gotowa. Patrząc na powyższy obrazek zostaje nam drobny niesmak, ze w miejscu w miejscu faktury widzimy identyfikator, zamiast bardziej czytelnej dla ludzi nazwy. Załatwi to dla nas atrybut XafDefaultProperty.
+I nasza aplikacja do fakturowania jest prawie gotowa. Patrząc na powyższy obrazek zostaje nam drobny niesmak, ze w miejscu w miejscu faktury widzimy identyfikator, zamiast bardziej czytelnej dla ludzi nazwy. Załatwi to dla nas atrybut *XafDefaultProperty*.
 
 ```csharp
 ...
@@ -664,7 +664,7 @@ public class Invoice : BaseObject
 }
 ```
 
-Kolejny drobiazg do rozwiązania to numer faktury. Powinien być unikalny i nie może być pusty. Można zrobić żeby automatycznie się wyliczał lub wymusić na użytkowniku, aby wpisywał właściwą wartość. Tym razem zastosujemy drugie rozwiązanie (Wyliczaniem tego typu wartości zajmiemy się w dalszej części).  Xaf dostarcza nam dodatkowy moduł, który służy do weryfikacji poprawności danych i wystarczy, że dodamy dwie adnotacje:
+Kolejny drobiazg do rozwiązania to numer faktury. Powinien być unikalny i nie może być pusty. Można zrobić żeby automatycznie się wyliczał lub wymusić na użytkowniku, aby wpisywał właściwą wartość. Tym razem zastosujemy drugie rozwiązanie (Wyliczaniem tego typu wartości zajmiemy się w dalszej części).  XAF dostarcza nam dodatkowy moduł <a href="https://docs.devexpress.com/eXpressAppFramework/113684/validation-module" target="_blank">Validation</a>, który służy do weryfikacji poprawności danych i wystarczy, że dodamy dwie adnotacje:
 
 ```csharp
 using DevExpress.Persistent.Validation;
@@ -688,7 +688,7 @@ Teraz jeśli użytkownik będzie chciał zapisać takie dane otrzyma komunikat b
 ![](validationRequired1.png)
 
 
-W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyciu niewielkiej wprawy jesteśmy napisać poniżej 2 godzin. 15 minut zajmie nam wydruk faktury, kolejne 10 dashbord jak poniżej. I mamy resztę dnia na korpo meetingi w teamsach czy innych zoomach.
+W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyciu niewielkiej wprawy jesteśmy napisać poniżej 2 godzin. 15 minut zajmie nam wydruk faktury, kolejne 10 dashboard jak poniżej. I mamy resztę dnia na korpo meetingi w teamsach czy innych zoomach, ewentualnie popykać w piłkarzyki lub Fife na firmowym PS5.
 
 ### Wydruk faktury
 
@@ -704,23 +704,29 @@ W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyci
 * Różnice pomiędzy BaseObject,XpObject itp
 
 
+## Rozbudowujemy aplikację
 
+### Modyfikacja widoków
+
+### Moduł Conditional Appearance
+
+### Wpłaty i rozrachunki
 
 ### Kontrolery i akcje
 
-
 ### Sprawdzianie klienta w GUS/Vies/US
-
 
 ### Uruchomienie aplikacji w Docker
 
-
-
 ### Uruchomienie aplikacji na Azure
 
+### Moduł Security
 
 
-### Generator danych testowych
+
+
+
+## Generator danych testowych
 
 Wiadomo, że program lepiej wygląda z danymi, wiec wygenerujemy nieco danych testowych wykorzystując pakiet Bogus.
 
