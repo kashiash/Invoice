@@ -24,7 +24,7 @@ namespace Invoice.Module.DatabaseUpdate
             base.UpdateDatabaseAfterUpdateSchema();
 
             PrepareTestData();
-            ObjectSpace.CommitChanges(); //Uncomment this line to persist created object(s).
+            ObjectSpace.CommitChanges(); 
         }
 
 

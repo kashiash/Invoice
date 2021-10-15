@@ -16,18 +16,23 @@ Niekiedy powyższe rozwiązanie jest jedynym wyjściem aby stworzyć właściwy 
 Od lat powstają narzędzia, które próbują wyeliminować powtarzalne elementy systemu, które prawie zawsze robi się w podobny sposób niezależnie od tego czy jest to aplikacja do wystawiania faktur, czy program do diagnozowania i leczenia raka. Narzędzia tego typu zwane kiedyś RAD (Rapid Application Development) np. Power Builder, Clarion, Power Apps i wiele innych, w różnym stopniu pozwalały programistom na elastyczność podczas procesu tworzenia aplikacji. Jedne wymagały trzymania się konkretnych zasad i pozwalały na tworzenie aplikacji o dość ograniczonej funkcjonalności, inne pozwalały na większa elastyczność, nie mniej jednak bardzo często kończyło się na egzotycznych trikach by osiągnąć zamierzony cel. O skuteczności tych narzędzi świadczą systemy jakie powstały choćby w Polsce m.in. cała seria WaPro WF-MAG (KaPer,Gang,Fakir) czy Comarch ERP XL stworzone z wykorzystaniem Clarion’a, czy produkty rodziny Simple.ERP, tworzone za pomocą Power Builder’a i wiele innych. 
 Z czasem narzędzia te zaczęły tracić przewagę z powodu rozwoju języków obiektowych i pojawiania się bibliotek wspomagających programistów w każdym możliwym aspekcie ich pracy.
 
-Jednym z takich jest Devexpress eXpressApp Framework (XAF). (Niestety nie jest to narzędzie darmowe, ale dostępna jest wersja testowa, a efekt końcowy jest wart ceny licencji - w końcu to jedynie  miesięczna pensja junior developera).
+Jednym z takich jest <a href="https://docs.devexpress.com/eXpressAppFramework/112670/expressapp-framework" target="_blank">Devexpress eXpressApp Framework (XAF)</a>.  *Niestety nie jest to narzędzie darmowe, ale dostępna jest wersja testowa, a efekt końcowy jest wart ceny licencji - w końcu to jedynie  miesięczna pensja junior developera.*
 
-XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (XAF wspiera kilkanaście serwerów baz danych ). Komunikacja z baza danych jest poprzez ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych (nudne CRUD’y poszły się …).
+XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (<a href="https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo" target="_blank">XAF wspiera kilkanaście serwerów baz danych</a> ). Komunikacja z baza danych jest poprzez klasy ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych (nudne CRUD’y poszły się …).
 
 **ListView** wyświetlają  kolekcje danych, pozwalają je sortować i przeszukiwać z wykorzystaniem zaawansowanych metod filtrowania.
 
 **DetailView** pozwalają na prace z pojedynczym obiektem (rekordem danych) wyświetlając dane w odpowiednich edytorach. Wykorzystywane są do dodawania i edycji danych.
 DashboardView pozwala grupować wiele innych widoków na jednym oknie.
 
-#### Klasa Biznesowa
+#### Klasy biznesowe
 
 Model biznesowy definiujemy za pomocą klas, dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji.
+
+#### Moduły rozszerzające
+
+XAF zawiera kilkanaście modułów rozszerzających funkcjonalność aplikacji. Np wystarczy dołożyć do projektu moduł **Reports** aby w aplikacji pojawił się rozbudowany edytor wydruków. Dodając moduł Security otrzymujemy zaawansowaną obsługę kontroli dostępu do aplikacji. 
+<a href="https://docs.devexpress.com/eXpressAppFramework/118046/application-shell-and-base-infrasctructure/application-solution-components/modules#modules-shipped-with-xaf" target="_blank">Wykaz standardowych modułów dostępny w XAF</a>
 
 
 #### Kontrolery
@@ -38,13 +43,20 @@ Model biznesowy definiujemy za pomocą klas, dla których zostaną utworzone str
 
 #### Bierzemy się za program
 
-W skrócie: należy zdefiniować klasy, które odzwierciedlą tabele bazy danych używane przez nasza aplikację. Uzupełnić je o powiązania pomiędzy nimi w celu zamodelowania relacji. 
+W skrócie: należy zdefiniować klasy, które odzwierciedlą tabele bazy danych używane przez aplikację. Uzupełnić je o powiązania pomiędzy nimi w celu zamodelowania relacji. 
 Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS. Zmodyfikować w modelu domyślne widoki wg naszych upodobań - w końcu nie każdemu będzie się podobało to co domyślnie zaproponuje XAF.
+
+1. Tworzymy nowy projekt w VS.
+2. Z dostępnych szblonów wybieramy DevExpress v21.2 XAF Template Gallery (c#) 
+3. Po wpisaniu nazwy projektu i zatwierdzeniu pojawi się okno XAF Solution Wizard, Klikamy Run wizard.
+4. Wybieramy docelowe platformy - proponuję wybrać obie jednocześnie, dzięki temu uzyskamy aplikacje WinForms oraz Web Blazor.
+5. Na oknie z wyborem ORM wybieramy XPO. Jest to <a href="https://docs.devexpress.com/XPO/1998/express-persistent-objects" target="_blank">ORM dostarczany przez DevExpress</a> i zwykle pewne funkcjonalności w XAF pojawiają sie wcześniej dla XPO niż Entity Framework 
 
 Klasy możemy stworzyć na 3 sposoby:
 1.	Model First - Definiując klasy i powiązania w dedykowanym Edytorze Modelu (XPO Data Model Designer) i generując klasy na podstawie tego modelu.
 2.	Database First – importując struktury z istniejącej bazy danych do Edytora Modelu i następnie wygenerowanie klas.
 3.	Code First – Deklarując klasy bezpośrednio w kodzie.
+
 Osobiście preferuję wariant 3-ci – czyli klasy definiowane bezpośrednio w kodzie.
 
 Potrzebujemy następujące klasy i ich pola:
