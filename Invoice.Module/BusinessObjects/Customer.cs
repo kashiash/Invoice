@@ -17,6 +17,8 @@ namespace Invoice.Module.BusinessObjects
         { }
 
 
+        string phone;
+        string email;
         Segment segment;
         string notes;
         string postalCode;
@@ -72,7 +74,23 @@ namespace Invoice.Module.BusinessObjects
         }
 
 
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string Email
+        {
+            get => email;
+            set => SetPropertyValue(nameof(Email), ref email, value);
+        }
+
         
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string Phone
+        {
+            get => phone;
+            set => SetPropertyValue(nameof(Phone), ref phone, value);
+        }
+
+
         public Segment Segment
         {
             get => segment;

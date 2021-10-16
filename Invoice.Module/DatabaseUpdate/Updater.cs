@@ -24,16 +24,15 @@ namespace Invoice.Module.DatabaseUpdate
             base.UpdateDatabaseAfterUpdateSchema();
 
             PrepareTestData();
-            ObjectSpace.CommitChanges(); 
+            ObjectSpace.CommitChanges();
         }
 
 
         private void PrepareTestData()
         {
             var rates = ObjectSpace.GetObjectsQuery<VatRate>().ToList();
-            if (rates.Count == 0)
+            if(rates.Count == 0)
             {
-
                 rates.Add(NowaStawka("23%", 23M));
                 rates.Add(NowaStawka("0%", 0M));
                 rates.Add(NowaStawka("7%", 7M));
@@ -48,7 +47,9 @@ namespace Invoice.Module.DatabaseUpdate
                 .RuleFor(o => o.Segment, f => f.PickRandom<Segment>())
                 .RuleFor(o => o.City, f => f.Address.City())
                 .RuleFor(o => o.PostalCode, f => f.Address.ZipCode())
-                .RuleFor(o => o.Street, f => f.Address.StreetName());
+                .RuleFor(o => o.Street, f => f.Address.StreetName())
+                .RuleFor(o => o.Phone, f => f.Person.Phone)
+                .RuleFor(o => o.Email, (f, c) => f.Internet.Email());
             cusFaker.Generate(10);
 
 
@@ -59,7 +60,7 @@ namespace Invoice.Module.DatabaseUpdate
                 .RuleFor(o => o.Notes, f => f.Commerce.ProductDescription())
                 .RuleFor(o => o.Symbol, f => f.Commerce.Product())
                 .RuleFor(o => o.UnitPrice, f => f.Random.Decimal(0.01M, 100M))
-                   .RuleFor(o => o.VatRate, f => f.PickRandom(rates))
+                .RuleFor(o => o.VatRate, f => f.PickRandom(rates))
                 .RuleFor(o => o.GTIN, f => f.Commerce.Ean13());
 
             prodFaker.Generate(10);
@@ -71,7 +72,7 @@ namespace Invoice.Module.DatabaseUpdate
             var orderFaker = new Faker<Invoice.Module.BusinessObjects.Invoice>("pl")
             .CustomInstantiator(f => ObjectSpace.CreateObject<Invoice.Module.BusinessObjects.Invoice>())
                 .RuleFor(o => o.InvoiceNumber, f => f.Random.Int().ToString())
-                .RuleFor(o => o.InvoiceDate, f => f.Date.Past(20))
+                .RuleFor(o => o.InvoiceDate, f => f.Date.Past(2))
                 .RuleFor(o => o.DueDate, f => f.Date.Past(2))
                 .RuleFor(o => o.Customer, f => f.PickRandom(customers));
             var orders = orderFaker.Generate(customers.Count * 10);
@@ -86,16 +87,15 @@ namespace Invoice.Module.DatabaseUpdate
 
             var items = itemsFaker.Generate(orders.Count * 10);
         }
+
         private VatRate NowaStawka(string symbol, decimal val)
         {
             var vat = ObjectSpace.FindObject<VatRate>(CriteriaOperator.Parse("Symbol = ?", symbol));
-            if (vat == null)
+            if(vat == null)
             {
                 vat = ObjectSpace.CreateObject<VatRate>();
                 vat.Symbol = symbol;
                 vat.Value = val;
-
-
             }
             return vat;
         }
