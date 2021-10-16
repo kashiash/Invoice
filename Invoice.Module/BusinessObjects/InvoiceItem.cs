@@ -134,7 +134,6 @@ namespace Invoice.Module.BusinessObjects
             else
             {
                 Brutto = Netto;
-
             }
            Vat = Brutto - Netto;
 
