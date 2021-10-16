@@ -251,14 +251,12 @@ public class Product : BaseObject
 
 ##### Faktura
 
-
-
 z pliku
+
 ```csharp:Invoice.Module/BusinessObjects/Invoice.cs
 
-
-
 ```
+
 wklejony
 ```csharp
 [DefaultClassOptions]
