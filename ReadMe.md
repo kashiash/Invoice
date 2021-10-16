@@ -83,8 +83,18 @@ Osobiście preferuję wariant 3-ci – czyli klasy definiowane bezpośrednio w k
 
 Potrzebujemy następujące klasy i ich pola:
 
-![Diagram powiązań pomiędzy tabelami](Diagram2.png)
+[![](https://mermaid.ink/img/eyJjb2RlIjoiICAgIGVyRGlhZ3JhbVxuICAgICAgQ1VTVE9NRVIgfHwtLW97IElOVk9JQ0UgOiBnZXRcbiAgICAgIElOVk9JQ0UgfHwtLXx7IElOVk9JQ0VJVEVNIDogY29udGFpbnNcbiAgICAgXG4gICAgICBQUk9EVUNUIHx8LS18eyBJTlZPSUNFSVRFTSA6IGluXG4gICAgICBWQVRSQVRFIHx8LS18eyBJTlZPSUNFSVRFTSA6IHVzZVxuICAgICAgVkFUUkFURSB8fC0tfHsgUFJPRFVDVCA6IHVzZVxuICAgICAgIFBST0RVQ1QgfHwtLXx7IFBST0RVQ1RHUk9VUCA6IGhhc1xuICAiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOnRydWUsImF1dG9TeW5jIjp0cnVlLCJ1cGRhdGVEaWFncmFtIjpmYWxzZX0)](https://mermaid.live/edit#eyJjb2RlIjoiICAgIGVyRGlhZ3JhbVxuICAgICAgQ1VTVE9NRVIgfHwtLW97IElOVk9JQ0UgOiBnZXRcbiAgICAgIElOVk9JQ0UgfHwtLXx7IElOVk9JQ0VJVEVNIDogY29udGFpbnNcbiAgICAgXG4gICAgICBQUk9EVUNUIHx8LS18eyBJTlZPSUNFSVRFTSA6IGluXG4gICAgICBWQVRSQVRFIHx8LS18eyBJTlZPSUNFSVRFTSA6IHVzZVxuICAgICAgVkFUUkFURSB8fC0tfHsgUFJPRFVDVCA6IHVzZVxuICAgICAgIFBST0RVQ1QgfHwtLXx7IFBST0RVQ1RHUk9VUCA6IGhhc1xuICAiLCJtZXJtYWlkIjoie1xuICBcInRoZW1lXCI6IFwiZGVmYXVsdFwiXG59IiwidXBkYXRlRWRpdG9yIjp0cnVlLCJhdXRvU3luYyI6dHJ1ZSwidXBkYXRlRGlhZ3JhbSI6ZmFsc2V9)
 
+<div class="mermaid">
+    erDiagram
+      CUSTOMER ||--o{ INVOICE : get
+      INVOICE ||--|{ INVOICEITEM : contains
+     
+      PRODUCT ||--|{ INVOICEITEM : in
+      VATRATE ||--|{ INVOICEITEM : use
+      VATRATE ||--|{ PRODUCT : use
+       PRODUCT ||--|{ PRODUCTGROUP : has
+</div>
 
 ##### Klient
 ```csharp
@@ -742,6 +752,17 @@ W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyci
 ### Moduł Conditional Appearance
 
 ### Wpłaty i rozrachunki
+
+Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
+<div class="mermaid">
+    erDiagram
+      CUSTOMER ||--o{ INVOICE : get
+      CUSTOMER ||--o{ PAYMENT : pay
+      INVOICE ||--o{ INVOICEPAYMENT : payedby
+      PAYMENT ||--o{ INVOICEPAYMENT : pay
+
+      
+</div>
 
 ### Kontrolery i akcje
 
