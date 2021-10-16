@@ -25,8 +25,14 @@ XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS S
 
 **ListView** wyświetlają  kolekcje danych, pozwalają je sortować i przeszukiwać z wykorzystaniem zaawansowanych metod filtrowania.
 
+![](ListView.png)
+
+
 **DetailView** pozwalają na prace z pojedynczym obiektem (rekordem danych) wyświetlając dane w odpowiednich edytorach. Wykorzystywane są do dodawania i edycji danych.
-DashboardView pozwala grupować wiele innych widoków na jednym oknie.
+
+![](DetasilView.png)
+
+**DashboardView** pozwala grupować wiele innych widoków na jednym oknie.
 
 #### Klasy biznesowe
  
@@ -53,8 +59,17 @@ Kontrolery używamy głównie w dwóch sytuacjach:
     W większości przypadków działanie aplikacji polega na interakcji z użytkownikiem. W tym celu Kontrolery mogą służyć jako kontenery dla akcji. Akcje to obiekty, które reprezentują abstrakcyjne elementy użytkownika i mogą być wyświetlane w systemie użytkownika przy użyciu rzeczywistych kontrolek: Button, ComboBox, SubMenu. W celu obsłużenia działania uzytkownika na kontrolce bedącej Akcją, należy obsłużyć odpowiednie zdarzenia. *Odpowiednik OnTextChanged OnClick itp. w WinForms*
 
 
+W XAF rozróżniamy 4 rodzaje akcji:
+* SimpleAction - służy do wykonywania zaprogramowanych funkcjonalności, gdy użytkownik kliknie na prostym przycisku.
+* PopupWindowAction - wywołuje okno popup z zadeklarowanym widokiem, gdzie użytkownik może wpisać dane a następnie po naciśnięciu OK lub Cancel, wykonuje dalsze działanie.
+* ParametrizedAction - wykonuje kod po wprowadzeniu przez użytkownika wartości do kontrolki skojarzonej z akcją.
+* SingleChoiceAction - wykonuje kod po wybraniu jednej z opcji określonej podczas tworzenia akcji
 
-#### Model
+
+#### Application Model
+
+Application Model przechowuje wszystkie informacje potrzebne do zbudowania UI aplikacji. Np zawiera informacje jakie edytory przypisaliśmy dla poszczególnych typów danych, jak ułożone są kontrolki na ekranie i jakie etykiety przypisaliśmy poszczególnym polom. 
+Application Model automatycznie wypełniany jest danymi na podstawie zadeklarowanych klas BO oraz kontrolerów. MOdel można zmieniać za pomocą dedykowanego edytora zintegrowanego w Visual Studio lub zwykłym edytorem tekstowym ponieważ jest on zapisywany jako plik XML.
 
 
 # Bierzemy się za programowanie
@@ -65,14 +80,13 @@ Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS
 1. Tworzymy nowy projekt w VS.
 2. Z dostępnych szablonów wybieramy DevExpress v21.2 XAF Template Gallery (c#) 
 3. Po wpisaniu nazwy projektu i zatwierdzeniu pojawi się okno XAF Solution Wizard Klikamy *Run wizard*.
+    
+    Ważne jest aby upewnić się, że wybraliśmy framework .Net Core oraz język programowania C#
 4. Wybieramy docelowe platformy - proponuję wybrać obie jednocześnie, dzięki temu uzyskamy aplikacje WinForms oraz Web Blazor.
-5. Na oknie z wyborem ORM wybieramy XPO. Jest to <a href="https://docs.devexpress.com/XPO/1998/express-persistent-objects" target="_blank">ORM dostarczany przez DevExpress</a> i zwykle pewne funkcjonalności w XAF pojawiają się wcześniej dla XPO niż Entity Framework. Jednocześnie DevExpress utrzymuje że <a href="https://github.com/DevExpress/XPO/tree/master/Benchmarks" target="_blank">wydajnościowo XPo jest dużo lepsze od Entity Framework</a>. 
+5. Na oknie z wyborem ORM wybieramy XPO. Jest to <a href="https://docs.devexpress.com/XPO/1998/express-persistent-objects" target="_blank">ORM dostarczany przez DevExpress</a> i zwykle pewne funkcjonalności w XAF pojawiają się wcześniej dla XPO niż Entity Framework. Jednocześnie DevExpress utrzymuje że <a href="https://github.com/DevExpress/XPO/tree/master/Benchmarks" target="_blank">wydajnościowo XPO jest dużo lepsze od Entity Framework</a>. 
 6. Na oknie Choose Security wybieramy *None* (dodamy to później)
 7. Na oknie z dodatkowymi modułami wybieramy Bussines Class Library, Conditional Appearance, Dashboard, Reports, Scheduler i Validation. 
 8. Klikamy *Finish* i po kilku sekundach zostaną wygenerowane odpowiednie projekty.
-
-
-
 
 Klasy możemy stworzyć na 3 sposoby:
 1.	Model First - Definiując klasy i powiązania w dedykowanym Edytorze Modelu (XPO Data Model Designer) i generując klasy na podstawie tego modelu.
@@ -83,7 +97,6 @@ Osobiście preferuję wariant 3-ci – czyli klasy definiowane bezpośrednio w k
 
 Potrzebujemy następujące klasy i ich pola:
 
-[![](https://mermaid.ink/img/eyJjb2RlIjoiICAgIGVyRGlhZ3JhbVxuICAgICAgQ1VTVE9NRVIgfHwtLW97IElOVk9JQ0UgOiBnZXRcbiAgICAgIElOVk9JQ0UgfHwtLXx7IElOVk9JQ0VJVEVNIDogY29udGFpbnNcbiAgICAgXG4gICAgICBQUk9EVUNUIHx8LS18eyBJTlZPSUNFSVRFTSA6IGluXG4gICAgICBWQVRSQVRFIHx8LS18eyBJTlZPSUNFSVRFTSA6IHVzZVxuICAgICAgVkFUUkFURSB8fC0tfHsgUFJPRFVDVCA6IHVzZVxuICAgICAgIFBST0RVQ1QgfHwtLXx7IFBST0RVQ1RHUk9VUCA6IGhhc1xuICAiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOnRydWUsImF1dG9TeW5jIjp0cnVlLCJ1cGRhdGVEaWFncmFtIjpmYWxzZX0)](https://mermaid.live/edit#eyJjb2RlIjoiICAgIGVyRGlhZ3JhbVxuICAgICAgQ1VTVE9NRVIgfHwtLW97IElOVk9JQ0UgOiBnZXRcbiAgICAgIElOVk9JQ0UgfHwtLXx7IElOVk9JQ0VJVEVNIDogY29udGFpbnNcbiAgICAgXG4gICAgICBQUk9EVUNUIHx8LS18eyBJTlZPSUNFSVRFTSA6IGluXG4gICAgICBWQVRSQVRFIHx8LS18eyBJTlZPSUNFSVRFTSA6IHVzZVxuICAgICAgVkFUUkFURSB8fC0tfHsgUFJPRFVDVCA6IHVzZVxuICAgICAgIFBST0RVQ1QgfHwtLXx7IFBST0RVQ1RHUk9VUCA6IGhhc1xuICAiLCJtZXJtYWlkIjoie1xuICBcInRoZW1lXCI6IFwiZGVmYXVsdFwiXG59IiwidXBkYXRlRWRpdG9yIjp0cnVlLCJhdXRvU3luYyI6dHJ1ZSwidXBkYXRlRGlhZ3JhbSI6ZmFsc2V9)
 
 <div class="mermaid">
     erDiagram
@@ -93,7 +106,7 @@ Potrzebujemy następujące klasy i ich pola:
       PRODUCT ||--|{ INVOICEITEM : in
       VATRATE ||--|{ INVOICEITEM : use
       VATRATE ||--|{ PRODUCT : use
-       PRODUCT ||--|{ PRODUCTGROUP : has
+      PRODUCT }|--|{ PRODUCTGROUP : has
 </div>
 
 ##### Klient
@@ -687,8 +700,78 @@ public decimal Brutto
 
 Podobnie robimy w fakturze z odpowiednimi polami. Dodajemy metodę która zsumuje nam pozycje faktury RecalculateTotals. Metoda ta będzie wywoływana z poziomu pozycji wtedy, gdy ją przeliczymy lub wtedy gdy zmianie ulegnie faktura powiązana z pozycją - np. gdy pozycja zostanie podpięta do innej faktury lub zostanie usunięta.
 
+```csharp
+    public class Invoice : BaseObject
+    {
+    ...
+        internal void RecalculateTotals(bool forceChangeEvents)
+              {
+                  decimal oldNetto = Netto;
+                  decimal? oldVAT = Vat;
+                  decimal? oldBrutto = Brutto;
+        
+        
+                  decimal tmpNetto = 0m;
+                  decimal tmpVAT = 0m;
+                  decimal tmpBrutto = 0m;
+        
+                  foreach (var rec in Items)
+                  {
+                      tmpNetto += rec.Netto;
+                      tmpVAT += rec.Vat;
+                      tmpBrutto += rec.Brutto;
+                  }
+                  Netto = tmpNetto;
+                  Vat = tmpVAT;
+                  Brutto = tmpBrutto;
+        
+                  if (forceChangeEvents)
+                  {
+                      OnChanged(nameof(Netto), oldNetto, Netto);
+                      OnChanged(nameof(Vat), oldVAT, Vat);
+                      OnChanged(nameof(Brutto), oldBrutto, Brutto);
+                  }
+              }
+              ...
+    }
+    
+    public class InvoiceItem : BaseObject
+    {
+    ...
+    
+            public Product Product
+        {
+            get => product;
+            set
+            {
+                bool modified = SetPropertyValue(nameof(Product), ref product, value);
+                if (modified && !IsLoading && !IsSaving && Product != null)
+                {
+                    unitPrice = Product.UnitPrice;
+                    vatRate = Product.VatRate;
+                    RecalculateItem();
+                }
+            }
+        }
+        
+        
+        
+    ...
+        private void RecalculateItem()
+        {
 
-![](invoices.png)
+
+           ...
+
+            if (Invoice != null)
+            {
+                Invoice.RecalculateTotals(true);
+            }
+        }
+        
+        ...
+    }
+```
 
 
 I nasza aplikacja do fakturowania jest prawie gotowa. Patrząc na powyższy obrazek zostaje nam drobny niesmak, ze w miejscu w miejscu faktury widzimy identyfikator, zamiast bardziej czytelnej dla ludzi nazwy. Załatwi to dla nas atrybut *XafDefaultProperty*.
