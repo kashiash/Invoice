@@ -229,11 +229,10 @@ public class Product : BaseObject
 
 
 z pliku
-```csharp:Invoice.Module/BusinessObjects/Invoice.cs
-
-
+```csharp:./Invoice.Module/BusinessObjects/Invoice.cs
 
 ```
+
 wklejony
 ```csharp
 [DefaultClassOptions]
