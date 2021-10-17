@@ -149,7 +149,7 @@ Kilka słów o powyższej strukturze projektów:
     
     Praktycznie jest to projekt z którego powstaje plik wykonywalny aplikacji. Ewentualne zmiany w tym projekcie obejmować mogą pliki Program.cs oraz WinApplication.cs i konfiguracji. Tutaj nie należy definiować kontrolerów ani klas BO. Nie będą one widoczne dla mechanizmów XAF i nie zostaną uwzględnione w modelu aplikacji.
     
-    W pliku App.config możemy zmodyfikowac połaczenie do bazy danych:
+    W pliku App.config możemy zmodyfikować połączenie do bazy danych:
     
     `<add name="ConnectionString" connectionString="Integrated Security=SSPI;Pooling=false;Data Source=(localdb)\mssqllocaldb;Initial Catalog=Invoice" />`
     
@@ -157,12 +157,12 @@ Kilka słów o powyższej strukturze projektów:
     
     Praktycznie jest to projekt z którego powstaje plik wykonywalny serwisu który umieścimy w kontenerze lub w IIS. Podobnie jak dla wersji WIN, ewentualne zmiany w tym projekcie obejmować mogą pliki Program.cs oraz WinApplication.cs oraz plików konfiguracji. Tutaj nie należy definiować kontrolerów ani klas BO. 
     
-    W pliku appsettings.json możemy skonfigurowac połaczenie do bazy danych
+    W pliku appsettings.json możemy zmodyfikować połączenie do bazy danych
     
     `"ConnectionString": "Integrated Security=SSPI;Pooling=false;Data Source=(localdb)\\mssqllocaldb;Initial Catalog=Invoice",`
 * Invoice.WebApi
 
-    To wisienka na torcie wprowadzona w najnowszej wersji serwis WebApi. 
+    To wisienka na torcie wprowadzona w najnowszej wersji serwis WebApi. Rozwinąć temat ....
 
     
 ### Business Objects
@@ -332,13 +332,6 @@ public class Product : BaseObject
 
 ##### Faktura
 
-z pliku
-
-```csharp:Invoice.Module/BusinessObjects/Invoice.cs
-
-```
-
-wklejony
 ```csharp
 [DefaultClassOptions]
    public class Invoice : BaseObject
