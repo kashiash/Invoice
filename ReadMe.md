@@ -108,7 +108,8 @@ Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS
    
 ![](start2.png)
    
-    Ważne jest aby upewnić się, że wybraliśmy framework .Net Core oraz język programowania C#
+    Ważne jest aby upewnić się, że wybraliśmy framework .Net Core oraz język programowania C#. Gdybyśmy wybrali NetFramework zamiast NetCore
+    
 4. Wybieramy docelowe platformy - proponuję wybrać obie jednocześnie, dzięki temu uzyskamy aplikacje WinForms oraz Web Blazor.
 
 ![](start3.png)
@@ -127,12 +128,16 @@ Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS
 
 8. Klikamy *Finish* i po kilku sekundach zostaną wygenerowane odpowiednie projekty.
 
+![](solutionExplorer1.png)
+
+Kilka słów 
+
 Klasy możemy stworzyć na 3 sposoby:
 1.	Model First - Definiując klasy i powiązania w dedykowanym Edytorze Modelu (XPO Data Model Designer) i generując klasy na podstawie tego modelu.
 2.	Database First – importując struktury z istniejącej bazy danych do Edytora Modelu i następnie wygenerowanie klas.
 3.	Code First – Deklarując klasy bezpośrednio w kodzie.
 
-Osobiście preferuję wariant 3-ci – czyli klasy definiowane bezpośrednio w kodzie. <a href="https://docs.devexpress.com/CodeRushForRoslyn/115802/coderush" target="_blank">W tym procesie wspomaga mnie CodeRush</a>, jest to rozszerzenie do VS wspomagające programistę w podstawowym procesie programowania, refaktoryzacji, debugowania czy testowania (odpowiednik ReSharpera od JetBrains). Używając <a href="https://community.devexpress.com/blogs/markmiller/archive/2018/04/25/coderush-cheat-sheet-v3.aspx" target="_blank">odpowiednich skrótów klawiszowych</a>, czyni proces kodowania zdecydowanie szybszy od robienia tego w Model Designerze.
+Osobiście preferuję wariant 3-ci – czyli klasy definiowane bezpośrednio w kodzie. <a href="https://docs.devexpress.com/CodeRushForRoslyn/115802/coderush" target="_blank">W tym procesie pomocny będzie CodeRush</a>, jest to rozszerzenie do VS wspomagające programistę w podstawowym procesie programowania, refaktoryzacji, debugowania czy testowania (odpowiednik ReSharpera od JetBrains). Używając <a href="https://community.devexpress.com/blogs/markmiller/archive/2018/04/25/coderush-cheat-sheet-v3.aspx" target="_blank">odpowiednich skrótów klawiszowych</a>, czyni proces kodowania zdecydowanie szybszy od robienia tego w Model Designerze.
 
 Potrzebujemy następujące klasy i ich pola:
 
@@ -838,58 +843,9 @@ Teraz jeśli użytkownik będzie chciał zapisać takie dane otrzyma komunikat b
 ![](validationRequired1.png)
 
 
-W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyciu niewielkiej wprawy jesteśmy napisać poniżej 2 godzin. 15 minut zajmie nam wydruk faktury, kolejne 10 dashboard jak poniżej. I mamy resztę dnia na korpo meetingi w teamsach czy innych zoomach, ewentualnie popykać w piłkarzyki lub Fife na firmowym PS5.
-
-### Wydruk faktury
-
-![](report1.png)
-
-### Dashboard
-
-![](dash1.png)
-
-### Jak to wszystko działa ...
-* Budowa klasy XpObject, Optimistic locking , GCRecord
-
-* Różnice pomiędzy BaseObject,XpObject itp
-
-
-## Rozbudowujemy aplikację
-
-### Modyfikacja widoków
-
-### Moduł Conditional Appearance
-
-### Wpłaty i rozrachunki
-
-Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
-<div class="mermaid">
-    erDiagram
-      CUSTOMER ||--o{ INVOICE : get
-      CUSTOMER ||--o{ PAYMENT : pay
-      INVOICE ||--o{ INVOICEPAYMENT : payedby
-      PAYMENT ||--o{ INVOICEPAYMENT : pay
-
-      
-</div>
-
-### Kontrolery i akcje
-
-### Sprawdzianie klienta w GUS/Vies/US
-
-### Uruchomienie aplikacji w Docker
-
-### Uruchomienie aplikacji na Azure
-
-### Moduł Security
-
-
-
-
-
 ## Generator danych testowych
 
-Wiadomo, że program lepiej wygląda z danymi, wiec wygenerujemy nieco danych testowych wykorzystując pakiet Bogus.
+Wiadomo, że program do prezentacji uzytkownikom, lepiej wygląda wypełnionymi listami i formatkami, więc wygenerujemy nieco danych testowych wykorzystując pakiet Bogus.
 
 W pliku Updater.cs dodajemy kod który wywoła metody wpisujące dane testowe:
 
@@ -984,6 +940,57 @@ public class Updater : ModuleUpdater
     
 }    
 ```
+
+W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyciu niewielkiej wprawy jesteśmy napisać poniżej 2 godzin. 15 minut zajmie nam wydruk faktury, kolejne 10 dashboard jak poniżej. I mamy resztę dnia na korpo meetingi w teamsach czy innych zoomach, ewentualnie popykać w piłkarzyki lub nowy FarCry na PS5.
+
+### Wydruk faktury
+
+![](report1.png)
+
+### Dashboard
+
+![](dash1.png)
+
+### Jak to wszystko działa ...
+* Budowa klasy XpObject, Optimistic locking , GCRecord
+
+* Różnice pomiędzy BaseObject,XpObject itp
+
+
+## Rozbudowujemy aplikację
+
+### Modyfikacja widoków
+
+### Moduł Conditional Appearance
+
+### Wpłaty i rozrachunki
+
+Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
+<div class="mermaid">
+    erDiagram
+      CUSTOMER ||--o{ INVOICE : get
+      CUSTOMER ||--o{ PAYMENT : pay
+      INVOICE ||--o{ INVOICEPAYMENT : payedby
+      PAYMENT ||--o{ INVOICEPAYMENT : pay
+
+      
+</div>
+
+### Kontrolery i akcje
+
+### Sprawdzianie klienta w GUS/Vies/US
+
+### Uruchomienie aplikacji w Docker
+
+### Uruchomienie aplikacji na Azure
+
+### Moduł Security
+
+
+
+
+
+
 
 
 
