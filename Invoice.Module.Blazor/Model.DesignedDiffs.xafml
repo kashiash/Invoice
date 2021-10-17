@@ -1,3 +1,13 @@
-﻿<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="21.2.2.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.2.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.2.0" IsNewNode="True" />
+  </SchemaModules>
+  <ViewItems>
+    <PropertyEditor Name="PropertyEditors">
+      <RegisteredPropertyEditor PropertyType="System.Decimal" DefaultDisplayFormat="{0:N}" DefaultEditMask="N" />
+    </PropertyEditor>
+  </ViewItems>
 </Application>

@@ -876,11 +876,11 @@ Picture:
 
 Win
 
-![](picturewin.png)
+![](model1.png)in.png)
 
 Blazor
 
-![](modelBlazor.png)
+![](model2.png)azor.png)
 
 ## Generator danych testowych
 
