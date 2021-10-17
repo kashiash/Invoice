@@ -33,7 +33,7 @@
             this.AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.Resource));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.SystemModule.SystemModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule));
-			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.CloneObject.CloneObjectModule));
+
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Dashboards.DashboardsModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Office.OfficeModule));

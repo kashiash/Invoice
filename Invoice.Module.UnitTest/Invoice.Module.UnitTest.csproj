@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.2-beta" />
     <PackageReference Include="FluentAssertions" Version="6.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="NUnit" Version="3.13.1" />

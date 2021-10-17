@@ -28,7 +28,7 @@
             this.module3 = new Invoice.Module.InvoiceModule();
             this.module4 = new Invoice.Module.Win.InvoiceWindowsFormsModule();
             this.objectsModule = new DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule();
-            this.cloneObjectModule = new DevExpress.ExpressApp.CloneObject.CloneObjectModule();
+
             this.conditionalAppearanceModule = new DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule();
             this.dashboardsModule = new DevExpress.ExpressApp.Dashboards.DashboardsModule();
             this.dashboardsWindowsFormsModule = new DevExpress.ExpressApp.Dashboards.Win.DashboardsWindowsFormsModule();
@@ -67,7 +67,7 @@
             this.Modules.Add(this.module3);
             this.Modules.Add(this.module4);
             this.Modules.Add(this.objectsModule);
-            this.Modules.Add(this.cloneObjectModule);
+
             this.Modules.Add(this.conditionalAppearanceModule);
             this.Modules.Add(this.dashboardsModule);
             this.Modules.Add(this.dashboardsWindowsFormsModule);
@@ -95,7 +95,7 @@
         private Invoice.Module.InvoiceModule module3;
         private Invoice.Module.Win.InvoiceWindowsFormsModule module4;
         private DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule objectsModule;
-        private DevExpress.ExpressApp.CloneObject.CloneObjectModule cloneObjectModule;
+
         private DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule conditionalAppearanceModule;
         private DevExpress.ExpressApp.Dashboards.DashboardsModule dashboardsModule;
         private DevExpress.ExpressApp.Dashboards.Win.DashboardsWindowsFormsModule dashboardsWindowsFormsModule;

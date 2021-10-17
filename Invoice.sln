@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Module.Blazor", "In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Blazor.Server", "Invoice.Blazor.Server\Invoice.Blazor.Server.csproj", "{18A8BD15-B6A3-46D1-8A3A-14C17B936A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoice.Module.UnitTest", "Invoice.Module.UnitTest\Invoice.Module.UnitTest.csproj", "{CEC9DF0C-9B05-4049-BF39-A780275992D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Module.UnitTest", "Invoice.Module.UnitTest\Invoice.Module.UnitTest.csproj", "{CEC9DF0C-9B05-4049-BF39-A780275992D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
