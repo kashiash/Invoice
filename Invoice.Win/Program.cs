@@ -29,14 +29,20 @@ namespace Invoice.Win {
             }
             Tracing.Initialize();
             InvoiceWindowsFormsApplication winApplication = new InvoiceWindowsFormsApplication();
+            winApplication.GetSecurityStrategy().RegisterXPOAdapterProviders();
             if(ConfigurationManager.ConnectionStrings["ConnectionString"] != null) {
                 winApplication.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             }
-
-            //if(System.Diagnostics.Debugger.IsAttached && winApplication.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
-            //    winApplication.DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
-            //}
-
+#if EASYTEST
+            if(ConfigurationManager.ConnectionStrings["EasyTestConnectionString"] != null) {
+                winApplication.ConnectionString = ConfigurationManager.ConnectionStrings["EasyTestConnectionString"].ConnectionString;
+            }
+#endif
+#if DEBUG
+            if(System.Diagnostics.Debugger.IsAttached && winApplication.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
+                winApplication.DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
+            }
+#endif
             try {
                 winApplication.Setup();
                 winApplication.Start();

@@ -7,6 +7,7 @@ using DevExpress.ExpressApp.DC;
 using System.Collections.Generic;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
+using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Editors;

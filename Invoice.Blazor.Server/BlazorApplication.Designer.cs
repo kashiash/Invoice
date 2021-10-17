@@ -27,8 +27,10 @@
             this.module2 = new DevExpress.ExpressApp.Blazor.SystemModule.SystemBlazorModule();
             this.module3 = new Invoice.Module.InvoiceModule();
             this.module4 = new Invoice.Module.Blazor.InvoiceBlazorModule();
+            this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
+            this.auditTrailModule = new DevExpress.ExpressApp.AuditTrail.AuditTrailModule();
             this.objectsModule = new DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule();
-
+            this.cloneObjectModule = new DevExpress.ExpressApp.CloneObject.CloneObjectModule();
             this.conditionalAppearanceModule = new DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule();
             this.dashboardsModule = new DevExpress.ExpressApp.Dashboards.DashboardsModule();
             this.dashboardsBlazorModule = new DevExpress.ExpressApp.Dashboards.Blazor.DashboardsBlazorModule();
@@ -40,9 +42,14 @@
             this.schedulerModuleBase = new DevExpress.ExpressApp.Scheduler.SchedulerModuleBase();
             this.validationModule = new DevExpress.ExpressApp.Validation.ValidationModule();
             this.validationBlazorModule = new DevExpress.ExpressApp.Validation.Blazor.ValidationBlazorModule();
+            this.viewVariantsModule = new DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule();
 
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
 
+            //
+            // auditTrailModule
+            //
+            this.auditTrailModule.AuditDataItemPersistentType = typeof(DevExpress.Persistent.BaseImpl.AuditDataItemPersistent);
             //
             // dashboardsModule
             //
@@ -57,6 +64,10 @@
             // validationModule
             //
             this.validationModule.AllowValidationDetailsAccess = false;
+            //
+            // viewVariantsModule
+            //
+            this.viewVariantsModule.ShowAdditionalNavigation = true;
             // 
             // InvoiceBlazorApplication
             // 
@@ -66,8 +77,10 @@
             this.Modules.Add(this.module2);
             this.Modules.Add(this.module3);
             this.Modules.Add(this.module4);
+            this.Modules.Add(this.securityModule1);
+            this.Modules.Add(this.auditTrailModule);
             this.Modules.Add(this.objectsModule);
-
+            this.Modules.Add(this.cloneObjectModule);
             this.Modules.Add(this.conditionalAppearanceModule);
             this.Modules.Add(this.dashboardsModule);
             this.Modules.Add(this.dashboardsBlazorModule);
@@ -79,6 +92,7 @@
             this.Modules.Add(this.schedulerModuleBase);
             this.Modules.Add(this.validationModule);
             this.Modules.Add(this.validationBlazorModule);
+            this.Modules.Add(this.viewVariantsModule);
             this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.InvoiceBlazorApplication_DatabaseVersionMismatch);
 
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
@@ -91,8 +105,10 @@
         private DevExpress.ExpressApp.Blazor.SystemModule.SystemBlazorModule module2;
         private Invoice.Module.InvoiceModule module3;
         private Invoice.Module.Blazor.InvoiceBlazorModule module4;
+        private DevExpress.ExpressApp.Security.SecurityModule securityModule1;
+        private DevExpress.ExpressApp.AuditTrail.AuditTrailModule auditTrailModule;
         private DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule objectsModule;
-
+        private DevExpress.ExpressApp.CloneObject.CloneObjectModule cloneObjectModule;
         private DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule conditionalAppearanceModule;
         private DevExpress.ExpressApp.Dashboards.DashboardsModule dashboardsModule;
         private DevExpress.ExpressApp.Dashboards.Blazor.DashboardsBlazorModule dashboardsBlazorModule;
@@ -104,5 +120,6 @@
         private DevExpress.ExpressApp.Scheduler.SchedulerModuleBase schedulerModuleBase;
         private DevExpress.ExpressApp.Validation.ValidationModule validationModule;
         private DevExpress.ExpressApp.Validation.Blazor.ValidationBlazorModule validationBlazorModule;
+        private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule;
     }
 }

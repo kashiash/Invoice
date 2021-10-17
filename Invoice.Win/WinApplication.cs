@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using DevExpress.ExpressApp.Updating;
 using DevExpress.ExpressApp.Win.Utils;
 using DevExpress.ExpressApp.Xpo;
+using DevExpress.ExpressApp.Security;
+using DevExpress.ExpressApp.Security.ClientServer;
 
 namespace Invoice.Win {
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Win.WinApplication._members
@@ -15,7 +17,7 @@ namespace Invoice.Win {
 			SplashScreen = new DXSplashScreen(typeof(XafSplashScreen), new DefaultOverlayFormOptions());
         }
         protected override void CreateDefaultObjectSpaceProvider(CreateCustomObjectSpaceProviderEventArgs args) {
-            args.ObjectSpaceProviders.Add(new XPObjectSpaceProvider(XPObjectSpaceProvider.GetDataStoreProvider(args.ConnectionString, args.Connection, true), false));
+            args.ObjectSpaceProviders.Add(new SecuredObjectSpaceProvider((SecurityStrategyComplex)Security, XPObjectSpaceProvider.GetDataStoreProvider(args.ConnectionString, args.Connection, true), false));
             args.ObjectSpaceProviders.Add(new NonPersistentObjectSpaceProvider(TypesInfo, null));
         }
         private void InvoiceWindowsFormsApplication_CustomizeLanguagesList(object sender, CustomizeLanguagesListEventArgs e) {

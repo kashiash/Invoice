@@ -11,5 +11,5 @@
 #EndIf
 
 #IfDef InvoiceBlazor
-!Action Navigation(My Details)
+*Action Navigation(My Details)
 #EndIf

@@ -130,7 +130,39 @@ Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS
 
 ![](solutionExplorer1.png)
 
-Kilka słów 
+Kilka słów o powyższej strukturze projektów:
+
+* Invoice.Module
+
+    Wspólny projekt wykorzystywany przez pozostałe, to tutaj koncentruje się większość kodu o ile nie jest on specyficzny dla konkretnej platformy (platform agnostic). 
+    Praktycznie wszystkie klasy z naszym modelem biznesowym powinny znajdować się w tym projekcie. Tutaj implementować będziemy także kontrolery niezależne od platformy.
+
+* Invoice.Module.Win
+
+    Tutaj definiujemy Edytory i Kontrolery dedykowane dla platformy WinForms. Uwaga klasy BO zdefiniowane tutaj nie będą widziane w aplikacji Blazor!
+    
+* Invoice.Module.Blazor    
+
+    Tutaj definiujemy Edytory i Kontrolery dedykowane dla platformy Blazor. Uwaga klasy BO zdefiniowane tutaj nie będą widziane w aplikacji Win! 
+
+* Invoice.Module.Win
+    
+    Praktycznie jest to projekt z którego powstaje plik wykonywalny aplikacji. Ewentualne zmiany w tym projekcie obejmować mogą pliki Program.cs oraz WinApplication.cs i konfiguracji. Tutaj nie należy definiować kontrolerów ani klas BO. Nie będą one widoczne dla mechanizmów XAF i nie zostaną uwzględnione w modelu aplikacji.
+    
+    W pliku App.config możemy zmodyfikowac połaczenie do bazy danych:
+    
+    `<add name="ConnectionString" connectionString="Integrated Security=SSPI;Pooling=false;Data Source=(localdb)\mssqllocaldb;Initial Catalog=Invoice" />`
+    
+* Invoice.Service.Blazor
+    
+    Praktycznie jest to projekt z którego powstaje plik wykonywalny serwisu który umieścimy w kontenerze lub w IIS. Podobnie jak dla wersji WIN, ewentualne zmiany w tym projekcie obejmować mogą pliki Program.cs oraz WinApplication.cs oraz plików konfiguracji. Tutaj nie należy definiować kontrolerów ani klas BO. 
+    
+    W pliku appsettings.json możemy skonfigurowac połaczenie do bazy danych
+    
+    `"ConnectionString": "Integrated Security=SSPI;Pooling=false;Data Source=(localdb)\\mssqllocaldb;Initial Catalog=Invoice",`
+* 
+    
+### Business Objects
 
 Klasy możemy stworzyć na 3 sposoby:
 1.	Model First - Definiując klasy i powiązania w dedykowanym Edytorze Modelu (XPO Data Model Designer) i generując klasy na podstawie tego modelu.

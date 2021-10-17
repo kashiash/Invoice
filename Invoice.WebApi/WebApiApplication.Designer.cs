@@ -29,12 +29,14 @@
             this.securityModule1 = new DevExpress.ExpressApp.Security.SecurityModule();
             this.auditTrailModule = new DevExpress.ExpressApp.AuditTrail.AuditTrailModule();
             this.objectsModule = new DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule();
+            this.cloneObjectModule = new DevExpress.ExpressApp.CloneObject.CloneObjectModule();
             this.conditionalAppearanceModule = new DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule();
             this.dashboardsModule = new DevExpress.ExpressApp.Dashboards.DashboardsModule();
             this.officeModule = new DevExpress.ExpressApp.Office.OfficeModule();
             this.reportsModuleV2 = new DevExpress.ExpressApp.ReportsV2.ReportsModuleV2();
             this.schedulerModuleBase = new DevExpress.ExpressApp.Scheduler.SchedulerModuleBase();
             this.validationModule = new DevExpress.ExpressApp.Validation.ValidationModule();
+            this.viewVariantsModule = new DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule();
 
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
 
@@ -56,6 +58,10 @@
             // validationModule
             //
             this.validationModule.AllowValidationDetailsAccess = false;
+            //
+            // viewVariantsModule
+            //
+            this.viewVariantsModule.ShowAdditionalNavigation = true;
             // 
             // InvoiceWebApiApplication
             // 
@@ -67,12 +73,14 @@
             this.Modules.Add(this.securityModule1);
             this.Modules.Add(this.auditTrailModule);
             this.Modules.Add(this.objectsModule);
+            this.Modules.Add(this.cloneObjectModule);
             this.Modules.Add(this.conditionalAppearanceModule);
             this.Modules.Add(this.dashboardsModule);
             this.Modules.Add(this.officeModule);
             this.Modules.Add(this.reportsModuleV2);
             this.Modules.Add(this.schedulerModuleBase);
             this.Modules.Add(this.validationModule);
+            this.Modules.Add(this.viewVariantsModule);
             this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.InvoiceWebApiApplication_DatabaseVersionMismatch);
 
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
@@ -87,11 +95,13 @@
         private DevExpress.ExpressApp.Security.SecurityModule securityModule1;
         private DevExpress.ExpressApp.AuditTrail.AuditTrailModule auditTrailModule;
         private DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule objectsModule;
+        private DevExpress.ExpressApp.CloneObject.CloneObjectModule cloneObjectModule;
         private DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule conditionalAppearanceModule;
         private DevExpress.ExpressApp.Dashboards.DashboardsModule dashboardsModule;
         private DevExpress.ExpressApp.Office.OfficeModule officeModule;
         private DevExpress.ExpressApp.ReportsV2.ReportsModuleV2 reportsModuleV2;
         private DevExpress.ExpressApp.Scheduler.SchedulerModuleBase schedulerModuleBase;
         private DevExpress.ExpressApp.Validation.ValidationModule validationModule;
+        private DevExpress.ExpressApp.ViewVariantsModule.ViewVariantsModule viewVariantsModule;
     }
 }
