@@ -870,6 +870,17 @@ Teraz jeśli użytkownik będzie chciał zapisać takie dane otrzyma komunikat b
 
 ![](validationRequired1.png)
 
+### Zmiany w modelu
+
+Picture:
+
+Win
+
+![](picturewin.png)
+
+Blazor
+
+![](modelBlazor.png)
 
 ## Generator danych testowych
 
