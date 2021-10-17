@@ -153,14 +153,17 @@ Kilka słów o powyższej strukturze projektów:
     
     `<add name="ConnectionString" connectionString="Integrated Security=SSPI;Pooling=false;Data Source=(localdb)\mssqllocaldb;Initial Catalog=Invoice" />`
     
-* Invoice.Service.Blazor
+* Invoice.Blazor.Server
     
     Praktycznie jest to projekt z którego powstaje plik wykonywalny serwisu który umieścimy w kontenerze lub w IIS. Podobnie jak dla wersji WIN, ewentualne zmiany w tym projekcie obejmować mogą pliki Program.cs oraz WinApplication.cs oraz plików konfiguracji. Tutaj nie należy definiować kontrolerów ani klas BO. 
     
     W pliku appsettings.json możemy skonfigurowac połaczenie do bazy danych
     
     `"ConnectionString": "Integrated Security=SSPI;Pooling=false;Data Source=(localdb)\\mssqllocaldb;Initial Catalog=Invoice",`
-* 
+* Invoice.WebApi
+
+    To wisienka na torcie wprowadzona w najnowszej wersji serwis WebApi. 
+
     
 ### Business Objects
 
