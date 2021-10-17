@@ -102,12 +102,17 @@ Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS
 
 1. Tworzymy nowy projekt w VS.
 2. Z dostępnych szablonów wybieramy DevExpress v21.2 XAF Template Gallery (c#) 
+
 ![](start1.png)
 3. Po wpisaniu nazwy projektu i zatwierdzeniu pojawi się okno XAF Solution Wizard Klikamy *Run wizard*.
-    ![](start2.png)
+   
+![](start2.png)
+   
     Ważne jest aby upewnić się, że wybraliśmy framework .Net Core oraz język programowania C#
 4. Wybieramy docelowe platformy - proponuję wybrać obie jednocześnie, dzięki temu uzyskamy aplikacje WinForms oraz Web Blazor.
+
 ![](start3.png)
+
 5. Na oknie z wyborem ORM wybieramy XPO. Jest to <a href="https://docs.devexpress.com/XPO/1998/express-persistent-objects" target="_blank">ORM dostarczany przez DevExpress</a> i zwykle pewne funkcjonalności w XAF pojawiają się wcześniej dla XPO niż Entity Framework. Jednocześnie DevExpress utrzymuje że <a href="https://github.com/DevExpress/XPO/tree/master/Benchmarks" target="_blank">wydajnościowo XPO jest dużo lepsze od Entity Framework</a>. 
 
 ![](start4.png)
