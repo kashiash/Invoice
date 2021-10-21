@@ -13,5 +13,42 @@
   </SchemaModules>
   <Views>
     <ListView Id="ApplicationUser_ListView" Caption="Users" />
+    <DetailView Id="Customer_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="25.29348986125934">
+            <LayoutGroup Id="Customer" RelativeSize="100">
+              <LayoutGroup Id="Customer_col1" RelativeSize="50">
+                <LayoutItem Id="Symbol" RelativeSize="23.91304347826087" />
+                <LayoutItem Id="VatNumber" RelativeSize="17.391304347826086" />
+                <LayoutItem Id="CustomerName" RelativeSize="17.391304347826086" />
+                <LayoutItem Id="Street" RelativeSize="17.391304347826086" />
+                <LayoutItem Id="City" RelativeSize="23.91304347826087" />
+              </LayoutGroup>
+              <LayoutGroup Id="Customer_col2" RelativeSize="50">
+                <LayoutItem Id="PostalCode" RelativeSize="23.91304347826087" />
+                <LayoutItem Id="Email" RelativeSize="17.391304347826086" />
+                <LayoutItem Id="Phone" RelativeSize="17.391304347826086" />
+                <LayoutItem Id="Segment" RelativeSize="41.30434782608695" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="SizeableEditors" Caption="Notes" RelativeSize="74.70651013874067">
+            <TabbedGroup Id="Item2" CaptionLocation="Top" Index="0" RelativeSize="100" IsNewNode="True">
+              <LayoutGroup Id="Invoices_Group" ShowCaption="True" Caption="Invoices" Index="0" RelativeSize="100" IsNewNode="True">
+                <LayoutItem Id="Invoices" ViewItem="Invoices" Index="0" RelativeSize="100" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Item1" ShowCaption="True" CaptionLocation="Top" Index="1" RelativeSize="100" Caption="Notes" IsNewNode="True">
+                <LayoutItem Id="Notes" ViewItem="Notes" Index="0" RelativeSize="100" ShowCaption="False" IsNewNode="True" />
+              </LayoutGroup>
+            </TabbedGroup>
+            <LayoutItem Id="Notes" Removed="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="Invoices_Group" Direction="Vertical" RelativeSize="37.353255069370334" Removed="True">
+            <LayoutItem Id="Invoices" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
   </Views>
 </Application>

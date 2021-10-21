@@ -1,4 +1,5 @@
-﻿using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
 using System;
@@ -60,7 +61,7 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(VatRate), ref vatRate, value);
         }
 
-
+        [DetailViewLayoutAttribute("GroupsAndNotes", LayoutGroupType.TabbedGroup, 100)]
         [Size(SizeAttribute.Unlimited)]
         public string Notes
         {
@@ -69,6 +70,7 @@ namespace Invoice.Module.BusinessObjects
         }
 
         [Association("Product-Products")]
+        [DetailViewLayoutAttribute("GroupsAndNotes", LayoutGroupType.TabbedGroup, 100)]
         public XPCollection<ProductGroup> Groups
         {
             get

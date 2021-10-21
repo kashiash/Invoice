@@ -1,4 +1,5 @@
 ﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
@@ -98,6 +99,7 @@ namespace Invoice.Module.BusinessObjects
         }
 
         [Association]
+        [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
         public XPCollection<Invoice> Invoices
         {
             get
@@ -106,8 +108,9 @@ namespace Invoice.Module.BusinessObjects
             }
         }
 
-        
+        [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
         [Size(SizeAttribute.Unlimited)]
+        
         public string Notes
         {
             get => notes;

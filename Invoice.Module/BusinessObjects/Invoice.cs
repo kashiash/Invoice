@@ -81,7 +81,7 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Brutto), ref brutto, value);
         }
 
-
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Association, DevExpress.Xpo.Aggregated]
         public XPCollection<InvoiceItem> Items
         {
@@ -92,6 +92,8 @@ namespace Invoice.Module.BusinessObjects
         }
 
         [Size(SizeAttribute.Unlimited)]
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
+        
         public string Notes
         {
             get => notes;
