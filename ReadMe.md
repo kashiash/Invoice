@@ -884,7 +884,7 @@ Blazor
 
 ## Generator danych testowych
 
-Wiadomo, że program do prezentacji uzytkownikom, lepiej wygląda wypełnionymi listami i formatkami, więc wygenerujemy nieco danych testowych wykorzystując pakiet Bogus.
+Program do prezentacji użytkownikom czy nawet do testów, lepiej wygląda z listami i formatkami wypełnionymi danymi.Wygenerujemy w tym celu nieco danych testowych wykorzystując pakiet Bogus.
 
 W pliku Updater.cs dodajemy kod który wywoła metody wpisujące dane testowe:
 
@@ -900,6 +900,8 @@ public class Updater : ModuleUpdater
     {
         base.UpdateDatabaseAfterUpdateSchema();
     
+        ...
+
         PrepareTestData();
         ObjectSpace.CommitChanges(); 
     }
@@ -999,6 +1001,12 @@ W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyci
 ## Rozbudowujemy aplikację
 
 ### Modyfikacja widoków
+
+![](lay1.png)
+
+
+Więcej na temat modyfikacji <a href="https://docs.devexpress.com/eXpressAppFramework/112833/getting-started/in-depth-tutorial-winforms-webforms/ui-customization/customize-the-view-items-layout" target="_blank">widoków</a>
+
 
 ### Moduł Conditional Appearance
 
