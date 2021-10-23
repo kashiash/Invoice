@@ -109,6 +109,16 @@ namespace Invoice.Module.BusinessObjects
         }
 
         [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Association("Customer-Payments")]
+        public XPCollection<Payment> Payments
+        {
+            get
+            {
+                return GetCollection<Payment>(nameof(Payments));
+            }
+        }
+
+        [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
         [Size(SizeAttribute.Unlimited)]
         
         public string Notes

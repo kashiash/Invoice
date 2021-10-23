@@ -1,6 +1,10 @@
 # eXpressApp Framework przyjacielem "leniwego" programisty
 
 
+<a href="#wstęp" target="_blank">Wstęp</a>
+<a href="#bierzemy-się-za-programowanie" target="_blank">Bierzemy się za programowanie</a>
+<a href="#generator-danych-testowych" target="_blank">Generator danych testowych</a>
+<a href="#rozbudowujemy-aplikację" target="_blank">Rozbudowujemy aplikację</a>
 
 ## Wstęp
 Proces tworzenia  oprogramowania składa się z różnych etapów, z których niektóre potrafimy robić dniami i nocami np. 3 doby na pizzy i redbulu, oraz takie które odkładamy jak się da i najchętniej delegujemy junior programmer’owi. W efekcie powstają smutne historie i w kolejnej firmie już nasz były junior, opowiada, że zajmował się cały czas np. nudnymi CRUD’ami, układał edytory na widokach albo czymś jeszcze nudniejszym. 
@@ -1012,6 +1016,9 @@ Więcej na temat modyfikacji <a href="https://docs.devexpress.com/eXpressAppFram
 
 ### Wpłaty i rozrachunki
 
+Wymaganie: program ma umożliwiać rejestrowanie wpłat dokonanych przez kontrahenta. Jedna wpłata może dotyczyć spłacać cześć faktury, całą fakturę, lub wiele faktur. Klient może wskazać jakie faktury dotyczy wpłata, ale to osoba rozliczająca decyduje która faktura zostanie spłacona.
+Dostarczyć automat rozliczający wpłatę na faktury w kolejności daty płatności faktur.
+
 Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
 <div class="mermaid">
     erDiagram
@@ -1019,6 +1026,8 @@ Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
       CUSTOMER ||--o{ PAYMENT : pay
       INVOICE ||--o{ INVOICEPAYMENT : payedby
       PAYMENT ||--o{ INVOICEPAYMENT : pay
+
+
 
       
 </div>

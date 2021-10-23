@@ -20,10 +20,12 @@ namespace Invoice.Module.BusinessObjects
         { }
 
 
+        DateTime paymentDate;
+        decimal sumOfPayments;
         string notes;
-        decimal brutto;
-        decimal vat;
-        decimal netto;
+        decimal totalBrutto;
+        decimal totalVat;
+        decimal totalNetto;
         Customer customer;
         DateTime dueDate;
         DateTime invoiceDate;
@@ -53,6 +55,21 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(DueDate), ref dueDate, value);
         }
 
+
+
+        public decimal SumOfPayments
+        {
+            get => sumOfPayments;
+            set => SetPropertyValue(nameof(SumOfPayments), ref sumOfPayments, value);
+        }
+
+
+        public DateTime PaymentDate
+        {
+            get => paymentDate;
+            set => SetPropertyValue(nameof(PaymentDate), ref paymentDate, value);
+        }
+
         [Association]
         public Customer Customer
         {
@@ -61,33 +78,42 @@ namespace Invoice.Module.BusinessObjects
         }
 
         [ModelDefault("AllowEdit", "False")]
-        public decimal Netto
+        public decimal TotalNetto
         {
-            get => netto;
-            set => SetPropertyValue(nameof(Netto), ref netto, value);
+            get => totalNetto;
+            set => SetPropertyValue(nameof(TotalNetto), ref totalNetto, value);
         }
 
         [ModelDefault("AllowEdit", "False")]
-        public decimal Vat
+        public decimal TotalVat
         {
-            get => vat;
-            set => SetPropertyValue(nameof(Vat), ref vat, value);
+            get => totalVat;
+            set => SetPropertyValue(nameof(TotalVat), ref totalVat, value);
         }
 
         [ModelDefault("AllowEdit", "False")]
-        public decimal Brutto
+        public decimal TotalBrutto
         {
-            get => brutto;
-            set => SetPropertyValue(nameof(Brutto), ref brutto, value);
+            get => totalBrutto;
+            set => SetPropertyValue(nameof(TotalBrutto), ref totalBrutto, value);
         }
 
         [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Association, DevExpress.Xpo.Aggregated]
-        public XPCollection<InvoiceItem> Items
+        public XPCollection<InvoiceItem> InvoiceItems
         {
             get
             {
-                return GetCollection<InvoiceItem>(nameof(Items));
+                return GetCollection<InvoiceItem>(nameof(InvoiceItems));
+            }
+        }
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Association, DevExpress.Xpo.Aggregated]
+        public XPCollection<InvoicePayment> Payments
+        {
+            get
+            {
+                return GetCollection<InvoicePayment>(nameof(Payments));
             }
         }
 
@@ -102,30 +128,53 @@ namespace Invoice.Module.BusinessObjects
 
         internal void RecalculateTotals(bool forceChangeEvents)
         {
-            decimal oldNetto = Netto;
-            decimal? oldVAT = Vat;
-            decimal? oldBrutto = Brutto;
+            decimal oldNetto = TotalNetto;
+            decimal? oldVAT = TotalVat;
+            decimal? oldBrutto = TotalBrutto;
 
 
             decimal tmpNetto = 0m;
             decimal tmpVAT = 0m;
             decimal tmpBrutto = 0m;
 
-            foreach (var rec in Items)
+            foreach (var rec in InvoiceItems)
             {
                 tmpNetto += rec.Netto;
                 tmpVAT += rec.Vat;
                 tmpBrutto += rec.Brutto;
             }
-            Netto = tmpNetto;
-            Vat = tmpVAT;
-            Brutto = tmpBrutto;
+            TotalNetto = tmpNetto;
+            TotalVat = tmpVAT;
+            TotalBrutto = tmpBrutto;
 
             if (forceChangeEvents)
             {
-                OnChanged(nameof(Netto), oldNetto, Netto);
-                OnChanged(nameof(Vat), oldVAT, Vat);
-                OnChanged(nameof(Brutto), oldBrutto, Brutto);
+                OnChanged(nameof(TotalNetto), oldNetto, TotalNetto);
+                OnChanged(nameof(TotalVat), oldVAT, TotalVat);
+                OnChanged(nameof(TotalBrutto), oldBrutto, TotalBrutto);
+            }
+        }
+
+        public void CalculateSumOfPayments(bool forceChangeEvents)
+        {
+            decimal? oldSumOfPayments = sumOfPayments;
+
+            decimal tempSumOfPayemnts = 0m;
+            paymentDate = DateTime.MinValue;
+            foreach (var payment in Payments.OrderBy(w => w.Payment.PaymentDate))
+            {
+                tempSumOfPayemnts += payment.Amount;
+                if (paymentDate != payment.Payment.PaymentDate && tempSumOfPayemnts >= TotalBrutto)
+                {
+                    paymentDate = payment.Payment.PaymentDate;
+                }
+            }
+
+            sumOfPayments = tempSumOfPayemnts;
+
+            if (forceChangeEvents)
+            {
+                OnChanged(nameof(SumOfPayments), oldSumOfPayments, sumOfPayments);
             }
         }
     }
