@@ -990,13 +990,18 @@ W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyci
 
 ### Wydruk faktury
 
+Opisanie procesu tworzenia faktury ...
+
 ![](report1.png)
 
 ### Dashboard
 
+Opisanie procesu tworzenia dashboardu ...
+
 ![](dash1.png)
 
 ### Jak to wszystko działa ...
+
 * Budowa klasy XpObject, Optimistic locking , GCRecord
 
 * Różnice pomiędzy BaseObject,XpObject itp
@@ -1006,11 +1011,17 @@ W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyci
 
 ### Modyfikacja widoków
 
+Wprowadzimy teraz drobne zmiany w interfejsie użytkownika za pomocą Edytora Modelu:
+W SolutionExplorer odszukujemy projekt Invoice.Module a w nim plik Model.DesignedDiffs.xafml. 
+Po otwarciu Edytora Modelu, 
+
+
 ![](lay1.png)
 
 
 Więcej na temat modyfikacji <a href="https://docs.devexpress.com/eXpressAppFramework/112833/getting-started/in-depth-tutorial-winforms-webforms/ui-customization/customize-the-view-items-layout" target="_blank">widoków</a>
 
+### Kontrolery i akcje
 
 ### Moduł Conditional Appearance
 
@@ -1032,7 +1043,7 @@ Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
       
 </div>
 
-### Kontrolery i akcje
+
 
 ### Sprawdzianie klienta w GUS/Vies/US
 

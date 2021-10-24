@@ -21,7 +21,15 @@ namespace Invoice.Module.BusinessObjects
         public decimal Amount
         {
             get => amount;
-            set => SetPropertyValue(nameof(Amount), ref amount, value);
+            set
+            {
+             var modified =   SetPropertyValue(nameof(Amount), ref amount, value);
+                if (modified && !IsLoading && !IsSaving)
+                {
+                    invoice?.CalculateSumOfPayments();
+                    payment?.CalculateSumOfPayments();
+                }
+            }
         }
 
 
@@ -30,7 +38,16 @@ namespace Invoice.Module.BusinessObjects
         public Invoice Invoice
         {
             get => invoice;
-            set => SetPropertyValue(nameof(Invoice), ref invoice, value);
+            set
+            {
+                var oldInvoice = invoice;
+                var modified = SetPropertyValue(nameof(Invoice), ref invoice, value);
+                if (modified && !IsSaving && !IsLoading)
+                {
+                    invoice?.CalculateSumOfPayments();
+                    oldInvoice?.CalculateSumOfPayments();
+                }
+            }
         }
 
         [Association]
@@ -38,7 +55,16 @@ namespace Invoice.Module.BusinessObjects
         public Payment Payment
         {
             get => payment;
-            set => SetPropertyValue(nameof(Payment), ref payment, value);
+            set
+            {
+                var oldPayment = payment;
+               var modified = SetPropertyValue(nameof(Payment), ref payment, value);
+                if (modified && !IsLoading && !IsSaving)
+                {
+                    payment?.CalculateSumOfPayments();
+                    oldPayment?.CalculateSumOfPayments();
+                }
+            }
         }
 
     }

@@ -123,6 +123,14 @@ namespace Invoice.Module.DatabaseUpdate {
                 .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M));
 
             var items = itemsFaker.Generate(orders.Count * 10);
+
+            var paymentsFaker = new Faker<Payment>()
+                 .CustomInstantiator(f => ObjectSpace.CreateObject<Payment>())
+                 .RuleFor(p => p.Amount, f => f.Random.Decimal(0.01M, 100M))
+                  .RuleFor(o => o.Customer, f => f.PickRandom(customers))
+                  .RuleFor(o=>o.PaymentDescription ,f=>f.Lorem.Sentences(5))
+                 .RuleFor(p => p.PaymentDate, f => f.Date.Past(2));
+            var payments = paymentsFaker.Generate(orders.Count);
         }
 
         private VatRate NowaStawka(string symbol, decimal val)

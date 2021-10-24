@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp.Model;
+﻿using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System;
@@ -10,14 +11,15 @@ using System.Threading.Tasks;
 namespace Invoice.Module.BusinessObjects
 {
     [DefaultClassOptions]
+    [Appearance("PaymentIfBalanceZero", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "PaymentBalance = 0", Context = "ListView", FontColor = "Blue", Priority = 101)]
     public class Payment : XPObject
     {
         public Payment(Session session) : base(session)
         { }
 
 
-        bool paymentsAssigned;
-        decimal transactionBalance;
+  
+        decimal paymentBalance;
         decimal sumOfPayments;
         string notes;
         string paymentDescription;
@@ -54,40 +56,35 @@ namespace Invoice.Module.BusinessObjects
         }
 
 
-        public decimal TransactionBalance
+        public decimal PaymentBalance
         {
-            get => transactionBalance;
-            set => SetPropertyValue(nameof(TransactionBalance), ref transactionBalance, value);
+            get => paymentBalance;
+            set => SetPropertyValue(nameof(PaymentBalance), ref paymentBalance, value);
         }
 
         public void FindInvoicesForPayment()
         {
-                if (Customer != null )
+            if (Customer != null)
+            {
+                var invoices = customer.Invoices
+                    .Where(i => i.SumOfPayments < i.TotalBrutto)
+                    .OrderBy(i => i.PaymentDate);
+
+                foreach (var invoice in invoices)
                 {
-                    var invoices = customer.Invoices
-                        .Where(i => i.SumOfPayments < i.TotalBrutto)
-                        .OrderBy(i => i.PaymentDate);
+                    decimal rest = RegisterPayments2Invoice(invoice);
 
-                    foreach (var invoice in invoices)
+                    if (rest <= 0)
                     {
-                        decimal rest = RegisterPayments2Invoice(invoice);
-
-                        if (rest <= 0)
-                        {
-                            break;
-                        }
+                        break;
                     }
                 }
-        }
-
-        public bool PaymentsAssigned
-        {
-            get => paymentsAssigned;
-            set => SetPropertyValue(nameof(PaymentsAssigned), ref paymentsAssigned, value);
+            }
         }
 
 
-        [Association,Aggregated]
+
+        [Association, Aggregated]
         [DetailViewLayoutAttribute("PaymentsAndNotes", LayoutGroupType.TabbedGroup, 100)]
         public XPCollection<InvoicePayment> InvoicePayments
         {
@@ -113,7 +110,7 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Notes), ref notes, value);
         }
 
-        public void CalculateSumOfPayments(bool forceChangeEvents)
+        public void CalculateSumOfPayments(bool forceChangeEvents = true)
         {
             decimal? oldSumOfPayments = sumOfPayments;
 
@@ -124,12 +121,12 @@ namespace Invoice.Module.BusinessObjects
                 sumOfPaymentsTotal += payment.Amount;
             }
             sumOfPayments = sumOfPaymentsTotal;
-            transactionBalance = amount - sumOfPayments;
+            paymentBalance = amount - sumOfPayments;
 
             if (forceChangeEvents)
             {
                 OnChanged(nameof(SumOfPayments), oldSumOfPayments, sumOfPayments);
-                OnChanged(nameof(TransactionBalance));
+                OnChanged(nameof(PaymentBalance));
             }
         }
 
@@ -140,6 +137,7 @@ namespace Invoice.Module.BusinessObjects
             {
                 var payment = new InvoicePayment(Session);
                 payment.Payment = this;
+                payment.Invoice = invoice;
                 var dueAmount = invoice.TotalBrutto - invoice.SumOfPayments;
                 payment.Amount = balance > dueAmount ? dueAmount : balance;
                 InvoicePayments.Add(payment);
@@ -148,6 +146,11 @@ namespace Invoice.Module.BusinessObjects
             }
 
             return 0;
+        }
+        protected override void OnSaving()
+        {
+            PaymentBalance = Amount - SumOfPayments;
+
         }
     }
 }

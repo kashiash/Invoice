@@ -43,7 +43,7 @@ namespace Invoice.Module.Controllers
             foreach (var payment in e.SelectedObjects)
             {
                 var transaction = payment as Payment;
-                if (!transaction.PaymentsAssigned)
+                if (transaction.PaymentBalance > 0)
                 {
                     transaction.FindInvoicesForPayment();
                 }

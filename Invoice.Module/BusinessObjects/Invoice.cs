@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp.DC;
+﻿using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
@@ -6,6 +7,7 @@ using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,12 +16,18 @@ namespace Invoice.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [XafDefaultProperty(nameof(InvoiceNumber))]
+
+    [Appearance("InvoiceIfPayed", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "SumOfPayments >= TotalBrutto", Context = "ListView", FontColor = "Blue", Priority = 101)]
+
+    [Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "OverDue", Context = "ListView", FontColor = "Red", Priority = 101)]
+
     public class Invoice : BaseObject
     {
         public Invoice(Session session) : base(session)
         { }
 
-
+        [Browsable(false)]
+        public bool OverDue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
         DateTime paymentDate;
         decimal sumOfPayments;
         string notes;
@@ -119,18 +127,18 @@ namespace Invoice.Module.BusinessObjects
 
         [Size(SizeAttribute.Unlimited)]
         [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
-        
+
         public string Notes
         {
             get => notes;
             set => SetPropertyValue(nameof(Notes), ref notes, value);
         }
 
-        internal void RecalculateTotals(bool forceChangeEvents)
+        internal void RecalculateTotals(bool forceChangeEvents = true)
         {
             decimal oldNetto = TotalNetto;
-            decimal? oldVAT = TotalVat;
-            decimal? oldBrutto = TotalBrutto;
+            decimal oldVAT = TotalVat;
+            decimal oldBrutto = TotalBrutto;
 
 
             decimal tmpNetto = 0m;
@@ -155,13 +163,13 @@ namespace Invoice.Module.BusinessObjects
             }
         }
 
-        public void CalculateSumOfPayments(bool forceChangeEvents)
+        public void CalculateSumOfPayments(bool forceChangeEvents = true)
         {
             decimal? oldSumOfPayments = sumOfPayments;
 
             decimal tempSumOfPayemnts = 0m;
             paymentDate = DateTime.MinValue;
-            foreach (var payment in Payments.OrderBy(w => w.Payment.PaymentDate))
+            foreach (var payment in Payments.OrderBy(w => w.Payment?.PaymentDate))
             {
                 tempSumOfPayemnts += payment.Amount;
                 if (paymentDate != payment.Payment.PaymentDate && tempSumOfPayemnts >= TotalBrutto)
@@ -175,6 +183,22 @@ namespace Invoice.Module.BusinessObjects
             if (forceChangeEvents)
             {
                 OnChanged(nameof(SumOfPayments), oldSumOfPayments, sumOfPayments);
+            }
+        }
+
+        [Action(Caption = "Find payments",TargetObjectsCriteria = "SumOfPayments < TotalBrutto")]
+        public void FindPaymentsForInvoice()
+        {
+            if (Customer != null)
+            {
+                var payments = customer.Payments
+                    .Where(i => i.SumOfPayments < i.Amount)
+                    .OrderBy(i => i.PaymentDate);
+
+                foreach (var payment in payments)
+                {
+                    _ = payment.RegisterPayments2Invoice(this);
+                }
             }
         }
     }
