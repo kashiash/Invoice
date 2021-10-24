@@ -1023,7 +1023,7 @@ Więcej na temat modyfikacji <a href="https://docs.devexpress.com/eXpressAppFram
 
 ### Kontrolery i akcje
 
-### Moduł Conditional Appearance
+
 
 ### Wpłaty i rozrachunki
 
@@ -1043,6 +1043,28 @@ Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
       
 </div>
 
+### Moduł Conditional Appearance
+
+
+```csharp
+...
+[Appearance("InvoiceIfPayed", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "SumOfPayments >= TotalBrutto", Context = "ListView", FontColor = "Blue", Priority = 101)]
+
+[Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "OverDue", Context = "ListView", FontColor = "Red", Priority = 101)]
+
+public class Invoice : BaseObject
+{
+...
+```
+
+
+```csharp
+...
+[Appearance("PaymentIfBalanceZero", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "PaymentBalance = 0", Context = "ListView", FontColor = "Blue", Priority = 101)]
+public class Payment : XPObject
+{
+...
+```
 
 
 ### Sprawdzianie klienta w GUS/Vies/US
