@@ -480,11 +480,6 @@ public class Product : BaseObject
 
 #### Relacje
 
-XPO wspiera 3 typy relacji pomiędzy obiektami: 
-*	jeden do wielu 1-M
-*	Jeden do Jednego 1-1
-*	Wiele do Wielu M-M
-
 W naszym przypadku mamy do czynienia z następującymi relacjami:
 
 * <a href="#faktury-klienta" target="_blank">Klient może mieć dowolną liczbę faktur 1-M</a>
@@ -1038,25 +1033,30 @@ Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
       INVOICE ||--o{ INVOICEPAYMENT : payedby
       PAYMENT ||--o{ INVOICEPAYMENT : pay
 
-
-
-      
 </div>
 
 ### Moduł Conditional Appearance
 
+W fakturach chcemy na niebiesko wyświetlać te które są zapłacone, a na czerwono niezapłacone przeterminowane.
 
 ```csharp
 ...
 [Appearance("InvoiceIfPayed", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "SumOfPayments >= TotalBrutto", Context = "ListView", FontColor = "Blue", Priority = 101)]
 
-[Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "OverDue", Context = "ListView", FontColor = "Red", Priority = 101)]
+[Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "OverDue = True", Context = "ListView", FontColor = "Red", Priority = 101)]
 
 public class Invoice : BaseObject
 {
+
+        [Browsable(false)]
+        public bool OverDue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
+
 ...
 ```
+Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać złożonych warunków, zdecydowanie prościej jest wyliczyć ten warunek w zmiennej OverDue i jej użyć w regule Apperance/Cryteria 
 
+
+Płatności które zostały już zaksięgowane na faktury chcemy wyświetlać na niebiesko
 
 ```csharp
 ...
@@ -1065,7 +1065,7 @@ public class Payment : XPObject
 {
 ...
 ```
-
+Więcej w tym temacie na stronie <a href="https://docs.devexpress.com/eXpressAppFramework/113286/conditional-appearance" target="_blank">DevExpress</a>
 
 ### Sprawdzianie klienta w GUS/Vies/US
 
