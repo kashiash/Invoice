@@ -981,7 +981,7 @@ public class Updater : ModuleUpdater
 }    
 ```
 
-W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyciu niewielkiej wprawy jesteśmy napisać poniżej 2 godzin. 15 minut zajmie nam wydruk faktury, kolejne 10 dashboard jak poniżej. I mamy resztę dnia na korpo meetingi w teamsach czy innych zoomach, ewentualnie popykać w piłkarzyki lub nowy FarCry na PS5.
+W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyciu niewielkiej wprawy jesteśmy napisać poniżej kilku godzin, w tym także powstanie wydruk faktury, statystyka (dashboard). I mamy resztę dnia na korpo meetingi w teamsach czy innych zoomach, ewentualnie popykać w piłkarzyki lub nowy FarCry na PS5 lub X1.
 
 ### Wydruk faktury
 
@@ -1003,6 +1003,92 @@ Opisanie procesu tworzenia dashboardu ...
 
 
 ## Rozbudowujemy aplikację
+
+W przypadku niektórych danych chcielibyśmy mieć informację o tym, kto i kiedy utworzył rekord lub go modyfikował. Napiszemy w tym celu klasę **CustomBaseObject**, która będzie wypleniać te dane. 
+
+```csharp
+[NonPersistent]
+   public abstract class CustomBaseObject : BaseObject
+   {
+       public CustomBaseObject(Session session)
+           : base(session)
+       {
+       }
+       PermissionPolicyUser GetCurrentUser()
+       {
+           return Session.GetObjectByKey<PermissionPolicyUser>(SecuritySystem.CurrentUserId);
+
+       }
+       public override void AfterConstruction()
+       {
+           base.AfterConstruction();
+           CreatedOn = DateTime.Now;
+           CreatedBy = GetCurrentUser();
+       }
+       protected override void OnSaving()
+       {
+           base.OnSaving();
+           UpdatedOn = DateTime.Now;
+           UpdatedBy = GetCurrentUser();
+       }
+       PermissionPolicyUser createdBy;
+       [ModelDefault("AllowEdit", "False")]
+       [DetailViewLayoutAttribute(LayoutColumnPosition.Left,"Auditing", 900)]
+       public PermissionPolicyUser CreatedBy
+       {
+           get { return createdBy; }
+           set { SetPropertyValue("CreatedBy", ref createdBy, value); }
+       }
+       DateTime createdOn;
+       [DetailViewLayoutAttribute(LayoutColumnPosition.Right, "Auditing", 900)]
+       [ModelDefault("AllowEdit", "False"), ModelDefault("DisplayFormat", "G")]
+       public DateTime CreatedOn
+       {
+           get { return createdOn; }
+           set { SetPropertyValue("CreatedOn", ref createdOn, value); }
+       }
+       PermissionPolicyUser updatedBy;
+       [DetailViewLayoutAttribute(LayoutColumnPosition.Left, "Auditing", 900)]
+       [ModelDefault("AllowEdit", "False")]
+       public PermissionPolicyUser UpdatedBy
+       {
+           get { return updatedBy; }
+           set { SetPropertyValue("UpdatedBy", ref updatedBy, value); }
+       }
+       DateTime updatedOn;
+       [DetailViewLayoutAttribute(LayoutColumnPosition.Right, "Auditing", 900)]
+       [ModelDefault("AllowEdit", "False"), ModelDefault("DisplayFormat", "G")]
+       public DateTime UpdatedOn
+       {
+           get { return updatedOn; }
+           set { SetPropertyValue("UpdatedOn", ref updatedOn, value); }
+       }
+   }
+```
+
+Następnie klasy, w których chcemy przechowywać takie informacje po prostu odziedziczą nowopowstałą klasę **CustomBaseObject**. W naszym przypadku będą to klasy z Fakturami, Klientami i Produktami:
+
+
+```csharp
+
+...
+    public class Invoice : CustomBaseObject
+    {
+...
+
+
+...
+    public class Customer : CustomBaseObject
+    {
+...
+
+
+...
+    public class Product : CustomBaseObject
+    {
+...
+```
+
 
 ### Modyfikacja widoków
 
@@ -1034,6 +1120,170 @@ Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
       PAYMENT ||--o{ INVOICEPAYMENT : pay
 
 </div>
+
+W kliencie dodamy kolekcję wpłat:
+
+```csharp
+[DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
+[Association("Customer-Payments")]
+public XPCollection<Payment> Payments
+{
+    get
+    {
+        return GetCollection<Payment>(nameof(Payments));
+    }
+}
+```
+
+Tabela Wpłaty (Payment) będzie przechowywała informacje o wszystkich wpłatach od klienta:
+
+```csharp
+public class Payment : CustomBaseObject
+{
+    public Payment(Session session) : base(session)
+    { }
+
+
+
+    decimal paymentBalance;
+    decimal sumOfPayments;
+    string notes;
+    string paymentDescription;
+    Customer customer;
+    decimal amount;
+    DateTime paymentDate;
+
+    public DateTime PaymentDate
+    {
+        get => paymentDate;
+        set => SetPropertyValue(nameof(PaymentDate), ref paymentDate, value);
+    }
+
+
+    public decimal Amount
+    {
+        get => amount;
+        set => SetPropertyValue(nameof(Amount), ref amount, value);
+    }
+
+    [Association("Customer-Payments")]
+    public Customer Customer
+    {
+        get => customer;
+        set => SetPropertyValue(nameof(Customer), ref customer, value);
+    }
+
+
+
+    public decimal SumOfPayments
+    {
+        get => sumOfPayments;
+        set => SetPropertyValue(nameof(SumOfPayments), ref sumOfPayments, value);
+    }
+
+
+    public decimal PaymentBalance
+    {
+        get => paymentBalance;
+        set => SetPropertyValue(nameof(PaymentBalance), ref paymentBalance, value);
+    }
+
+
+    [Association, Aggregated]
+    [DetailViewLayoutAttribute("PaymentsAndNotes", LayoutGroupType.TabbedGroup, 100)]
+    public XPCollection<InvoicePayment> InvoicePayments
+    {
+        get
+        {
+            return GetCollection<InvoicePayment>(nameof(InvoicePayments));
+        }
+    }
+
+    [DetailViewLayoutAttribute("PaymentsAndNotes", LayoutGroupType.TabbedGroup, 100)]
+    [Size(SizeAttribute.Unlimited)]
+    public string PaymentDescription
+    {
+        get => paymentDescription;
+        set => SetPropertyValue(nameof(PaymentDescription), ref paymentDescription, value);
+    }
+
+    [DetailViewLayoutAttribute("PaymentsAndNotes", LayoutGroupType.TabbedGroup, 100)]
+    [Size(SizeAttribute.Unlimited)]
+    public string Notes
+    {
+        get => notes;
+        set => SetPropertyValue(nameof(Notes), ref notes, value);
+    }
+
+    public void CalculateSumOfPayments(bool forceChangeEvents = true)
+    {
+        decimal? oldSumOfPayments = sumOfPayments;
+
+        decimal sumOfPaymentsTotal = 0m;
+
+        foreach (var payment in InvoicePayments)
+        {
+            sumOfPaymentsTotal += payment.Amount;
+        }
+        sumOfPayments = sumOfPaymentsTotal;
+        paymentBalance = amount - sumOfPayments;
+
+        if (forceChangeEvents)
+        {
+            OnChanged(nameof(SumOfPayments), oldSumOfPayments, sumOfPayments);
+            OnChanged(nameof(PaymentBalance));
+        }
+    }
+}
+```
+W powyższej klasie oprócz standardowych pól dotyczących wpłaty tzn Data płatności, kwota, od kogo opis itp, dodaliśmy kolekcję rozrachunków **InvoicePayments** pozwalającą przypisać wartości częściowe tej wpłaty na poszczególne faktury. 
+Na podobieństwo zliczania wartości faktury, dodajemy tutaj CalculateSumOfPayments, która aktualizuje wartość rozliczonych faktur tą wpłatą. 
+
+Dodatkowo dodamy 2 metody pozwalające znaleźć faktury, które można rozliczyć bieżącą wpłatą:
+
+```csharp
+public void FindInvoicesForPayment()
+{
+    if (Customer != null)
+    {
+        var invoices = customer.Invoices
+            .Where(i => i.SumOfPayments < i.TotalBrutto)
+            .OrderBy(i => i.PaymentDate);
+
+        foreach (var invoice in invoices)
+        {
+            decimal rest = RegisterPayments2Invoice(invoice);
+
+            if (rest <= 0)
+            {
+                break;
+            }
+        }
+    }
+}
+        
+public decimal RegisterPayments2Invoice(BusinessObjects.Invoice invoice)
+{
+    var balance = Amount - SumOfPayments;
+    if (balance > 0)
+    {
+        var payment = new InvoicePayment(Session);
+        payment.Payment = this;
+        payment.Invoice = invoice;
+        var dueAmount = invoice.TotalBrutto - invoice.SumOfPayments;
+        payment.Amount = balance > dueAmount ? dueAmount : balance;
+        InvoicePayments.Add(payment);
+        CalculateSumOfPayments(true);
+        return balance - payment.Amount;
+    }
+
+    return 0;
+}
+```
+
+
+
+
 
 ### Moduł Conditional Appearance
 
