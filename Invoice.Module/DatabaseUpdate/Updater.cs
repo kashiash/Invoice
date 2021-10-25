@@ -54,7 +54,7 @@ namespace Invoice.Module.DatabaseUpdate {
 			userAdmin.Roles.Add(adminRole);
 
 
-            //  PrepareTestData();
+             PrepareTestData();
 
             ObjectSpace.CommitChanges(); //This line persists created object(s).
         }
@@ -108,7 +108,7 @@ namespace Invoice.Module.DatabaseUpdate {
 
             var orderFaker = new Faker<Invoice.Module.BusinessObjects.Invoice>("pl")
             .CustomInstantiator(f => ObjectSpace.CreateObject<Invoice.Module.BusinessObjects.Invoice>())
-                .RuleFor(o => o.InvoiceNumber, f => f.Random.Int().ToString())
+                .RuleFor(o => o.InvoiceNumber, f => f.Random.Int(0,24000000).ToString())
                 .RuleFor(o => o.InvoiceDate, f => f.Date.Past(2))
                 .RuleFor(o => o.DueDate, f => f.Date.Past(2))
                 .RuleFor(o => o.Customer, f => f.PickRandom(customers));
@@ -126,11 +126,11 @@ namespace Invoice.Module.DatabaseUpdate {
 
             var paymentsFaker = new Faker<Payment>()
                  .CustomInstantiator(f => ObjectSpace.CreateObject<Payment>())
-                 .RuleFor(p => p.Amount, f => f.Random.Decimal(0.01M, 100M))
+                 .RuleFor(p => p.Amount, f => f.Random.Decimal(0.01M, 2000M))
                   .RuleFor(o => o.Customer, f => f.PickRandom(customers))
                   .RuleFor(o=>o.PaymentDescription ,f=>f.Lorem.Sentences(5))
                  .RuleFor(p => p.PaymentDate, f => f.Date.Past(2));
-            var payments = paymentsFaker.Generate(orders.Count);
+            var payments = paymentsFaker.Generate(orders.Count * 4);
         }
 
         private VatRate NowaStawka(string symbol, decimal val)

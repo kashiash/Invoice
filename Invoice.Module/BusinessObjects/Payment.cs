@@ -12,7 +12,7 @@ namespace Invoice.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [Appearance("PaymentIfBalanceZero", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "PaymentBalance = 0", Context = "ListView", FontColor = "Blue", Priority = 101)]
-    public class Payment : XPObject
+    public class Payment : CustomBaseObject
     {
         public Payment(Session session) : base(session)
         { }

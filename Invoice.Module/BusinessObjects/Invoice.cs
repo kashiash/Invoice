@@ -19,14 +19,14 @@ namespace Invoice.Module.BusinessObjects
 
     [Appearance("InvoiceIfPayed", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "SumOfPayments >= TotalBrutto", Context = "ListView", FontColor = "Blue", Priority = 101)]
 
-    [Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "OverDue", Context = "ListView", FontColor = "Red", Priority = 101)]
+    [Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "OverDue = TRue", Context = "ListView", FontColor = "Red", Priority = 101)]
 
-    public class Invoice : BaseObject
+    public class Invoice : CustomBaseObject
     {
         public Invoice(Session session) : base(session)
         { }
 
-        [Browsable(false)]
+        //[Browsable(false)]
         public bool OverDue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
         DateTime paymentDate;
         decimal sumOfPayments;

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Invoice.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    public class Customer : BaseObject
+    public class Customer : CustomBaseObject
     {
         public Customer(Session session) : base(session)
         { }
