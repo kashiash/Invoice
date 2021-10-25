@@ -61,7 +61,7 @@ namespace Invoice.Module.BusinessObjects
             get => paymentBalance;
             set => SetPropertyValue(nameof(PaymentBalance), ref paymentBalance, value);
         }
-        [Action(Caption = "Find payments", TargetObjectsCriteria = "SumOfPayments < TotalBrutto", ImageName = "BO_Skull", AutoCommit = true)]
+        [Action(Caption = "Find invoices", TargetObjectsCriteria = "SumOfPayments < Amount", ImageName = "BO_Skull", AutoCommit = true)]
         public void FindInvoicesForPayment()
         {
             if (Customer != null)
