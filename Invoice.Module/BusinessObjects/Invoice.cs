@@ -186,7 +186,7 @@ namespace Invoice.Module.BusinessObjects
             }
         }
 
-        [Action(Caption = "Find payments",TargetObjectsCriteria = "SumOfPayments < TotalBrutto")]
+        [Action(Caption = "Find payments",TargetObjectsCriteria = "SumOfPayments < TotalBrutto", ImageName = "BO_Skull",AutoCommit =true)]
         public void FindPaymentsForInvoice()
         {
             if (Customer != null)
