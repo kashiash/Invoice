@@ -7,7 +7,7 @@
 <a href="#rozbudowujemy-aplikację" target="_blank">Rozbudowujemy aplikację</a>
 
 ## Wstęp
-Proces tworzenia  oprogramowania składa się z różnych etapów, z których niektóre potrafimy robić dniami i nocami np. 3 doby na pizzy i redbulu, oraz takie które odkładamy jak się da i najchętniej delegujemy junior programmer’owi. W efekcie powstają smutne historie i w kolejnej firmie już nasz były junior, opowiada, że zajmował się cały czas np. nudnymi CRUD’ami, układał edytory na widokach albo czymś jeszcze nudniejszym. 
+Proces tworzenia  oprogramowania składa się z różnych etapów, z których niektóre potrafimy robić dniami i nocami np. 3 doby na pizzy i redbulu, oraz takie które odkładamy jak się da i najchętniej delegujemy junior programmer’owi. W efekcie powstają smutne historie i w kolejnej firmie już nasz były junior, opowiada, że zajmował się cały czas np. nudnymi CRUD’ami, układał edytory na widokach albo czymś jeszcze gorszym. A o programistę teraz trudno ...
 
 Standardowy proces tworzenia oprogramowania stawia przed programistami następujące wyzwania:
 *	 Najprostsze czynności jak przeglądanie czy przechowywanie danych są czasochłonne. Programiści muszą dbać o każdy aspekt tworzonej aplikacji – od zarządzania danymi na poziomie serwerów danych, po dostarczenie edytorów do każdego edytowanego pola.
@@ -1239,7 +1239,7 @@ public class Payment : CustomBaseObject
 W powyższej klasie oprócz standardowych pól dotyczących wpłaty tzn Data płatności, kwota, od kogo opis itp, dodaliśmy kolekcję rozrachunków **InvoicePayments** pozwalającą przypisać wartości częściowe tej wpłaty na poszczególne faktury. 
 Na podobieństwo zliczania wartości faktury, dodajemy tutaj CalculateSumOfPayments, która aktualizuje wartość rozliczonych faktur tą wpłatą. 
 
-Dodatkowo dodamy 2 metody pozwalające znaleźć faktury, które można rozliczyć bieżącą wpłatą:
+Dodatkowo dodamy 2 metody pozwalające znaleźć faktury, które można rozliczyć bieżącą wpłatą. Wyszukujemy niezapłacone faktury u tego samego klienta, do którego przypisana jest wpłata:
 
 ```csharp
 public void FindInvoicesForPayment()
