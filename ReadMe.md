@@ -1237,7 +1237,7 @@ public class Payment : CustomBaseObject
 }
 ```
 W powyższej klasie oprócz standardowych pól dotyczących wpłaty tzn Data płatności, kwota, od kogo opis itp, dodaliśmy kolekcję rozrachunków **InvoicePayments** pozwalającą przypisać wartości częściowe tej wpłaty na poszczególne faktury. 
-Na podobieństwo zliczania wartości faktury, dodajemy tutaj CalculateSumOfPayments, która aktualizuje wartość rozliczonych faktur tą wpłatą. 
+Na podobieństwo zliczania wartości faktury, dodajemy tutaj CalculateSumOfPayments, która aktualizuje wartość rozliczonych faktur tą wpłatą. Metoda ta będzie wywoływana z obiektu InvoicePayment gdy przypiszemy ja do płatności, lub gdy zmieni się kwota.
 
 Dodatkowo dodamy 2 metody pozwalające znaleźć faktury, które można rozliczyć bieżącą wpłatą. Wyszukujemy niezapłacone faktury u tego samego klienta, do którego przypisana jest wpłata:
 
@@ -1281,6 +1281,65 @@ public decimal RegisterPayments2Invoice(BusinessObjects.Invoice invoice)
 }
 ```
 
+W fakturze dodajemy podobną kolekcję, która będzie przechowywała informacje o rozrachunkach tej faktury. Następnie dodajemy metodę, która pozwoli nam wyliczyć saldo faktury. Metoda ta będzie wywoływana z obiektu InvoicePayment gdy przypiszemy ja do faktury, lub gdy zmieni się kwota.
+
+```csharp
+[DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
+[Association, DevExpress.Xpo.Aggregated]
+public XPCollection<InvoicePayment> Payments
+{
+    get
+    {
+        return GetCollection<InvoicePayment>(nameof(Payments));
+    }
+}
+
+public void CalculateSumOfPayments(bool forceChangeEvents = true)
+{
+    decimal? oldSumOfPayments = sumOfPayments;
+
+    decimal tempSumOfPayemnts = 0m;
+    paymentDate = DateTime.MinValue;
+    foreach (var payment in Payments.OrderBy(w => w.Payment?.PaymentDate))
+    {
+        tempSumOfPayemnts += payment.Amount;
+        if (paymentDate != payment.Payment.PaymentDate && tempSumOfPayemnts >= TotalBrutto)
+        {
+            paymentDate = payment.Payment.PaymentDate;
+        }
+    }
+
+    sumOfPayments = tempSumOfPayemnts;
+
+    if (forceChangeEvents)
+    {
+        OnChanged(nameof(SumOfPayments), oldSumOfPayments, sumOfPayments);
+    }
+}
+
+```
+Dodajemy też metodę która pozwoli znaleźć wpłaty i przypisać je do faktury:
+
+
+```csharp
+[Action(Caption = "Find payments",TargetObjectsCriteria = "SumOfPayments < TotalBrutto", ImageName = "BO_Skull",AutoCommit =true)]
+public void FindPaymentsForInvoice()
+{
+    if (Customer != null)
+    {
+        var payments = customer.Payments
+            .Where(i => i.SumOfPayments < i.Amount)
+            .OrderBy(i => i.PaymentDate);
+
+        foreach (var payment in payments)
+        {
+            _ = payment.RegisterPayments2Invoice(this);
+        }
+    }
+}
+```
+
+Tu należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
 
 
 
