@@ -16,6 +16,8 @@
     <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Win" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.Scheduler.Win" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors.Win" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.Validation.Win" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.Win" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.2-beta" />

@@ -25,6 +25,7 @@
     <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.Scheduler" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.Validation" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="21.2.2-beta" />
     <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.2-beta" />
