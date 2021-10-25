@@ -1359,17 +1359,17 @@ W fakturach chcemy na niebiesko wyświetlać te które są zapłacone, a na czer
 ...
 [Appearance("InvoiceIfPayed", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "SumOfPayments >= TotalBrutto", Context = "ListView", FontColor = "Blue", Priority = 101)]
 
-[Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "OverDue = True", Context = "ListView", FontColor = "Red", Priority = 101)]
+[Appearance("InvoiceIfOverdue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "Overdue = True", Context = "ListView", FontColor = "Red", Priority = 101)]
 
 public class Invoice : BaseObject
 {
 
-        [Browsable(false)]
-        public bool OverDue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
+    [Browsable(false)]
+    public bool Overdue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
 
 ...
 ```
-Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać złożonych warunków, zdecydowanie prościej jest wyliczyć ten warunek w zmiennej OverDue i jej użyć w regule Apperance/Cryteria 
+Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać złożonych warunków, zdecydowanie prościej jest wyliczyć ten warunek w zmiennej Overdue i jej użyć w regule Apperance/Cryteria 
 
 
 Płatności które zostały już zaksięgowane na faktury chcemy wyświetlać na niebiesko
@@ -1382,6 +1382,62 @@ public class Payment : XPObject
 ...
 ```
 Więcej w tym temacie na stronie <a href="https://docs.devexpress.com/eXpressAppFramework/113286/conditional-appearance" target="_blank">DevExpress</a>
+
+
+### Tree List Module
+
+Chcemy teraz w produktach dołożyć podział na kategorie. Z tym, że kategorie mogą mieć podkategorie, te mogą mieć pod-podkategorie itd... Pomoże nam w tym TreeListEditor. 
+Zakładam, że przy tworzeniu projektów w wizardzie wybraliście także TreeEditor.
+
+Tworzymy klasę bazową, która implementuje interfejs ITreeNode, wymagany do hierarchicznego wyświetlania danych:
+
+```csharp
+[DefaultProperty(nameof(TreeListBaseObject.Caption))]
+[DefaultClassOptions]
+public class TreeListBaseObject : BaseObject, ITreeNode
+{
+   private TreeListBaseObject parentObject;
+   private string caption;
+   public TreeListBaseObject(Session session) : base(session) { }
+   public string Caption
+   {
+      get { return caption; }
+      set { SetPropertyValue<string>(nameof(Caption), ref caption, value); }
+   }
+   [Browsable(false)]
+   [Association("TreeListBaseObject-TreeListBaseObject")]
+   public TreeListBaseObject ParentObject
+   {
+      get { return parentObject; }
+      set { SetPropertyValue<TreeListBaseObject>(nameof(ParentObject), ref parentObject, value); }
+   }
+   [Association("TreeListBaseObject-TreeListBaseObject"), Aggregated]
+   public XPCollection<TreeListBaseObject> NestedObjects
+   {
+      get { return GetCollection<TreeListBaseObject>(nameof(NestedObjects)); }
+   }
+   #region ITreeNode Members
+   IBindingList ITreeNode.Children
+   {
+      get { return NestedObjects; }
+   }
+   string ITreeNode.Name
+   {
+      get { return Caption; }
+   }
+   ITreeNode ITreeNode.Parent
+   {
+      get { return ParentObject; }
+   }
+   #endregion
+
+}
+```
+
+
+
+
+<a href="https://docs.devexpress.com/eXpressAppFramework/112836/application-shell-and-base-infrasctructure/tree-list-editors/tree-list-editors-module-overview" target="_blank">Więcej na stronie DevExpress</a>
 
 ### Sprawdzianie klienta w GUS/Vies/US
 
