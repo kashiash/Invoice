@@ -1433,7 +1433,7 @@ public class TreeListBaseObject : BaseObject, ITreeNode
 
 }
 ```
-
+Na bazie tej klasy zdefiniujemy kategorie ... rozwinąć
 
 
 
@@ -1441,11 +1441,23 @@ public class TreeListBaseObject : BaseObject, ITreeNode
 
 ### Sprawdzianie klienta w GUS/Vies/US
 
-### Uruchomienie aplikacji w Docker
+### Uruchomienie aplikacji w Docker (drugi artykuł)
 
-### Uruchomienie aplikacji na Azure
+### Uruchomienie aplikacji na Azure (drugi artykuł)
 
-### Moduł Security
+### Moduł Security (trzeci artykuł)
+
+### Rozbudowa aplikacji
+Dodamy podział na działy firmy, pracowników, ograniczymy pracownikom uprawnienia
+#### Pracownicy i Działy
+
+#### Ograniczenia dostępu pracownikom
+    * Kierownik może edytować tylko dane swoich podwładnych
+    * Pracownik nie może oglądać danych innych pracowników oprócz swoich
+    * Pracownik może edytować tylko faktury ze swojego działu
+    * Pracownik może edytować klientów, których opiekunem jest pracownik z jego działu
+    * Pracownik może sprzedawać produkty z kategorii do których ma dostęp 
+    * jakieś pomysły ?
 
 
 
