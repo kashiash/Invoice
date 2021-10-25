@@ -833,6 +833,11 @@ Podobnie robimy w fakturze z odpowiednimi polami. Dodajemy metodę która zsumuj
     }
 ```
 
+Wersja WinForms
+![](winform1.png)
+
+Wersja Blazor
+![](blazor1.png)
 
 I nasza aplikacja do fakturowania jest prawie gotowa. Patrząc na powyższy obrazek zostaje nam drobny niesmak, ze w miejscu w miejscu faktury widzimy identyfikator, zamiast bardziej czytelnej dla ludzi nazwy. Załatwi to dla nas atrybut *XafDefaultProperty*.
 
@@ -875,11 +880,11 @@ Picture:
 
 Win
 
-![](model1.png)in.png)
+![](model1.png))
 
 Blazor
 
-![](model2.png)azor.png)
+![](model2.png))
 
 ## Generator danych testowych
 
