@@ -1247,6 +1247,7 @@ Na podobieństwo zliczania wartości faktury, dodajemy tutaj CalculateSumOfPayme
 Dodatkowo dodamy 2 metody pozwalające znaleźć faktury, które można rozliczyć bieżącą wpłatą. Wyszukujemy niezapłacone faktury u tego samego klienta, do którego przypisana jest wpłata:
 
 ```csharp
+[Action(Caption = "Find invoices", TargetObjectsCriteria = "SumOfPayments < Amount", ImageName = "BO_Skull", AutoCommit = true)]
 public void FindInvoicesForPayment()
 {
     if (Customer != null)
@@ -1285,6 +1286,7 @@ public decimal RegisterPayments2Invoice(BusinessObjects.Invoice invoice)
     return 0;
 }
 ```
+Tu należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma rozrachunków jest mniejsza niż kwota wpłaty. 
 
 W fakturze dodajemy podobną kolekcję, która będzie przechowywała informacje o rozrachunkach tej faktury. Następnie dodajemy metodę, która pozwoli nam wyliczyć saldo faktury. Metoda ta będzie wywoływana z obiektu InvoicePayment gdy przypiszemy ja do faktury, lub gdy zmieni się kwota.
 
@@ -1344,7 +1346,7 @@ public void FindPaymentsForInvoice()
 }
 ```
 
-Tu należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
+Tu też należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
 
 
 
