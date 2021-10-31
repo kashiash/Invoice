@@ -1247,6 +1247,7 @@ Na podobieństwo zliczania wartości faktury, dodajemy tutaj CalculateSumOfPayme
 Dodatkowo dodamy 2 metody pozwalające znaleźć faktury, które można rozliczyć bieżącą wpłatą. Wyszukujemy niezapłacone faktury u tego samego klienta, do którego przypisana jest wpłata:
 
 ```csharp
+[Action(Caption = "Find invoices", TargetObjectsCriteria = "SumOfPayments < Amount", ImageName = "BO_Skull", AutoCommit = true)]
 public void FindInvoicesForPayment()
 {
     if (Customer != null)
@@ -1285,6 +1286,7 @@ public decimal RegisterPayments2Invoice(BusinessObjects.Invoice invoice)
     return 0;
 }
 ```
+Tu należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma rozrachunków jest mniejsza niż kwota wpłaty. 
 
 W fakturze dodajemy podobną kolekcję, która będzie przechowywała informacje o rozrachunkach tej faktury. Następnie dodajemy metodę, która pozwoli nam wyliczyć saldo faktury. Metoda ta będzie wywoływana z obiektu InvoicePayment gdy przypiszemy ja do faktury, lub gdy zmieni się kwota.
 
@@ -1344,7 +1346,7 @@ public void FindPaymentsForInvoice()
 }
 ```
 
-Tu należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
+Tu też należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
 
 
 
@@ -1357,17 +1359,17 @@ W fakturach chcemy na niebiesko wyświetlać te które są zapłacone, a na czer
 ...
 [Appearance("InvoiceIfPayed", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "SumOfPayments >= TotalBrutto", Context = "ListView", FontColor = "Blue", Priority = 101)]
 
-[Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "OverDue = True", Context = "ListView", FontColor = "Red", Priority = 101)]
+[Appearance("InvoiceIfOverdue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "Overdue = True", Context = "ListView", FontColor = "Red", Priority = 101)]
 
 public class Invoice : BaseObject
 {
 
-        [Browsable(false)]
-        public bool OverDue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
+    [Browsable(false)]
+    public bool Overdue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
 
 ...
 ```
-Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać złożonych warunków, zdecydowanie prościej jest wyliczyć ten warunek w zmiennej OverDue i jej użyć w regule Apperance/Cryteria 
+Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać złożonych warunków, zdecydowanie prościej jest wyliczyć ten warunek w zmiennej Overdue i jej użyć w regule Apperance/Cryteria 
 
 
 Płatności które zostały już zaksięgowane na faktury chcemy wyświetlać na niebiesko
@@ -1381,13 +1383,81 @@ public class Payment : XPObject
 ```
 Więcej w tym temacie na stronie <a href="https://docs.devexpress.com/eXpressAppFramework/113286/conditional-appearance" target="_blank">DevExpress</a>
 
+
+### Tree List Module
+
+Chcemy teraz w produktach dołożyć podział na kategorie. Z tym, że kategorie mogą mieć podkategorie, te mogą mieć pod-podkategorie itd... Pomoże nam w tym TreeListEditor. 
+Zakładam, że przy tworzeniu projektów w wizardzie wybraliście także TreeEditor.
+
+Tworzymy klasę bazową, która implementuje interfejs ITreeNode, wymagany do hierarchicznego wyświetlania danych:
+
+```csharp
+[DefaultProperty(nameof(TreeListBaseObject.Caption))]
+[DefaultClassOptions]
+public class TreeListBaseObject : BaseObject, ITreeNode
+{
+   private TreeListBaseObject parentObject;
+   private string caption;
+   public TreeListBaseObject(Session session) : base(session) { }
+   public string Caption
+   {
+      get { return caption; }
+      set { SetPropertyValue<string>(nameof(Caption), ref caption, value); }
+   }
+   [Browsable(false)]
+   [Association("TreeListBaseObject-TreeListBaseObject")]
+   public TreeListBaseObject ParentObject
+   {
+      get { return parentObject; }
+      set { SetPropertyValue<TreeListBaseObject>(nameof(ParentObject), ref parentObject, value); }
+   }
+   [Association("TreeListBaseObject-TreeListBaseObject"), Aggregated]
+   public XPCollection<TreeListBaseObject> NestedObjects
+   {
+      get { return GetCollection<TreeListBaseObject>(nameof(NestedObjects)); }
+   }
+   #region ITreeNode Members
+   IBindingList ITreeNode.Children
+   {
+      get { return NestedObjects; }
+   }
+   string ITreeNode.Name
+   {
+      get { return Caption; }
+   }
+   ITreeNode ITreeNode.Parent
+   {
+      get { return ParentObject; }
+   }
+   #endregion
+
+}
+```
+Na bazie tej klasy zdefiniujemy kategorie ... rozwinąć
+
+
+
+<a href="https://docs.devexpress.com/eXpressAppFramework/112836/application-shell-and-base-infrasctructure/tree-list-editors/tree-list-editors-module-overview" target="_blank">Więcej na stronie DevExpress</a>
+
 ### Sprawdzianie klienta w GUS/Vies/US
 
-### Uruchomienie aplikacji w Docker
+### Uruchomienie aplikacji w Docker (drugi artykuł)
 
-### Uruchomienie aplikacji na Azure
+### Uruchomienie aplikacji na Azure (drugi artykuł)
 
-### Moduł Security
+### Moduł Security (trzeci artykuł)
+
+### Rozbudowa aplikacji
+Dodamy podział na działy firmy, pracowników, ograniczymy pracownikom uprawnienia
+#### Pracownicy i Działy
+
+#### Ograniczenia dostępu pracownikom
+    * Kierownik może edytować tylko dane swoich podwładnych
+    * Pracownik nie może oglądać danych innych pracowników oprócz swoich
+    * Pracownik może edytować tylko faktury ze swojego działu
+    * Pracownik może edytować klientów, których opiekunem jest pracownik z jego działu
+    * Pracownik może sprzedawać produkty z kategorii do których ma dostęp 
+    * jakieś pomysły ?
 
 
 
