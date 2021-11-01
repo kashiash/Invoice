@@ -36,13 +36,11 @@ ExpressApp Framework znacznie ułatwia proces programowania, przejmując na sieb
 
 * Aplikacje są łatwe w rozbudowie. Możemy dopasować czy nawet w pełni wymienić prawie każdy z dostarczonych elementów interfejsu aplikacji czy jej zachowania. Można łączyć XAF z bibliotekami stworzonymi bez jego udziału np pokazać niestandardowe formularze lub kontrolki w oknie stworzonym przez XAF. W wyjątkowych sytuacjach możemy wprowadzić zmiany bezpośrednio w kodzie XAF ponieważ mamy dostęp do kompletnego kodu źródłowego.
 
-
-
-
-
-
+* Tworzona aplikacja automatycznie zarządza zmianami struktury w bazie klienta. Jeśli dodamy nowe pola, tabele czy powiązania pomiędzy nimi, aplikacja po uruchomieniu u klienta może samodzielnie dokonać modyfikacji bazy danych. Niewielkie modyfikacje w procedurze aktualizacyjnej wymagane są w sytuacjach zmiany typów danych na istniejących polach czy zmiany relacji pomiędzy tabelami.
 
 Należy jednak pamiętać, że nie będziemy mieli z XAF większego pożytku przy tworzeniu aplikacji innego rodzaju np takich jak gry, programy do obróbki grafiki, kolejnego portalu społecznościowego itp.
+
+
 
 XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (<a href="https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo" target="_blank">XAF wspiera kilkanaście serwerów baz danych</a> ). Komunikacja z baza danych jest poprzez klasy ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych (nudne CRUD’y poszły się …).
 
@@ -185,7 +183,7 @@ Kilka słów o powyższej strukturze projektów:
     `"ConnectionString": "Integrated Security=SSPI;Pooling=false;Data Source=(localdb)\\mssqllocaldb;Initial Catalog=Invoice",`
 * Invoice.WebApi
 
-    To wisienka na torcie wprowadzona w najnowszej wersji serwis WebApi. Rozwinąć temat ....
+    Funkcjonalność wprowadzona w najnowszej wersji DevExpress. Serwis WebApi, który możemy użyć do modyfikacji danych z zewnętrznych aplikacji np aplikacji zrobionej w NET. MAUI. Wystarczy określić jakie BO chcemy udostępniać na zewnątrz i API do naszego sytemu gotowe.
 
     
 ### Business Objects
@@ -1009,7 +1007,7 @@ W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyci
 
 ### Wydruk faktury
 
-Opisanie procesu tworzenia faktury ...
+
 
 ![](report1.png)
 
@@ -1020,6 +1018,32 @@ Opisanie procesu tworzenia dashboardu ...
 ![](dash1.png)
 
 ### Jak to wszystko działa ...
+
+Chociaż architektura XAF pomaga programistom zaoszczędzić znaczną ilość czasu, sama architektura nie kontroluje każdego aspektu procesu tworzenia oprogramowania. Nadal należy stosować się do dobrych praktyk, tworzyć testy jednostkowe i co ważne dla rozbudowanych aplikacji dobrze rozpoznać dziedzinę i zaprojektować architekturę tworzonej aplikacji.
+Część klas można wyklikać w edytorze lub zaimportować z istniejącej bazy danych i uruchomić działająca aplikację bez napisania linijki kodu, ale do tworzenia złożonych aplikacji nadal niezbędna jest znajomość Visual Studio, programowania obiektowego, tworzenia zapytań LINQ itp. Dobrze jest znać dobre praktyki dla używanych technologii. Kluczowa jest znajomość samych zasad funkcjonowania XAF i XPO.
+
+Obsługa współdzielonego dostępu do bazy danych wymagana jest w każdej poważnej aplikacji biznesowej. Istnieją trzy podejścia
+
+Tworząc obiekty biznesowe w większości użyłem klas XPO, które można podzielić wg ich funkcjonalności i przeznaczenia:
+
+
+
++-----------------+--------------+-------------------+------------------+------------+
+| Typ Obiektu XPO | Wbudowany OID| Deffered Deletion |Optimistic Locking| Uwagi      |
++=================+==============+===================+==================+============+
+| XPObject        |   TAK        |  TAK              |  TAK             |   Domyślny typ dla aplikacji XAF, najlepszy dla nowotworzonych aplikacji            
++-----------------+--------------+-------------------+------------------+------------+
+| XPLiteObject    |   NIE        |  NIE              |  NIE             |  Typ używany dla zaimportowanych BO z bazy danych, gdy zależy nam aby nie modyfikowac struktury istniejącej bazy danych        
++-----------------+--------------+-------------------+------------------+------------+
+| XPCustomObject  |   NIE        |  TAK              |  TAK             |  Typ używany dla zaimportowanych BO z bazy danych, gdzie chcemy użyć wbudowanego mechanizmu DD i OL          
++-----------------+--------------+-------------------+------------------+------------+
+| PersistentBase  |   NIE        |  NIE              |  TAK             |            |
++-----------------+--------------+-------------------+------------------+------------+
+| XPBaseObject    |   NIE        |  NIE              |  TAK             |            |
++-----------------+--------------+-------------------+------------------+------------+
+| BaseObject      |   TAK        |  TAK              |  TAK             |   W sytuacji gdy potrzebujemy użyć GUID w polu identyfikatora, można użyć tego typu zamiast XPObject    
++-----------------+--------------+-------------------+------------------+------------+
+
 
 * Budowa klasy XpObject, Optimistic locking , GCRecord
 
@@ -1090,7 +1114,7 @@ W przypadku niektórych danych chcielibyśmy mieć informację o tym, kto i kied
    }
 ```
 
-Następnie klasy, w których chcemy przechowywać takie informacje po prostu odziedziczą nowo powstałą klasę **CustomBaseObject**. W naszym przypadku będą to klasy z Fakturami, Klientami i Produktami:
+Następnie klasy, w których chcemy przechowywać takie informacje, zmodyfikujemy aby dziedziczyły nowo powstałą klasę **CustomBaseObject**. W naszym przypadku będą to klasy z Fakturami, Klientami i Produktami:
 
 
 ```csharp
@@ -1388,7 +1412,7 @@ public class Invoice : BaseObject
 
 ...
 ```
-Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać złożonych warunków, zdecydowanie prościej jest wyliczyć ten warunek w zmiennej Overdue i jej użyć w regule Apperance/Cryteria 
+Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać złożonych warunków, zdecydowanie prościej jest wyliczyć ten warunek w zmiennej Overdue i jej użyć w regule Apperance/Criteria 
 
 
 Płatności które zostały już zaksięgowane na faktury chcemy wyświetlać na niebiesko
@@ -1402,6 +1426,7 @@ public class Payment : XPObject
 ```
 Więcej w tym temacie na stronie <a href="https://docs.devexpress.com/eXpressAppFramework/113286/conditional-appearance" target="_blank">DevExpress</a>
 
+# od tego miejsca II ARTYKUŁ !!!!!!!
 
 ### Tree List Module
 
