@@ -1036,9 +1036,9 @@ Różnice pomiędzy klasami XPO:
 +-----------------+--------------+-------------------+------------------+------------+
 | Typ Obiektu XPO | Wbudowany OID| Deffered Deletion |Optimistic Locking| Uwagi      |
 +=================+==============+===================+==================+============+
-| XPObject        |   TAK        |  TAK              |  TAK             |   Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji            
+| XPObject        |   TAK        |  TAK              |  TAK             |   Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji          |  
 +-----------------+--------------+-------------------+------------------+------------+
-| XPLiteObject    |   NIE        |  NIE              |  NIE             |  Typ używany dla zaimportowanych BO z bazy danych, gdy zależy nam aby nie modyfikować struktury istniejącej bazy danych        
+| XPLiteObject    |   NIE        |  NIE              |  NIE             |  Typ używany dla zaimportowanych BO z bazy danych, gdy zależy nam aby nie modyfikować struktury istniejącej bazy danych |       
 +-----------------+--------------+-------------------+------------------+------------+
 | XPCustomObject  |   NIE        |  TAK              |  TAK             |  Typ używany dla zaimportowanych BO z bazy danych, gdzie chcemy użyć wbudowanego mechanizmu DD i OL          
 +-----------------+--------------+-------------------+------------------+------------+
