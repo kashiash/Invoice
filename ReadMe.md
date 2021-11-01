@@ -1022,22 +1022,24 @@ Opisanie procesu tworzenia dashboardu ...
 Chociaż architektura XAF pomaga programistom zaoszczędzić znaczną ilość czasu, sama architektura nie kontroluje każdego aspektu procesu tworzenia oprogramowania. Nadal należy stosować się do dobrych praktyk, tworzyć testy jednostkowe i co ważne dla rozbudowanych aplikacji dobrze rozpoznać dziedzinę i zaprojektować architekturę tworzonej aplikacji.
 Część klas można wyklikać w edytorze lub zaimportować z istniejącej bazy danych i uruchomić działająca aplikację bez napisania linijki kodu, ale do tworzenia złożonych aplikacji nadal niezbędna jest znajomość Visual Studio, programowania obiektowego, tworzenia zapytań LINQ itp. Dobrze jest znać dobre praktyki dla używanych technologii. Kluczowa jest znajomość samych zasad funkcjonowania XAF i XPO.
 
-Obsługa współdzielonego dostępu do bazy danych wymagana jest w każdej poważnej aplikacji biznesowej. Istnieją trzy podejścia
-
-Tworząc obiekty biznesowe w większości użyłem klas XPO, które można podzielić wg ich funkcjonalności i przeznaczenia:
+Obsługa współdzielonego dostępu do bazy danych wymagana jest w każdej poważnej aplikacji biznesowej. XPO obsługuje wariant optymistyczny (Optimistic Locking). Głównym zadaniem OL jest kontrola modyfikacji tego samego obiektu przez wielu użytkowników. Do tego celu używane jest pole OptimisticLockingField automatycznie dodawane do tworzonych tabel (w wybranych typach klas XPO - szczegóły w tabelce niżej). Gdy obiekt odczytywany jest z bazy danych, zapamiętywana jest wartość z OptimisticLockingField. Gdy obiekt jest zmieniany, zapamiętana wartość porównywana jest z wartością w bazie i jeśli się różnią zgłaszany jest wyjątek LockingException. Jeśli wartości są równe, pole OptimisticLockingField jest aktualizowane (domyślnie jest to inkrementowane pole typu int) i obiekt jest zapisywany do bazy.
 
 
 
+
+Tworząc powyższe obiekty biznesowe w większości użyłem klas XPO, które można podzielić wg ich funkcjonalności i przeznaczenia:
+
+Różnice pomiędzy klasami XPO:
 +-----------------+--------------+-------------------+------------------+------------+
 | Typ Obiektu XPO | Wbudowany OID| Deffered Deletion |Optimistic Locking| Uwagi      |
 +=================+==============+===================+==================+============+
-| XPObject        |   TAK        |  TAK              |  TAK             |   Domyślny typ dla aplikacji XAF, najlepszy dla nowotworzonych aplikacji            
+| XPObject        |   TAK        |  TAK              |  TAK             |   Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji            
 +-----------------+--------------+-------------------+------------------+------------+
-| XPLiteObject    |   NIE        |  NIE              |  NIE             |  Typ używany dla zaimportowanych BO z bazy danych, gdy zależy nam aby nie modyfikowac struktury istniejącej bazy danych        
+| XPLiteObject    |   NIE        |  NIE              |  NIE             |  Typ używany dla zaimportowanych BO z bazy danych, gdy zależy nam aby nie modyfikować struktury istniejącej bazy danych        
 +-----------------+--------------+-------------------+------------------+------------+
 | XPCustomObject  |   NIE        |  TAK              |  TAK             |  Typ używany dla zaimportowanych BO z bazy danych, gdzie chcemy użyć wbudowanego mechanizmu DD i OL          
 +-----------------+--------------+-------------------+------------------+------------+
-| PersistentBase  |   NIE        |  NIE              |  TAK             |            |
+| PersistentBase  |   NIE        |  NIE              |  TAK             |  Praktycznie nie używany w XAF, służy jako bazowy do pozostałych          |
 +-----------------+--------------+-------------------+------------------+------------+
 | XPBaseObject    |   NIE        |  NIE              |  TAK             |            |
 +-----------------+--------------+-------------------+------------------+------------+
@@ -1045,9 +1047,6 @@ Tworząc obiekty biznesowe w większości użyłem klas XPO, które można podzi
 +-----------------+--------------+-------------------+------------------+------------+
 
 
-* Budowa klasy XpObject, Optimistic locking , GCRecord
-
-* Różnice pomiędzy BaseObject,XpObject itp
 
 
 ## Rozbudowujemy aplikację
