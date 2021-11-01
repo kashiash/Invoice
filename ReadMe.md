@@ -42,6 +42,8 @@ ExpressApp Framework znacznie ułatwia proces programowania, przejmując na sieb
 
 * DevExpress dostarcza język skryptowy, który jest bardziej czytelny dla osób nieprogramujących, który używany jest w wyrażeniach filtrujących, polach wyliczanych na formatkach i wydrukach.
 
+* XAF dostarczany jest z wbudowanymi modułami np. do Statystyk, Raportów czy kontroli dostępu. Wiele elementów aplikacji mamy gotowe na starcie.
+
 * Wsparcie techniczne od ludzi z DevExpress jest warte ponownego zasygnalizowania! Nie zdarzyło mi się, żebym nie otrzymał odpowiedzi w później niż po 48 godzinach od zgłoszenia.
 
 Należy jednak pamiętać, że nie będziemy mieli z XAF większego pożytku przy tworzeniu aplikacji innego rodzaju np takich jak gry, programy do obróbki grafiki, kolejnego portalu społecznościowego itp.
@@ -1399,7 +1401,45 @@ public void FindPaymentsForInvoice()
 
 Tu też należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
 
+### Kontrolery
 
+Kontrolery pozwalają na roszerzanie interfejsu użytkownika oraz wykonywanie pewnych akcji w momencie otwierania lub zamykania widoku, są one pewnego rodzaju kontenerami w których są przechowywane akcje określone dla wybranych widoków oraz obiektów.
+Pierwszy kontroler posłuży do zmiany koloru nieparzystych wierszy na listach, a dokładniej to dwa kontrolery, ponieważ trzeba stworzyć osobny kontroler dla wersji Win oraz wersji Blazor.
+
+Blazor tworzymy w projekcie Invoice.Module.Blazor
+```csharp
+    public class GridViewController : ViewController<ListView>
+    {
+        protected override void OnViewControlsCreated()
+        {
+            base.OnViewControlsCreated();
+            if (View.Editor is GridListEditor gridListEditor)
+            {
+                IDxDataGridAdapter dataGridAdapter = gridListEditor.GetDataGridAdapter();
+                dataGridAdapter.DataGridModel.CssClass += " table-striped";
+            }
+        }
+    }
+```
+
+Win tworzymy w projekcie Invoice.Module.Win
+```csharp
+    public class GridViewController : ViewController<ListView>
+    {
+        protected override void OnViewControlsCreated()
+        {
+            base.OnViewControlsCreated();
+            if (View.Editor is GridListEditor gridListEditor)
+            {
+                GridView gridView = gridListEditor.GridView;
+                gridView.OptionsView.EnableAppearanceOddRow = true;
+                gridView.Appearance.OddRow.BackColor = Color.FromArgb(244, 244, 244);
+            }
+        }
+    }
+```
+
+![](oddRow.png)
 
 
 ### Moduł Conditional Appearance
