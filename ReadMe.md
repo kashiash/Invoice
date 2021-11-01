@@ -1404,6 +1404,42 @@ Tu też należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda 
 ### Kontrolery
 
 Kontrolery pozwalają na roszerzanie interfejsu użytkownika oraz wykonywanie pewnych akcji w momencie otwierania lub zamykania widoku, są one pewnego rodzaju kontenerami w których są przechowywane akcje określone dla wybranych widoków oraz obiektów.
+Pierwszy kontroler posłuży do zmiany koloru nieparzystych wierszy na listach, a dokładniej to dwa kontrolery, ponieważ trzeba stworzyć osobny kontroler dla wersji Win oraz wersji Blazor.
+
+Blazor tworzymy w projekcie Invoice.Module.Blazor
+```csharp
+    public class GridViewController : ViewController<ListView>
+    {
+        protected override void OnViewControlsCreated()
+        {
+            base.OnViewControlsCreated();
+            if (View.Editor is GridListEditor gridListEditor)
+            {
+                IDxDataGridAdapter dataGridAdapter = gridListEditor.GetDataGridAdapter();
+                dataGridAdapter.DataGridModel.CssClass += " table-striped";
+            }
+        }
+    }
+```
+
+Win tworzymy w projekcie Invoice.Module.Win
+```csharp
+    public class GridViewController : ViewController<ListView>
+    {
+        protected override void OnViewControlsCreated()
+        {
+            base.OnViewControlsCreated();
+            if (View.Editor is GridListEditor gridListEditor)
+            {
+                GridView gridView = gridListEditor.GridView;
+                gridView.OptionsView.EnableAppearanceOddRow = true;
+                gridView.Appearance.OddRow.BackColor = Color.FromArgb(244, 244, 244);
+            }
+        }
+    }
+```
+
+![](oddRow.png)
 
 
 ### Moduł Conditional Appearance
