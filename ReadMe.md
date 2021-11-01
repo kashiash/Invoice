@@ -42,6 +42,8 @@ ExpressApp Framework znacznie ułatwia proces programowania, przejmując na sieb
 
 * DevExpress dostarcza język skryptowy, który jest bardziej czytelny dla osób nieprogramujących, który używany jest w wyrażeniach filtrujących, polach wyliczanych na formatkach i wydrukach.
 
+* XAF dostarczany jest z wbudowanymi modułami np. do Statystyk, Raportów czy kontroli dostępu. Wiele elementów aplikacji mamy gotowe na starcie.
+
 * Wsparcie techniczne od ludzi z DevExpress jest warte ponownego zasygnalizowania! Nie zdarzyło mi się, żebym nie otrzymał odpowiedzi w później niż po 48 godzinach od zgłoszenia.
 
 Należy jednak pamiętać, że nie będziemy mieli z XAF większego pożytku przy tworzeniu aplikacji innego rodzaju np takich jak gry, programy do obróbki grafiki, kolejnego portalu społecznościowego itp.
