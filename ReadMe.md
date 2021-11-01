@@ -29,14 +29,20 @@ Jednym z takich jest <a href="https://docs.devexpress.com/eXpressAppFramework/11
 ExpressApp Framework znacznie ułatwia proces programowania, przejmując na siebie wykonanie czynności związanych z przechowywaniem danych, ich przeglądaniem, mechanizmami do analizy danych, drukowania. XAF oferuje interfejs wysokiego poziomu ukrywający niektóre szczegóły implementacji i pozwalający skoncentrować się na dziedzinie problemu i logice biznesowej. Niektóre cechy XAF, dzięki którym ten proces jest łatwiejszy:
 
 * Do programowania wykorzystujemy C# lub VisualBasic.
+
 * Logika biznesowa bez większych zmian może być używana na wielu platformach (WinForms, WebForms czy Blazor)
-* Automatyczny kreator interfejsu użytkownika, programista nie musi tworzyć wielu podobnych formularzy do przeglądania i edycji danych. Przy okazji ułatwia to utrzymanie aplikacji, ponieważ po zmianie struktury klas, nie ma potrzeby modyfikowania wielu formularzy. XAF zrobi to za nas automatycznie.
+
+* Automatyczny kreator interfejsu użytkownika, programista nie musi tworzyć wielu podobnych formularzy do przeglądania i edycji danych. Przy okazji ułatwia to utrzymanie aplikacji, ponieważ po zmianie struktury klas, nie ma potrzeby modyfikowania wielu formularzy. XAF zrobi to za nas automatycznie. Np. dodajemy nowe pole w kontrahencie i pojawia się ono na każdej formatce związanej z kontrahentem, dostępne jest w wydruku, statystyce itp.
 
 * Wbudowane zarządzanie danymi. Programista nie musi zajmować się bazą danych, konfigurować ADO.NET. Zwolniony jest też z zajmowania się szczegółami konkretnych systemów baz danych. Wybieramy bazę docelową z dość obszernej listy m.in. (MS SQL, MySQL, Postgres, Oracle, DB2 i inne). Zmiana docelowej bazy sprowadza się do zmiany danych połączenia w konfiguracji.
 
 * Aplikacje są łatwe w rozbudowie. Możemy dopasować czy nawet w pełni wymienić prawie każdy z dostarczonych elementów interfejsu aplikacji czy jej zachowania. Można łączyć XAF z bibliotekami stworzonymi bez jego udziału np pokazać niestandardowe formularze lub kontrolki w oknie stworzonym przez XAF. W wyjątkowych sytuacjach możemy wprowadzić zmiany bezpośrednio w kodzie XAF ponieważ mamy dostęp do kompletnego kodu źródłowego.
 
 * Tworzona aplikacja automatycznie zarządza zmianami struktury w bazie klienta. Jeśli dodamy nowe pola, tabele czy powiązania pomiędzy nimi, aplikacja po uruchomieniu u klienta może samodzielnie dokonać modyfikacji bazy danych. Niewielkie modyfikacje w procedurze aktualizacyjnej wymagane są w sytuacjach zmiany typów danych na istniejących polach czy zmiany relacji pomiędzy tabelami.
+
+* DevExpress dostarcza język skryptowy, który jest bardziej czytelny dla osób nieprogramujących, który używany jest w wyrażeniach filtrujących, polach wyliczanych na formatkach i wydrukach.
+
+* Wsparcie techniczne od ludzi z DevExpress jest warte ponownego zasygnalizowania! Nie zdarzyło mi się, żebym nie otrzymał odpowiedzi w później niż po 48 godzinach od zgłoszenia.
 
 Należy jednak pamiętać, że nie będziemy mieli z XAF większego pożytku przy tworzeniu aplikacji innego rodzaju np takich jak gry, programy do obróbki grafiki, kolejnego portalu społecznościowego itp.
 
@@ -57,7 +63,7 @@ XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS S
 
 #### Klasy biznesowe
  
-Model biznesowy definiujemy za pomocą klas określanych jako Business Object (BO), dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji. DevExpress dostarcza <a href="https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces" target="_blank">Business Class Library</a> w której zdefiniowane sa najczęściej używane BO (Address, Person, Note, Organization) oraz klasy potrzebne we wbudowanych modułach dodatkowych (m.in. Reports, Dasboards, Security). Nie jesteśmy ograniczeni do tych klas, możemy definiować własne, co zrobimy w dalszej części tego artykułu. DevExpress dostarcza nam kompletny kod źródłowy i lektura kodu powyższych klas jest najlepsza metoda nauki, jak definiować własne klasy. 
+Model biznesowy definiujemy za pomocą klas określanych jako Business Object (BO), dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji. DevExpress dostarcza <a href="https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces" target="_blank">Business Class Library</a> w której zdefiniowane są najczęściej używane BO (Address, Person, Note, Organization) oraz klasy potrzebne we wbudowanych modułach dodatkowych (m.in. Reports, Dasboards, Security). Nie jesteśmy ograniczeni do tych klas, możemy definiować własne, co zrobimy w dalszej części tego artykułu. DevExpress dostarcza nam kompletny kod źródłowy i lektura kodu powyższych klas jest najlepsza metoda nauki, jak definiować własne klasy. 
 
 #### Moduły rozszerzające
 
