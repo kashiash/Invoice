@@ -4,6 +4,7 @@ using System.IO;
 using Gus.Regon.BIR11.Proxy;
 using System.Xml.Serialization;
 using Microsoft.Extensions.Options;
+using DevExpress.ExpressApp;
 
 namespace Invoice.Module.Services
 {
@@ -14,7 +15,7 @@ namespace Invoice.Module.Services
             var clientOptions = new BirClientOptions()
             {
                 EndpointAddress = "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc",
-                UserKey = "f3ccc9d63a3243bba830"
+                UserKey = "abcde12345abcde12345"
             };
 
             IOptions<BirClientOptions> optionParameter = Options.Create(clientOptions);
@@ -26,6 +27,10 @@ namespace Invoice.Module.Services
             try
             {
                 var response = client.DaneSzukajPodmioty(new DaneSzukajPodmiotyRequest { pParametryWyszukiwania = searchParameters });
+                if (string.IsNullOrEmpty(response.DaneSzukajPodmiotyResult))
+                {
+                    throw new UserFriendlyException("Subject not found.");
+                }
                 using var reader = new StringReader(response.DaneSzukajPodmiotyResult);
                 XmlSerializer xmlSerializerData = new XmlSerializer(typeof(Gus.Regon.BIR11.Proxy.Models.DaneSzukajPodmioty.DaneSzukajPodmioty.root));
                 return (Gus.Regon.BIR11.Proxy.Models.DaneSzukajPodmioty.DaneSzukajPodmioty.root)xmlSerializerData.Deserialize(reader);
@@ -33,7 +38,7 @@ namespace Invoice.Module.Services
             catch (Exception ex)
             {
                 var value = client.GetValue(new GetValueRequest { Body = new GetValueRequestBody { pNazwaParametru = "KomunikatKod" } });
-                throw new Exception(value?.Body?.GetValueResult, ex);
+                throw new UserFriendlyException(ex);
             }
             finally
             {
