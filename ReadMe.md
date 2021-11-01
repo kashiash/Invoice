@@ -62,7 +62,7 @@ XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS S
 **DashboardView** pozwala grupować wiele innych widoków na jednym oknie.
 
 #### Klasy biznesowe
- 
+
 Model biznesowy definiujemy za pomocą klas określanych jako Business Object (BO), dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji. DevExpress dostarcza <a href="https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces" target="_blank">Business Class Library</a> w której zdefiniowane są najczęściej używane BO (Address, Person, Note, Organization) oraz klasy potrzebne we wbudowanych modułach dodatkowych (m.in. Reports, Dasboards, Security). Nie jesteśmy ograniczeni do tych klas, możemy definiować własne, co zrobimy w dalszej części tego artykułu. DevExpress dostarcza nam kompletny kod źródłowy i lektura kodu powyższych klas jest najlepsza metoda nauki, jak definiować własne klasy. 
 
 #### Moduły rozszerzające
@@ -82,7 +82,7 @@ Kontrolery używamy głównie w dwóch sytuacjach:
     Podczas zamykania wywoływane są kolejne zdarzenia np. Controller.Deactivated, gdzie także można oprogramowac dodatkowe funkcjonalności. *W uproszczeniu można je porównać do zdarzeń jakie mamy dostępne podczas używania formatki Form z WinForms np Activated, Load, Activated itp.*
 
 * Rozszerzenie interfejsu użytkownika
-    
+  
     W większości przypadków działanie aplikacji polega na interakcji z użytkownikiem. W tym celu Kontrolery mogą służyć jako kontenery dla akcji. Akcje to obiekty, które reprezentują abstrakcyjne elementy użytkownika i mogą być wyświetlane w systemie użytkownika przy użyciu rzeczywistych kontrolek: Button, ComboBox, SubMenu. W celu obsłużenia działania uzytkownika na kontrolce bedącej Akcją, należy obsłużyć odpowiednie zdarzenia. *Odpowiednik OnTextChanged OnClick itp. w WinForms*
 
 
@@ -116,7 +116,7 @@ Po dalszej analizie zależności pomiędzy tabelami powinny wyglądać mniej wi�
     erDiagram
       CUSTOMER ||--o{ INVOICE : get
       INVOICE ||--|{ INVOICEITEM : contains
-     
+
       PRODUCT ||--|{ INVOICEITEM : in
       VATRATE ||--|{ INVOICEITEM : use
       VATRATE ||--|{ PRODUCT : use
@@ -133,10 +133,11 @@ Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS
 ![](start1.png)
 3. Po wpisaniu nazwy projektu i zatwierdzeniu pojawi się okno XAF Solution Wizard Klikamy *Run wizard*.
    
+
 ![](start2.png)
-   
+
     Ważne jest aby upewnić się, że wybraliśmy framework .Net Core oraz język programowania C#. Gdybyśmy wybrali NetFramework zamiast NetCore
-    
+
 4. Wybieramy docelowe platformy - proponuję wybrać obie jednocześnie, dzięki temu uzyskamy aplikacje WinForms oraz Web Blazor.
 
 ![](start3.png)
@@ -173,7 +174,7 @@ Kilka słów o powyższej strukturze projektów:
     Tutaj definiujemy Edytory i Kontrolery dedykowane dla platformy Blazor. Uwaga klasy BO zdefiniowane tutaj nie będą widziane w aplikacji Win! 
 
 * Invoice.Module.Win
-    
+  
     Praktycznie jest to projekt z którego powstaje plik wykonywalny aplikacji. Ewentualne zmiany w tym projekcie obejmować mogą pliki Program.cs oraz WinApplication.cs i konfiguracji. Tutaj nie należy definiować kontrolerów ani klas BO. Nie będą one widoczne dla mechanizmów XAF i nie zostaną uwzględnione w modelu aplikacji.
     
     W pliku App.config możemy zmodyfikować połączenie do bazy danych:
@@ -181,7 +182,7 @@ Kilka słów o powyższej strukturze projektów:
     `<add name="ConnectionString" connectionString="Integrated Security=SSPI;Pooling=false;Data Source=(localdb)\mssqllocaldb;Initial Catalog=Invoice" />`
     
 * Invoice.Blazor.Server
-    
+  
     Praktycznie jest to projekt z którego powstaje plik wykonywalny serwisu który umieścimy w kontenerze lub w IIS. Podobnie jak dla wersji WIN, ewentualne zmiany w tym projekcie obejmować mogą pliki Program.cs oraz WinApplication.cs oraz plików konfiguracji. Tutaj nie należy definiować kontrolerów ani klas BO. 
     
     W pliku appsettings.json możemy zmodyfikować połączenie do bazy danych
@@ -1031,29 +1032,23 @@ Część klas można wyklikać w edytorze lub zaimportować z istniejącej bazy 
 #### Kontrola wspóldzielonego dostepu do danych (Optimistic Locking)
 Obsługa współdzielonego dostępu do bazy danych wymagana jest w każdej poważnej aplikacji biznesowej. XPO obsługuje wariant optymistyczny. Głównym zadaniem OL jest kontrola modyfikacji tego samego obiektu przez wielu użytkowników. Do tego celu używane jest pole OptimisticLockingField automatycznie dodawane do tworzonych tabel (w wybranych typach klas XPO - szczegóły w tabelce niżej). Gdy obiekt odczytywany jest z bazy danych, zapamiętywana jest wartość z OptimisticLockingField. Gdy obiekt jest zmieniany, zapamiętana wartość porównywana jest z wartością w bazie i jeśli się różnią zgłaszany jest wyjątek LockingException. Jeśli wartości są równe, pole OptimisticLockingField jest aktualizowane (domyślnie jest to inkrementowane pole typu int) i obiekt jest zapisywany do bazy.
 
-#### Odłożone usuwanie danych (Deferred Deletion) poszukać odpowiednika po polsku !!!
+#### Odroczone usuwanie danych (Deferred Deletion) poszukać odpowiednika po polsku !!!
 
 Jeśli nasz klasy BO dziedziczą po XPObject, XPCustomObject lub BaseObject włączone jest Deferrd Deletion. Oznacza to, że w momencie usuwania danych, XPO nie usuwa fizycznie rekordu z bazy, tylko oznacza go jako usuniętego wypełniając pole GCRecord. Podczas wyświetlania kolekcji danych (np na ListView), pobierane są jedynie rekordy, w których GCRecord ma wartość NULL.Pobierane są jedynie gdy pobieramy dane z którymi były w relacji (usunięty rekord jest widoczny, ale nie można go edytować). To rozwiązanie pozwala uniknąć błędów w czasie usuwania lub późniejszego dostępu do danych które były powiązane z usuniętym obiektem.
 Usunięty w ten sposób rekord można odzyskać wstawiając do pola GCRecord wartość NULL.
 
 Tworząc obiekty biznesowe w bieżącej aplikacji, w większości użyłem klas XPO, które można podzielić wg ich funkcjonalności i przeznaczenia:
 
-+-----------------+--------------+-------------------+------------------+------------+
-| Typ Obiektu XPO | Wbudowany OID| Deferred Deletion |Optimistic Locking| Uwagi      |
-+=================+==============+===================+==================+============+
-| XPObject        |   TAK        |  TAK              |  TAK             |   Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji          |  
-+-----------------+--------------+-------------------+------------------+------------+
-| XPLiteObject    |   NIE        |  NIE              |  NIE             |  Typ używany dla zaimportowanych BO z bazy danych, gdy zależy nam aby nie modyfikować struktury istniejącej bazy danych |       
-+-----------------+--------------+-------------------+------------------+------------+
-| XPCustomObject  |   NIE        |  TAK              |  TAK             |  Typ używany dla zaimportowanych BO z bazy danych, gdzie chcemy użyć wbudowanego mechanizmu DD i OL          
-+-----------------+--------------+-------------------+------------------+------------+
-| PersistentBase  |   NIE        |  NIE              |  TAK             |  Praktycznie nie używany w XAF, służy jako bazowy do pozostałych          |
-+-----------------+--------------+-------------------+------------------+------------+
-| XPBaseObject    |   NIE        |  NIE              |  TAK             |            |
-+-----------------+--------------+-------------------+------------------+------------+
-| BaseObject      |   TAK        |  TAK              |  TAK             |   W sytuacji gdy potrzebujemy użyć GUID w polu identyfikatora, można użyć tego typu zamiast XPObject    
-+-----------------+--------------+-------------------+------------------+------------+
 
+
+| Typ Obiektu XPO | Wbudowany OID | Deferred Deletion | Optimistic Locking |                            Uwagi                             |
+| :-------------: | :-----------: | :---------------: | :----------------: | :----------------------------------------------------------: |
+|    XPObject     |      TAK      |        TAK        |        TAK         | Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji |
+|  XPLiteObject   |      NIE      |        NIE        |        NIE         | Typ używany dla zaimportowanych BO z bazy danych, gdy zależy nam aby nie modyfikować struktury istniejącej bazy danych |
+| XPCustomObject  |      NIE      |        TAK        |        TAK         | Typ używany dla zaimportowanych BO z bazy danych, gdzie chcemy użyć wbudowanego mechanizmu DD i OL |
+| PersistentBase  |      NIE      |        NIE        |        TAK         | Praktycznie nie używany w XAF, służy jako bazowy do pozostałych |
+|  XPBaseObject   |      NIE      |        NIE        |        TAK         |                             j.w.                             |
+|   BaseObject    |      TAK      |        TAK        |        TAK         | W sytuacji gdy potrzebujemy użyć GUID w polu identyfikatora, można użyć tego typu zamiast XPObject |
 
 
 
@@ -1171,7 +1166,7 @@ Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
     erDiagram
       CUSTOMER ||--o{ INVOICE : get
       INVOICE ||--|{ INVOICEITEM : contains
-     
+
       PRODUCT ||--|{ INVOICEITEM : in
       VATRATE ||--|{ PRODUCT : use
       VATRATE ||--|{ INVOICEITEM : use
@@ -1515,7 +1510,6 @@ Dodamy podział na działy firmy, pracowników, ograniczymy pracownikom uprawnie
     * Pracownik może edytować klientów, których opiekunem jest pracownik z jego działu
     * Pracownik może sprzedawać produkty z kategorii do których ma dostęp 
     * jakieś pomysły ?
-
 
 
 
