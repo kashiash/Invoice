@@ -1022,19 +1022,18 @@ Opisanie procesu tworzenia dashboardu ...
 Chociaż architektura XAF pomaga programistom zaoszczędzić znaczną ilość czasu, sama architektura nie kontroluje każdego aspektu procesu tworzenia oprogramowania. Nadal należy stosować się do dobrych praktyk, tworzyć testy jednostkowe i co ważne dla rozbudowanych aplikacji dobrze rozpoznać dziedzinę i zaprojektować architekturę tworzonej aplikacji.
 Część klas można wyklikać w edytorze lub zaimportować z istniejącej bazy danych i uruchomić działająca aplikację bez napisania linijki kodu, ale do tworzenia złożonych aplikacji nadal niezbędna jest znajomość Visual Studio, programowania obiektowego, tworzenia zapytań LINQ itp. Dobrze jest znać dobre praktyki dla używanych technologii. Kluczowa jest znajomość samych zasad funkcjonowania XAF i XPO.
 
-Obsługa współdzielonego dostępu do bazy danych wymagana jest w każdej poważnej aplikacji biznesowej. XPO obsługuje wariant optymistyczny (Optimistic Locking). Głównym zadaniem OL jest kontrola modyfikacji tego samego obiektu przez wielu użytkowników. Do tego celu używane jest pole OptimisticLockingField automatycznie dodawane do tworzonych tabel (w wybranych typach klas XPO - szczegóły w tabelce niżej). Gdy obiekt odczytywany jest z bazy danych, zapamiętywana jest wartość z OptimisticLockingField. Gdy obiekt jest zmieniany, zapamiętana wartość porównywana jest z wartością w bazie i jeśli się różnią zgłaszany jest wyjątek LockingException. Jeśli wartości są równe, pole OptimisticLockingField jest aktualizowane (domyślnie jest to inkrementowane pole typu int) i obiekt jest zapisywany do bazy.
+#### Kontrola wspóldzielonego dostepu do danych (Optimistic Locking)
+Obsługa współdzielonego dostępu do bazy danych wymagana jest w każdej poważnej aplikacji biznesowej. XPO obsługuje wariant optymistyczny. Głównym zadaniem OL jest kontrola modyfikacji tego samego obiektu przez wielu użytkowników. Do tego celu używane jest pole OptimisticLockingField automatycznie dodawane do tworzonych tabel (w wybranych typach klas XPO - szczegóły w tabelce niżej). Gdy obiekt odczytywany jest z bazy danych, zapamiętywana jest wartość z OptimisticLockingField. Gdy obiekt jest zmieniany, zapamiętana wartość porównywana jest z wartością w bazie i jeśli się różnią zgłaszany jest wyjątek LockingException. Jeśli wartości są równe, pole OptimisticLockingField jest aktualizowane (domyślnie jest to inkrementowane pole typu int) i obiekt jest zapisywany do bazy.
 
+#### Odłożone usuwanie danych (Deferred Deletion) poszukać odpowiednika po polsku !!!
 
+Jeśli nasz klasy BO dziedziczą po XPObject, XPCustomObject lub BaseObject włączone jest Deferrd Deletion. Oznacza to, że w momencie usuwania danych, XPO nie usuwa fizycznie rekordu z bazy, tylko oznacza go jako usuniętego wypełniając pole GCRecord. Podczas wyświetlania kolekcji danych (np na ListView), pobierane są jedynie rekordy, w których GCRecord ma wartość NULL.Pobierane są jedynie gdy pobieramy dane z którymi były w relacji (usunięty rekord jest widoczny, ale nie można go edytować). To rozwiązanie pozwala uniknąć błędów w czasie usuwania lub późniejszego dostępu do danych które były powiązane z usuniętym obiektem.
+Usunięty w ten sposób rekord można odzyskać wstawiając do pola GCRecord wartość NULL.
 
-
-Tworząc powyższe obiekty biznesowe w większości użyłem klas XPO, które można podzielić wg ich funkcjonalności i przeznaczenia:
-
-Różnice pomiędzy klasami XPO:
-
-
+Tworząc obiekty biznesowe w bieżącej aplikacji, w większości użyłem klas XPO, które można podzielić wg ich funkcjonalności i przeznaczenia:
 
 +-----------------+--------------+-------------------+------------------+------------+
-| Typ Obiektu XPO | Wbudowany OID| Deffered Deletion |Optimistic Locking| Uwagi      |
+| Typ Obiektu XPO | Wbudowany OID| Deferred Deletion |Optimistic Locking| Uwagi      |
 +=================+==============+===================+==================+============+
 | XPObject        |   TAK        |  TAK              |  TAK             |   Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji          |  
 +-----------------+--------------+-------------------+------------------+------------+
@@ -1165,6 +1164,12 @@ Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
 <div class="mermaid">
     erDiagram
       CUSTOMER ||--o{ INVOICE : get
+      INVOICE ||--|{ INVOICEITEM : contains
+     
+      PRODUCT ||--|{ INVOICEITEM : in
+      VATRATE ||--|{ PRODUCT : use
+      VATRATE ||--|{ INVOICEITEM : use
+      PRODUCTGROUP }|--|{ PRODUCT : has
       CUSTOMER ||--o{ PAYMENT : pay
       INVOICE ||--o{ INVOICEPAYMENT : payedby
       PAYMENT ||--o{ INVOICEPAYMENT : pay
