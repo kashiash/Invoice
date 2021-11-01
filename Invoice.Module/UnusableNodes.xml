@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="Customer_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SizeableEditors" Caption="Notes" RelativeSize="74.70651013874067">
+            <TabbedGroup Id="Item2" CaptionLocation="Top" Index="0" RelativeSize="100">
+              <LayoutGroup Id="Invoices_Group" ShowCaption="True" Caption="Invoices" Index="0" RelativeSize="100">
+                <LayoutItem Id="Invoices" ViewItem="Invoices" Index="0" RelativeSize="100" />
+              </LayoutGroup>
+              <LayoutGroup Id="Item1" ShowCaption="True" CaptionLocation="Top" Index="1" RelativeSize="100" Caption="Notes">
+                <LayoutItem Id="Notes" ViewItem="Notes" Index="0" RelativeSize="100" ShowCaption="False" />
+              </LayoutGroup>
+            </TabbedGroup>
+            <LayoutItem Id="Notes" Removed="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="Invoices_Group" Direction="Vertical" RelativeSize="37.353255069370334" Removed="True">
+            <LayoutItem Id="Invoices" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

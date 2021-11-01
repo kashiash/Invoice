@@ -15,7 +15,7 @@ namespace Invoice.Module.Services
             var clientOptions = new BirClientOptions()
             {
                 EndpointAddress = "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc",
-                UserKey = "abcde12345abcde12345"
+                UserKey = "f3ccc9d63a3243bba830"
             };
 
             IOptions<BirClientOptions> optionParameter = Options.Create(clientOptions);
@@ -29,7 +29,7 @@ namespace Invoice.Module.Services
                 var response = client.DaneSzukajPodmioty(new DaneSzukajPodmiotyRequest { pParametryWyszukiwania = searchParameters });
                 if (string.IsNullOrEmpty(response.DaneSzukajPodmiotyResult))
                 {
-                    throw new UserFriendlyException("Subject not found.");
+                    throw new UserFriendlyException("Customer not found.");
                 }
                 using var reader = new StringReader(response.DaneSzukajPodmiotyResult);
                 XmlSerializer xmlSerializerData = new XmlSerializer(typeof(Gus.Regon.BIR11.Proxy.Models.DaneSzukajPodmioty.DaneSzukajPodmioty.root));
