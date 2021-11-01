@@ -1030,6 +1030,9 @@ Obsługa współdzielonego dostępu do bazy danych wymagana jest w każdej powa�
 Tworząc powyższe obiekty biznesowe w większości użyłem klas XPO, które można podzielić wg ich funkcjonalności i przeznaczenia:
 
 Różnice pomiędzy klasami XPO:
+
+
+
 +-----------------+--------------+-------------------+------------------+------------+
 | Typ Obiektu XPO | Wbudowany OID| Deffered Deletion |Optimistic Locking| Uwagi      |
 +=================+==============+===================+==================+============+
