@@ -1,19 +1,25 @@
 # eXpressApp Framework przyjacielem programisty
-## Czyli jak zbudować apliakcję biznesową w 2 godziny
+## Czyli jak zbudować aplikację biznesową w 2 godziny
 
 
 <a href="#wstęp" target="_blank">Wstęp</a>
+
 <a href="#bierzemy-się-za-programowanie" target="_blank">Bierzemy się za programowanie</a>
+
 <a href="#generator-danych-testowych" target="_blank">Generator danych testowych</a>
+
 <a href="#rozbudowujemy-aplikację" target="_blank">Rozbudowujemy aplikację</a>
 
-## Wstęp
-Proces tworzenia  oprogramowania składa się z różnych etapów, z których niektóre potrafimy robić dniami i nocami np. 3 doby na pizzy i redbulu, oraz takie które odkładamy najdalej jak się da i najchętniej delegujemy junior programmer’owi. W efekcie powstają smutne historie programistów, jak to zajmowali się cały czas np. nudnymi CRUD’ami, układali kontrolki na widokach albo czymś jeszcze gorszym. A o programistę teraz trudno ...
 
-Standardowy proces tworzenia oprogramowania stawia przed programistami następujące wyzwania:
+
+## Wstęp
+Proces tworzenia  oprogramowania składa się z różnych etapów, z których niektóre potrafimy robić dniami i nocami, oraz takie które odkładamy najdłużej jak się da i najchętniej delegujemy junior programmer’owi. W efekcie powstają smutne historie programistów, jak to zajmowali się cały czas np. nudnymi CRUD’ami, układali kontrolki na widokach albo czymś jeszcze gorszym. A o programistę teraz trudno ...
+
+Standardowy proces tworzenia oprogramowania stawia przed programistami nietrywialne wyzwania:
 *	 Najprostsze czynności jak przeglądanie czy przechowywanie danych są czasochłonne. Programiści muszą dbać o każdy aspekt tworzonej aplikacji – od zarządzania danymi na poziomie serwerów danych, po dostarczenie edytorów do każdego edytowanego pola.
 *	Im bardziej złożony system, tym więcej kodu, tym więcej nieuchronnych błędów. Do celów testowych potrzeba znaczną ilość czasu i zasobów ludzkich.
 *	Utrzymanie tak stworzonego systemu nie jest trywialne. Nawet trzymając się wszelkich zasad programowania, wiele zadań będzie wymagało modyfikacji aplikacji w wielu miejscach. Jej rozbudowa jest kosztowna i koszt ten rośnie wraz ze złożonością systemu.
+
 Oczywiście niniejsze podejście ma tez swoje zalety:
 *	Każdy aspekt powstającego sytemu jest w pełni kontrolowany przez programistów. Nie są uzależnieni od ograniczeń czy nawet błędów zewnętrznych bibliotek. Wszystko co stworzyli mogą modyfikować i poprawiać w prostszy sposób.
 *	Programiści mogą optymalizować system wg własnych potrzeb, co jest trudne do osiągnięcia bazując na zewnętrznych rozwiązaniach.
@@ -21,14 +27,14 @@ Oczywiście niniejsze podejście ma tez swoje zalety:
 
 Niekiedy powyższe rozwiązanie jest jedynym wyjściem aby stworzyć właściwy system, często jednak wykonujemy systemy w których pewne funkcjonalności powtarzają się i faktycznie robienie tego samego w kółko zaczyna być nużące. Jest wiele rzeczy, które muszą zostać stworzone za każdym razem, kiedy tworzysz aplikacje biznesową, niektóre jej elementy są do siebie podobne, a jednocześnie na tyle rożne, że nie da się z tego zrobić raz i używać wielokrotnie w pozostałych przypadkach. Trzeba skonfigurować mapowania klas do bazy danych, zaprojektować formatki widoków, kontrolować dostęp współdzielony itp.
 
-Od lat powstają narzędzia, które próbują wyeliminować powtarzalne elementy systemu, które prawie zawsze robi się w podobny sposób niezależnie od tego czy jest to aplikacja do wystawiania faktur, czy program do diagnozowania i leczenia raka. Narzędzia tego typu zwane kiedyś RAD (Rapid Application Development) np. Power Builder, Clarion, Power Apps i wiele innych, w różnym stopniu pozwalały programistom na elastyczność podczas procesu tworzenia aplikacji. Jedne wymagały trzymania się konkretnych zasad i pozwalały na tworzenie aplikacji o dość ograniczonej funkcjonalności, inne pozwalały na większa elastyczność, nie mniej jednak bardzo często kończyło się na egzotycznych trikach by osiągnąć zamierzony cel. O skuteczności tych narzędzi świadczą systemy jakie powstały choćby w Polsce m.in. cała seria WaPro WF-MAG (KaPer,Gang,Fakir) czy Comarch ERP XL stworzone z wykorzystaniem Clarion’a, czy produkty rodziny Simple.ERP, tworzone za pomocą Power Builder’a i wiele innych. 
-Z czasem narzędzia te zaczęły tracić przewagę z powodu rozwoju języków obiektowych i pojawiania się bibliotek wspomagających programistów w każdym możliwym aspekcie ich pracy.
+Od lat powstają narzędzia, które próbują wyeliminować powtarzalne elementy systemu, które prawie zawsze robi się w podobny sposób niezależnie od tego czy jest to aplikacja do wystawiania faktur, czy program do diagnozowania i leczenia raka. Narzędzia tego typu zwane kiedyś RAD (Rapid Application Development) np. Power Builder, Clarion, LightSwitch zastąpiony obecnie przez Power Apps i wiele innych, w różnym stopniu pozwalają programistom na elastyczność podczas procesu tworzenia aplikacji. Jedne wymagały trzymania się konkretnych zasad i pozwalały na tworzenie aplikacji o dość ograniczonej funkcjonalności, inne pozwalały na większa elastyczność, nie mniej jednak bardzo często kończyło się na egzotycznych trikach by osiągnąć zamierzony cel. O skuteczności tych narzędzi świadczą systemy jakie powstały choćby w Polsce m.in. cała seria WaPro WF-MAG (KaPer,Gang,Fakir) czy Comarch ERP XL stworzone z wykorzystaniem Clarion’a, czy produkty rodziny Simple.ERP, tworzone za pomocą Power Builder’a i wiele innych. Power Apps nawet rozpychają się coraz bardziej w Azure. Nadal jednak pozostaje problem elastyczności tych narzędzi, automatyzacja wielu procesów wymaga ich ustandaryzowania, uproszczenia ergo pewnych kompromisów. 
+Gdzieś po środku pojawiają sie frameworki, które wyręczają w implementacji niektórych funkcjonalności np biblioteki ORM zwalniających nas z oprogramowywania warstwy komunikacji z bazami danych, czy automatycznego generowania warstwy prezentacji na podstawie modelu, które jednocześnie dają nam praktycznie pełną elastyczność dostępna w konkretnym języku programowania.
 
 Jednym z takich jest <a href="https://docs.devexpress.com/eXpressAppFramework/112670/expressapp-framework" target="_blank">DevExpress eXpressApp Framework (XAF)</a>.  <small>*Jest to narzędzie płatne, ale dostępna jest 30 dniowa wersja testowa, a efekt końcowy jest wart ceny licencji, narzędzie zdecydowanie przyspiesza proces tworzenia aplikacji, a jednocześnie firma oferuje bardzo dobry support techniczny, aktualizacje pojawiają się kilkanaście razy w roku*</small>
 
 ExpressApp Framework znacznie ułatwia proces programowania, przejmując na siebie wykonanie czynności związanych z przechowywaniem danych, ich przeglądaniem, mechanizmami do analizy danych, drukowania. XAF oferuje interfejs wysokiego poziomu ukrywający niektóre szczegóły implementacji i pozwalający skoncentrować się na dziedzinie problemu i logice biznesowej. Niektóre cechy XAF, dzięki którym ten proces jest łatwiejszy:
 
-* Do programowania wykorzystujemy C# lub VisualBasic.
+* Do programowania wykorzystujemy C# lub VisualBasic, mając do dyspozycji wszystko co te języki oferują.
 
 * Logika biznesowa bez większych zmian może być używana na wielu platformach (WinForms, WebForms czy Blazor)
 
@@ -44,13 +50,13 @@ ExpressApp Framework znacznie ułatwia proces programowania, przejmując na sieb
 
 * XAF dostarczany jest z wbudowanymi modułami np. do Statystyk, Raportów czy kontroli dostępu. Wiele elementów aplikacji mamy gotowe na starcie.
 
-* Wsparcie techniczne od ludzi z DevExpress jest warte ponownego zasygnalizowania! Nie zdarzyło mi się, żebym nie otrzymał odpowiedzi w później niż po 48 godzinach od zgłoszenia.
+* Wsparcie techniczne od ludzi z DevExpress jest warte ponownego zasygnalizowania! Nie zdarzyło się nam, abyśmy nie otrzymali odpowiedzi w później niż 48 godzin od zgłoszenia.
 
-Należy jednak pamiętać, że nie będziemy mieli z XAF większego pożytku przy tworzeniu aplikacji innego rodzaju np takich jak gry, programy do obróbki grafiki, kolejnego portalu społecznościowego itp.
+Należy jednak pamiętać, że nie będziemy mieli z XAF większego pożytku przy tworzeniu aplikacji innego rodzaju np takich jak gry, programy do obróbki grafiki, kolejnego portalu społecznościowego itp. 
 
 
 
-XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (<a href="https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo" target="_blank">XAF wspiera kilkanaście serwerów baz danych</a> ). Komunikacja z baza danych jest poprzez klasy ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych (nudne CRUD’y poszły się …).
+XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (Lista wspieranych serwerów baz danych: <a href="https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo" target="_blank">https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo</a> ). Komunikacja z baza danych jest poprzez klasy ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych. Wygenerowane widoki możemy dostosować do własnych potrzeb, jeśli to co proponuje XAF nie spełnia do końca naszych potrzeb.
 
 **ListView** wyświetlają  kolekcje danych, pozwalają je sortować i przeszukiwać z wykorzystaniem zaawansowanych metod filtrowania.
 
@@ -65,12 +71,12 @@ XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS S
 
 #### Klasy biznesowe
 
-Model biznesowy definiujemy za pomocą klas określanych jako Business Object (BO), dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji. DevExpress dostarcza <a href="https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces" target="_blank">Business Class Library</a> w której zdefiniowane są najczęściej używane BO (Address, Person, Note, Organization) oraz klasy potrzebne we wbudowanych modułach dodatkowych (m.in. Reports, Dasboards, Security). Nie jesteśmy ograniczeni do tych klas, możemy definiować własne, co zrobimy w dalszej części tego artykułu. DevExpress dostarcza nam kompletny kod źródłowy i lektura kodu powyższych klas jest najlepsza metoda nauki, jak definiować własne klasy. 
+Model biznesowy definiujemy za pomocą klas określanych jako Business Object (BO), dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji. DevExpress dostarcza Business Class Library (<a href="https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces" target="_blank">https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces</a>) w której zdefiniowane są najczęściej używane BO (Address, Person, Note, Organization) oraz klasy potrzebne we wbudowanych modułach dodatkowych (m.in. Reports, Dashboards, Security). Nie jesteśmy ograniczeni do tych klas, możemy definiować własne, co zrobimy w dalszej części tego artykułu. DevExpress dostarcza nam kompletny kod źródłowy i lektura kodu powyższych klas jest najlepsza metoda nauki, jak definiować własne klasy. 
 
 #### Moduły rozszerzające
 
-XAF zawiera kilkanaście modułów rozszerzających funkcjonalność aplikacji. Np wystarczy dołożyć do projektu moduł **Reports** aby w aplikacji pojawił się rozbudowany edytor wydruków. Dodając moduł Security otrzymujemy zaawansowaną obsługę kontroli dostępu do aplikacji. 
-<a href="https://docs.devexpress.com/eXpressAppFramework/118046/application-shell-and-base-infrasctructure/application-solution-components/modules#modules-shipped-with-xaf" target="_blank">Wykaz standardowych modułów dostępny w XAF</a>
+XAF zawiera kilkanaście modułów rozszerzających funkcjonalność aplikacji. Np wystarczy dołożyć do projektu moduł **Reports** aby w aplikacji pojawił się rozbudowany edytor wydruków. Dodając moduł Security otrzymujemy zaawansowaną obsługę kontroli dostępu do aplikacji. Wykaz standardowych modułów dostępny w XAF:
+<a href="https://docs.devexpress.com/eXpressAppFramework/118046/application-shell-and-base-infrasctructure/application-solution-components/modules#modules-shipped-with-xaf" target="_blank">https://docs.devexpress.com/eXpressAppFramework/118046/application-shell-and-base-infrasctructure/application-solution-components/modules#modules-shipped-with-xaf</a>
 
 
 #### Kontrolery i akcje
@@ -103,7 +109,7 @@ Application Model automatycznie wypełniany jest danymi na podstawie zadeklarowa
 
 # Bierzemy się za programowanie
 
-Wyobraźmy sobie standardową specyfikację wymagań: 
+Wyobraźmy sobie "standardową" specyfikację wymagań: 
 
 ***Zróbcie program do fakturowania tak aby było dobrze! Da radę na jutro ?***
 
@@ -114,11 +120,13 @@ Produkty przydałoby się dzielić na grupy, a klientów klasyfikować wg ich wi
 
 Po dalszej analizie zależności pomiędzy tabelami powinny wyglądać mniej więcej tak:
 
+
+![](erd1.png)
+
 <div class="mermaid">
     erDiagram
       CUSTOMER ||--o{ INVOICE : get
       INVOICE ||--|{ INVOICEITEM : contains
-
       PRODUCT ||--|{ INVOICEITEM : in
       VATRATE ||--|{ INVOICEITEM : use
       VATRATE ||--|{ PRODUCT : use
@@ -175,7 +183,7 @@ Kilka słów o powyższej strukturze projektów:
 
     Tutaj definiujemy Edytory i Kontrolery dedykowane dla platformy Blazor. Uwaga klasy BO zdefiniowane tutaj nie będą widziane w aplikacji Win! 
 
-* Invoice.Module.Win
+* Invoice.Win
   
     Praktycznie jest to projekt z którego powstaje plik wykonywalny aplikacji. Ewentualne zmiany w tym projekcie obejmować mogą pliki Program.cs oraz WinApplication.cs i konfiguracji. Tutaj nie należy definiować kontrolerów ani klas BO. Nie będą one widoczne dla mechanizmów XAF i nie zostaną uwzględnione w modelu aplikacji.
     
@@ -193,6 +201,7 @@ Kilka słów o powyższej strukturze projektów:
 * Invoice.WebApi
 
     Funkcjonalność wprowadzona w najnowszej wersji DevExpress. Serwis WebApi, który możemy użyć do modyfikacji danych z zewnętrznych aplikacji np aplikacji zrobionej w NET. MAUI. Wystarczy określić jakie BO chcemy udostępniać na zewnątrz i API do naszego sytemu gotowe.
+    *Generowanie tego projektu nie jest potrzebne jeśli tworzymy projekt dla platformy Blazor. Invoice.Blazor.Server także może działać jako WebApi*
 
     
 ### Business Objects
@@ -865,8 +874,7 @@ Wersja WinForms
 Wersja Blazor
 ![](blazor1.png)
 
-I nasza aplikacja do fakturowania jest prawie gotowa. Patrząc na powyższy obrazek zostaje nam drobny niesmak, ze w miejscu w miejscu faktury widzimy identyfikator, zamiast bardziej czytelnej dla ludzi nazwy. Załatwi to dla nas atrybut *XafDefaultProperty*.
-
+I nasza aplikacja do fakturowania jest prawie gotowa. Patrząc na powyższy obrazek zostają nam drobne rzeczy do poprawy: w miejscu w miejscu faktury widzimy identyfikator, zamiast bardziej czytelnej dla ludzi nazwy lub numeru faktury. Załatwi to dla nas atrybut *XafDefaultProperty*. W parametrze atrybuty wskazujemy nazwę pola, które chcemy wyświetlać zamiast wartości z identyfikatora. *Standardowo XAF szuka pierwszego pola w którego nazwie występuje słowo `Name` i to pole jest brane jako domyślne.*
 ```csharp
 ...
 [XafDefaultProperty(nameof(InvoiceNumber))]
@@ -876,8 +884,7 @@ public class Invoice : BaseObject
 ...
 }
 ```
-
-Kolejny drobiazg do rozwiązania to numer faktury. Powinien być unikalny i nie może być pusty. Można zrobić żeby automatycznie się wyliczał lub wymusić na użytkowniku, aby wpisywał właściwą wartość. Dla uproszczenia zastosujemy drugie rozwiązanie (Wyliczaniem tego typu wartości zajmiemy się w dalszej części).  XAF dostarcza nam dodatkowy moduł <a href="https://docs.devexpress.com/eXpressAppFramework/113684/validation-module" target="_blank">Validation</a>, który służy do weryfikacji poprawności danych i wystarczy, że dodamy dwie adnotacje:
+Kolejny drobiazg do rozwiązania to numer faktury. Powinien być unikalny i nie może być pusty. Można zrobić żeby automatycznie się wyliczał lub wymusić na użytkowniku, aby wpisywał właściwą wartość. Dla uproszczenia zastosujemy drugie rozwiązanie.  XAF dostarcza nam dodatkowy moduł przeznaczony do weryfikacji poprawności wprowadzanych danych: Validation (<a href="https://docs.devexpress.com/eXpressAppFramework/113684/validation-module" target="_blank">https://docs.devexpress.com/eXpressAppFramework/113684/validation-module</a>), który służy do weryfikacji poprawności danych i wystarczy, że dodamy dwie adnotacje:
 
 ```csharp
 using DevExpress.Persistent.Validation;
@@ -902,139 +909,67 @@ Teraz jeśli użytkownik będzie chciał zapisać takie dane otrzyma komunikat b
 
 ### Zmiany w modelu
 
-Picture:
+Przy wszystkich polach typu decimal program domyślnie wyświetla nam lokalną walutę (stosuje maskę Currency {0:C}), chcemy ją zmienić w naszej aplikacji na {0:N}. W tym celu w projekcie Invoice.Module.Win odszukujemy Model.DesignedDiffs.xafml, po kliknięciu na nim otworzy się Model Editor, w którym odszukujemy gałąź: ViewItems/PropertyEditors/System.Decimal i zmieniamy DefaultDisplayFormat na {0:N}.
 
-Win
+![](model1.png)
 
-![](model1.png))
+Podobnie w wersji Blazor
 
-Blazor
-
-![](model2.png))
-
-## Generator danych testowych
-
-Program do prezentacji użytkownikom czy nawet do testów, lepiej wygląda z listami i formatkami wypełnionymi danymi.Wygenerujemy w tym celu nieco danych testowych wykorzystując pakiet Bogus.
-
-W pliku Updater.cs dodajemy kod który wywoła metody wpisujące dane testowe:
+![](model2.png)
 
 
-```csharp
-using Bogus;
-...
-public class Updater : ModuleUpdater
-{
-    ...
-    
-    public override void UpdateDatabaseAfterUpdateSchema()
-    {
-        base.UpdateDatabaseAfterUpdateSchema();
-    
-        ...
-
-        PrepareTestData();
-        ObjectSpace.CommitChanges(); 
-    }
-    
-    private void PrepareTestData()
-    {
-        var rates = ObjectSpace.GetObjectsQuery<VatRate>().ToList();
-        if (rates.Count == 0)
-        {
-    
-            rates.Add(NowaStawka("23%", 23M));
-            rates.Add(NowaStawka("0%", 0M));
-            rates.Add(NowaStawka("7%", 7M));
-            rates.Add(NowaStawka("ZW", 0M));
-        }
-    
-        var cusFaker = new Faker<Customer>("pl")
-            .CustomInstantiator(f => ObjectSpace.CreateObject<Customer>())
-    
-            .RuleFor(o => o.Notes, f => f.Company.CatchPhrase())
-            .RuleFor(o => o.CustomerName, f => f.Company.CompanyName())
-            .RuleFor(o => o.Segment, f => f.PickRandom<Segment>())
-            .RuleFor(o => o.City, f => f.Address.City())
-            .RuleFor(o => o.PostalCode, f => f.Address.ZipCode())
-            .RuleFor(o => o.Street, f => f.Address.StreetName());
-        cusFaker.Generate(10);
-    
-    
-        var prodFaker = new Faker<Product>("pl")
-    
-        .CustomInstantiator(f => ObjectSpace.CreateObject<Product>())
-            .RuleFor(o => o.ProductName, f => f.Commerce.ProductName())
-            .RuleFor(o => o.Notes, f => f.Commerce.ProductDescription())
-            .RuleFor(o => o.Symbol, f => f.Commerce.Product())
-            .RuleFor(o => o.UnitPrice, f => f.Random.Decimal(0.01M, 100M))
-               .RuleFor(o => o.VatRate, f => f.PickRandom(rates))
-            .RuleFor(o => o.GTIN, f => f.Commerce.Ean13());
-    
-        prodFaker.Generate(10);
-    
-    
-        var customers = ObjectSpace.GetObjectsQuery<Customer>(true).ToList();
-    
-    
-        var orderFaker = new Faker<Invoice.Module.BusinessObjects.Invoice>("pl")
-        .CustomInstantiator(f => ObjectSpace.CreateObject<Invoice.Module.BusinessObjects.Invoice>())
-            .RuleFor(o => o.InvoiceNumber, f => f.Random.Int().ToString())
-            .RuleFor(o => o.InvoiceDate, f => f.Date.Past(20))
-            .RuleFor(o => o.DueDate, f => f.Date.Past(2))
-            .RuleFor(o => o.Customer, f => f.PickRandom(customers));
-        var orders = orderFaker.Generate(customers.Count * 10);
-    
-        var products = ObjectSpace.GetObjectsQuery<Product>(true).ToList();
-    
-        var itemsFaker = new Faker<InvoiceItem>()
-        .CustomInstantiator(f => ObjectSpace.CreateObject<InvoiceItem>())
-            .RuleFor(o => o.Invoice, f => f.PickRandom(orders))
-            .RuleFor(o => o.Product, f => f.PickRandom(products))
-            .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M));
-    
-        var items = itemsFaker.Generate(orders.Count * 10);
-    }
-    private VatRate NowaStawka(string symbol, decimal val)
-    {
-        var vat = ObjectSpace.FindObject<VatRate>(CriteriaOperator.Parse("Symbol = ?", symbol));
-        if (vat == null)
-        {
-            vat = ObjectSpace.CreateObject<VatRate>();
-            vat.Symbol = symbol;
-            vat.Value = val;
-    
-    
-        }
-        return vat;
-    }
-    ...
-    
-}    
-```
 
 W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyciu niewielkiej wprawy jesteśmy napisać poniżej kilku godzin, w tym także powstanie wydruk faktury, statystyka (dashboard). I mamy resztę dnia na korpo meetingi w teamsach czy innych zoomach, ewentualnie popykać w piłkarzyki lub nowy FarCry na PS5 lub X1.
 
 ### Wydruk faktury
 
-
+XAF dysponuje modułem obsługującym wydruki, wykorzystamy go aby przygotować wydruk faktury.
+W tym celu W menu bocznym przechodzimy do sekcji Report i wybieramy Reports. Na liście wydruków dodajemy nowy i w oknie wpisujemy nazwę naszego raportu oraz wybieramy klasę, na której ma być dostępny. Następnie naciskamy Finish, jeśli zapyta się o rodzaj wydruku wybierzemy blank bo to jedyny słuszny wariant dla programisty twardziela. Pojawi nam się okno kreatora wydruków czyli Report Desingner. 
 
 ![](report1.png)
 
-### Dashboard
+Report Designer jest na tyle intuicyjny, że jeśli robiliście wydruk w jakimkolwiek innym narzędziu np Crystal Reports czy MS SQL Reporting to tu nie powinniście mieć większych problemów.
+Standardowa polska faktura musi mieć dane klienta, sprzedawcy, listę sprzedanych artykułów i oczywiście podsumowanie z rozbiciem na stawki VAT.
+Sekcję Detail proponuję użyć jako nagłówek naszej faktury i dołożyć do niego dwukrotnie DetailReport wskazując na kolekcję źródłowa InvoiceItems. W efekcie końcowym powinniśmy mieć 3 sekcje Detail, DetailReport(InvoiceItems) i DetailReport1(InvoiceItems). Pierwszy z nich wyświetli nam listę pozycji faktury, a drugi pogrupujemy po Symbolu Stawki VAT, Wyliczymy Sumę wg grupy i sumę Wg Raportu co da nam podsumowanie w stawkach Vat i podsumowanie całej Faktury.
+W DetailReport dodajemy GroupHeader w którym umieścimy nagłówek pozycji
+W DetailReport1 dodajemy Grupowanie po stawce Vat, minimalizujemy GroupHeader - bo go nie potrzebujemy a jednocześnie nie da się go wyłączyć. A GroupFooter przeznaczamy na podsumowanie całej faktury.
 
-Opisanie procesu tworzenia dashboardu ...
+![](report2.png)
 
-![](dash1.png)
+Do sekcji Detail dodajemy dane faktury jak numer, datę płatności, wystawienia i dane klienta
+
+Na liście dostępnych pól wybieramy pola, które chcemy mieć w sekcji pozycji dokumentu. Najlepiej wybrać wszystkie naraz w kolejności w jakiej maja być na fakturze (z wciśniętym Ctrl klikamy kolejno na Product.ProductName, Quantity, UnitPrice,VatRate.Symbol, Netto,Vat Brutto). I teraz klikając na jednym zaznaczonych pól lewym przyciskiem myszy (LPM) przeciągamy do sekcji DetailReport.Detail. W ten sposób mamy wszystkie wymagane kolumny w sekcji wydruku pozycji faktury Powtarzamy operację jeszcze 3-krotnie: przeciągamy tak samo do sekcji ReportDetail1.Detail, ReportDetail1.GroupFooter i ReportDetail1.ReportFooter. Teraz klikamy na liście pól Prawym klawiszem myszki i przeciągamy kolumny do sekcji nagłówka pozycji czyli ReportDetail.Header. Zwróćcie uwagę że tym razem zamiast pól z danymi zostały przeciągnięte nazwy tych pól. (LPM - przeciągamy pola na dane, PPM - przeciągamy nagłówek pola).
+
+W sekcji ReportDetail1 we wszystkich podsekcjach usuwamy kolumny ProductName, Quantity, UnitPrice (wystarczy kliknąć na polu PPM  i wybrać delete column). Tak jest prościej niż dodawać te pola osobno i potem wyrównywać szerokości z lista pozycji.
+W ReportDetail1.GroupFooter po kliknięciu PPM na polu mamy dostęp do właściwości tego pola, należy tam w polu Summary wybrać Group, co oznacza,że to pole ma zliczać sumę  w ramach grupy.
+W ReportDetail1.ReportFooter w podobny sposób wybieramy Summary: Report, co oznacza że będzie tam zliczana suma dla całego raportu - czyli wszystkich pozycji z ReportDetail1. Operacje ta powtarzamy dla pól Netto, Vat i Brutto.
+
+W sekcji ReportDetail1.Detail ustawiamy Visiblity= false, co spowoduje, ze ta sekcja nie będzie drukowana na raporcie.
+
+Jeśli teraz byśmy kliknęli na Report Preview zobaczymy ze kolejne faktury pojawiają sie na tej samej kartce zaraz po poprzedniej. Należy ustawić przejście do nowej strony dla każdej z faktur. Żeby to osiągnąć wybierzmy sekcję Detail i w menu po prawej w polu PageBreak wybieramy Before Band Except First Entry.
+
+Jeśli program nie będzie służył do obsługi płatności w BTC, przydałoby się  zaznaczyć wszystkie pola z kwotami ustawić im format na {0:N2}.
+
+![](report5.png)
+
+![](report3.png)
+Pozostaje dopasowanie szerokości kolumn, ustawienie rodzaju i rozmiaru czcionki, pogrubień itp. Tu każdy może to zrobić wg własnego gustu.
+Po wybraniu preview wydruk wygląda mniej więcej jak poniżej.
+
+![](report4.png)
+
+Brakuje tekstu kwota słownie, dane sprzedawcy, ale to uzupełnimy w niedalekiej przyszłości.
+
 
 ### Jak to wszystko działa ...
 
-Chociaż architektura XAF pomaga programistom zaoszczędzić znaczną ilość czasu, sama architektura nie kontroluje każdego aspektu procesu tworzenia oprogramowania. Nadal należy stosować się do dobrych praktyk, tworzyć testy jednostkowe i co ważne dla rozbudowanych aplikacji dobrze rozpoznać dziedzinę i zaprojektować architekturę tworzonej aplikacji.
+Chociaż XAF pomaga programistom zaoszczędzić znaczną ilość czasu, sama architektura nie kontroluje każdego aspektu procesu tworzenia oprogramowania. Nadal należy stosować się do dobrych praktyk, tworzyć testy jednostkowe i co ważne dla rozbudowanych aplikacji dobrze rozpoznać dziedzinę i zaprojektować architekturę tworzonej aplikacji. Wbrew pozorom to nie jest narzędzie dla początkujących programistów.
 Część klas można wyklikać w edytorze lub zaimportować z istniejącej bazy danych i uruchomić działająca aplikację bez napisania linijki kodu, ale do tworzenia złożonych aplikacji nadal niezbędna jest znajomość Visual Studio, programowania obiektowego, tworzenia zapytań LINQ itp. Dobrze jest znać dobre praktyki dla używanych technologii. Kluczowa jest znajomość samych zasad funkcjonowania XAF i XPO.
 
 #### Kontrola wspóldzielonego dostepu do danych (Optimistic Locking)
 Obsługa współdzielonego dostępu do bazy danych wymagana jest w każdej poważnej aplikacji biznesowej. XPO obsługuje wariant optymistyczny. Głównym zadaniem OL jest kontrola modyfikacji tego samego obiektu przez wielu użytkowników. Do tego celu używane jest pole OptimisticLockingField automatycznie dodawane do tworzonych tabel (w wybranych typach klas XPO - szczegóły w tabelce niżej). Gdy obiekt odczytywany jest z bazy danych, zapamiętywana jest wartość z OptimisticLockingField. Gdy obiekt jest zmieniany, zapamiętana wartość porównywana jest z wartością w bazie i jeśli się różnią zgłaszany jest wyjątek LockingException. Jeśli wartości są równe, pole OptimisticLockingField jest aktualizowane (domyślnie jest to inkrementowane pole typu int) i obiekt jest zapisywany do bazy.
 
-#### Odroczone usuwanie danych (Deferred Deletion) poszukać odpowiednika po polsku !!!
+#### Odroczone usuwanie danych (Deferred Deletion)
 
 Jeśli nasz klasy BO dziedziczą po XPObject, XPCustomObject lub BaseObject włączone jest Deferrd Deletion. Oznacza to, że w momencie usuwania danych, XPO nie usuwa fizycznie rekordu z bazy, tylko oznacza go jako usuniętego wypełniając pole GCRecord. Podczas wyświetlania kolekcji danych (np na ListView), pobierane są jedynie rekordy, w których GCRecord ma wartość NULL.Pobierane są jedynie gdy pobieramy dane z którymi były w relacji (usunięty rekord jest widoczny, ale nie można go edytować). To rozwiązanie pozwala uniknąć błędów w czasie usuwania lub późniejszego dostępu do danych które były powiązane z usuniętym obiektem.
 Usunięty w ten sposób rekord można odzyskać wstawiając do pola GCRecord wartość NULL.
@@ -1045,18 +980,27 @@ Tworząc obiekty biznesowe w bieżącej aplikacji, w większości użyłem klas 
 
 | Typ Obiektu XPO | Wbudowany OID | Deferred Deletion | Optimistic Locking |                            Uwagi                             |
 | :-------------: | :-----------: | :---------------: | :----------------: | :----------------------------------------------------------: |
-|    XPObject     |      TAK      |        TAK        |        TAK         | Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji |
+|XPObject     |      TAK      |        TAK        |        TAK         | Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji |
 |  XPLiteObject   |      NIE      |        NIE        |        NIE         | Typ używany dla zaimportowanych BO z bazy danych, gdy zależy nam aby nie modyfikować struktury istniejącej bazy danych |
 | XPCustomObject  |      NIE      |        TAK        |        TAK         | Typ używany dla zaimportowanych BO z bazy danych, gdzie chcemy użyć wbudowanego mechanizmu DD i OL |
 | PersistentBase  |      NIE      |        NIE        |        TAK         | Praktycznie nie używany w XAF, służy jako bazowy do pozostałych |
 |  XPBaseObject   |      NIE      |        NIE        |        TAK         |                             j.w.                             |
 |   BaseObject    |      TAK      |        TAK        |        TAK         | W sytuacji gdy potrzebujemy użyć GUID w polu identyfikatora, można użyć tego typu zamiast XPObject |
 
+#### Object Space
+
+Wszystkie operacje związane z bazą danych odbywają się poprzez ObjectSpace. Object Space pozwala nam na edycję czy przeszukiwanie danych jako transakcji. Każdy tworzony widok posiada swój ObjectSpace, który zajmuje się dostarczeniem danych do widoku, rejestruje zmiany obiektów widoku i pozwala je zapisać w bazie danych. Dostęp do ObjectSpace mamy poprzez `View.ObjectSpace`. Możemy z niego korzystać np w kontrolerach. Nie mniej jednak View.ObjectSpace jest przewidziany do operacji związanych z obsługiwanym widokiem. Jeśli chcemy przeprowadzać złożone operacje na wielu danych lepiej jest utworzyć osobny ObjectSpace za pomocą komendy `Application.CreateObjectSpace`.
+
+Więcej na stronach DevExpress:
+<a href="https://docs.devexpress.com/eXpressAppFramework/113710/data-manipulation-and-business-logic/ways-to-implement-business-logic?p=net5" target="_blank">https://docs.devexpress.com/eXpressAppFramework/113710/data-manipulation-and-business-logic/ways-to-implement-business-logic?p=net5</a>
+
+<a href="https://docs.devexpress.com/eXpressAppFramework/113711/data-manipulation-and-business-logic/create-read-update-and-delete-data?p=net5" target="_blank">https://docs.devexpress.com/eXpressAppFramework/113711/data-manipulation-and-business-logic/create-read-update-and-delete-data?p=net5</a>
+
 
 
 ## Rozbudowujemy aplikację
 
-W przypadku niektórych danych chcielibyśmy mieć informację o tym, kto i kiedy utworzył rekord lub go modyfikował. Napiszemy w tym celu klasę **CustomBaseObject**, która będzie wypleniać te dane. 
+W przypadku niektórych danych chcielibyśmy mieć informację o tym, kto i kiedy utworzył rekord lub go modyfikował. Napiszemy w tym celu klasę **CustomBaseObject**, która będzie wypełniać te dane. 
 
 ```csharp
 [NonPersistent]
@@ -1146,29 +1090,57 @@ Następnie klasy, w których chcemy przechowywać takie informacje, zmodyfikujem
 
 Wprowadzimy teraz drobne zmiany w interfejsie użytkownika za pomocą Edytora Modelu:
 W SolutionExplorer odszukujemy projekt Invoice.Module a w nim plik Model.DesignedDiffs.xafml. 
-Po otwarciu Edytora Modelu, 
-
-
+Po otwarciu Edytora Modelu, idziemy do Views/Invoice.Module.BusinessObjects/Customeer/Customer_DetailView i tam pojawi nam się domyślne okno przygotowane do edycji danych klienta. Klikając PPM na oknie pojawi się opcja Customize Layout i uruchomi się edytor pozwalający na modyfikację widoku. W tym przypadku pole notes zajmuje 30% ekranu, a nie jest tak istotne jak np lista Invoices. Dlatego Grupę Invoices zamienimy na TabbedGroup, Na polu Notes utworzymy nową grupę i ta grupę przeciągniemy jako drugą zakładkę w InvoicesTabbedGroup. 
 ![](lay1.png)
+
+Modyfikacje Layoutu w wyżej przedtawiony sposób są nieuniknione, żaden automat nie zrobi tego dokładnie jak wymyśli to sobie użytkownik, dlatego biegłość w definiowaniu widoku jest przydatna. Dla tych którzy uruchomili program na swoim komputerze proponuję otworzyć ten DetailView dla klienta i klikając PPM wybrać Customize Layout. Taka mała niespodzianka, rzadko dostępna w aplikacjach tego typu ...
+
+Podobny efekt można uzyskać stosując DetailViewLayoutAttribute dodając je do pól które chcemy zebrać w jednej grupie:
+
+```csharp
+    public class Customer : CustomBaseObject
+    {
+        ...
+        [Association]
+        [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
+        public XPCollection<Invoice> Invoices
+        {
+            get
+            {
+                return GetCollection<Invoice>(nameof(Invoices));
+            }
+        }
+
+        [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Size(SizeAttribute.Unlimited)]
+        
+        public string Notes
+        {
+            get => notes;
+            set => SetPropertyValue(nameof(Notes), ref notes, value);
+        }
+        ..
+    }
+```
+Podobnie możemy zrobić praktycznie w każdej klasie gdzie występuje jakaś kolekcja i pole string z rozmiarem Unlimited.
+
 
 
 Więcej na temat modyfikacji <a href="https://docs.devexpress.com/eXpressAppFramework/112833/getting-started/in-depth-tutorial-winforms-webforms/ui-customization/customize-the-view-items-layout" target="_blank">widoków</a>
 
-### Kontrolery i akcje
-
-
-
 ### Wpłaty i rozrachunki
 
-Wymaganie: program ma umożliwiać rejestrowanie wpłat dokonanych przez kontrahenta. Jedna wpłata może dotyczyć spłacać cześć faktury, całą fakturę, lub wiele faktur. Klient może wskazać jakie faktury dotyczy wpłata, ale to osoba rozliczająca decyduje która faktura zostanie spłacona.
+Nowe wymaganie od użytkownika: program ma umożliwiać rejestrowanie wpłat dokonanych przez kontrahenta. Jedna wpłata może dotyczyć spłacać cześć faktury, całą fakturę, lub wiele faktur. Klient może wskazać jakie faktury dotyczy wpłata, ale to osoba rozliczająca decyduje która faktura zostanie spłacona.
 Dostarczyć automat rozliczający wpłatę na faktury w kolejności daty płatności faktur.
 
 Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
+
+![](erd2.png)
+
 <div class="mermaid">
     erDiagram
       CUSTOMER ||--o{ INVOICE : get
       INVOICE ||--|{ INVOICEITEM : contains
-
       PRODUCT ||--|{ INVOICEITEM : in
       VATRATE ||--|{ PRODUCT : use
       VATRATE ||--|{ INVOICEITEM : use
@@ -1399,14 +1371,18 @@ public void FindPaymentsForInvoice()
 }
 ```
 
-Tu też należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
+Tu też należy zwrócić uwagę na atrybut Action - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
 
 ### Kontrolery
 
-Kontrolery pozwalają na roszerzanie interfejsu użytkownika oraz wykonywanie pewnych akcji w momencie otwierania lub zamykania widoku, są one pewnego rodzaju kontenerami w których są przechowywane akcje określone dla wybranych widoków oraz obiektów.
-Pierwszy kontroler posłuży do zmiany koloru nieparzystych wierszy na listach, a dokładniej to dwa kontrolery, ponieważ trzeba stworzyć osobny kontroler dla wersji Win oraz wersji Blazor.
+Kontrolery pozwalają na rozszerzanie interfejsu użytkownika oraz wykonywanie pewnych akcji w momencie otwierania lub zamykania widoku, są one pewnego rodzaju kontenerami w których są przechowywane akcje określone dla wybranych widoków oraz obiektów.
 
-Blazor tworzymy w projekcie Invoice.Module.Blazor
+
+
+Pierwszy kontroler posłuży do zmiany koloru nieparzystych wierszy na listach, a dokładniej to dwa kontrolery, ponieważ trzeba stworzyć osobny kontroler dla wersji Win oraz wersji Blazor. 
+Kontroler wywoływany jest dla każdego tworzonego ListView ( `ViewController<ListView>` ), odnajduje w nim GridListEditor i ustawia mu odpowiednie właściwości. Oczywiście można to było zmienić w modelu, ale musielibyśmy zrobić dla każdej klasy.
+
+Kontroler dla wersji Blazor tworzymy w projekcie Invoice.Module.Blazor
 ```csharp
     public class GridViewController : ViewController<ListView>
     {
@@ -1421,6 +1397,8 @@ Blazor tworzymy w projekcie Invoice.Module.Blazor
         }
     }
 ```
+
+![](BlazorOddRow.png)
 
 Win tworzymy w projekcie Invoice.Module.Win
 ```csharp
@@ -1439,12 +1417,129 @@ Win tworzymy w projekcie Invoice.Module.Win
     }
 ```
 
-![](oddRow.png)
+![](WinOddRow.png)
+
+
+Musieliśmy zrobić 2 niezależne kontrolery dlatego ze sposób odwołania się do GridView dla obu platform jest odmienny.
+
+
+Kolejny kontroler będzie przeznaczony dla obiektu Customer działający tylko dla ListView, tym razem będzie on wspólny dla obu wersji dlatego dodamy go w Invoice.Module. Stworzymy w nim akcję do wyszukiwania klientów z GUS (wykorzystam do tego  https://github.com/tailored-apps/Gus.Regon.BIR11.Proxy). Instalujemy go jako pakiet nuget:
+
+`Install-Package Gus.Regon.BIR11.Proxy`
+
+Definiując kontroler wskazujemy, dla jakaich rodzajów widoku i na jakiej klasie powinien zostać aktywowany. W tym przypadku ma być wywoływany tylko dla ListView wyświetlających obiekty klasy Customer, co kreślamy podając te klasy jako parametry podczas deklarowania  konstruktora: (`ObjectViewController<ListView, Customer>`). W kontrolerze tworzymy akcję typu **ParametrizedAction** o nazwie searchCustomerAction, która wyświetli pole na wstążce menu, gdzie będzie można wpisać NIP klienta. Po naciśnięciu szukaj, zostanie wywołane zdarzenie Execute, w którym program spróbuje odnaleźć go w bazie danych, jeśli nie znajdzie, odpyta serwis GUS o klienta z tym numerem NIP. (Uwaga w GUSHelper.cs trzeba wpisać poprawny klucz do API `UserKey`, który można otrzymać od administratora tego serwisu). 
+
+
+```csharp
+    using Gus.Regon.BIR11.WebService;
+    using Gus.Regon.BIR11.Proxy;
+    ...
+    public class CustomerListViewController : ObjectViewController<ListView, Customer>
+    {
+        private readonly ParametrizedAction searchCustomerAction;
+
+        public CustomerListViewController()
+        {
+            searchCustomerAction = new ParametrizedAction(this, $"{GetType().FullName}{nameof(searchCustomerAction)}", PredefinedCategory.Unspecified, typeof(string))
+            {
+                Caption = "Search customer",
+                ImageName = "EnableSearch",
+                Shortcut = "F6",
+                PaintStyle = ActionItemPaintStyle.Image,
+            };
+            searchCustomerAction.Execute += SearchCustomerAction_Execute;
+        }
+
+        private void SearchCustomerAction_Execute(object sender, ParametrizedActionExecuteEventArgs e)
+        {
+            if (e.ParameterCurrentValue == null)
+            {
+                return;
+            }
+            if (e.ParameterCurrentValue.ToString().Length != 10)
+            {
+                throw new UserFriendlyException("Vat number must have 10 signs.");
+            }
+
+            var objectSpace = Application.CreateObjectSpace();
+            var customer = objectSpace.GetObjectsQuery<Customer>().Where(x => x.VatNumber == e.ParameterCurrentValue.ToString()).FirstOrDefault();
+            if (customer == null)
+            {
+                customer = SearchCustomer(e, objectSpace);
+            }
+
+            e.ShowViewParameters.CreatedView = Application.CreateDetailView(objectSpace, customer);
+        }
+
+        private Customer SearchCustomer(ParametrizedActionExecuteEventArgs e, IObjectSpace objectSpace)
+        {
+            Customer customer;
+            var subject = GusHelper.GetByNip(e.ParameterCurrentValue.ToString())?.dane?.FirstOrDefault();
+            if (subject == null || (subject.Regon == null && subject.Nazwa == null && subject.Miejscowosc == null))
+            {
+                throw new UserFriendlyException("Customer not found.");
+            }
+
+            customer = objectSpace.CreateObject<Customer>();
+            customer.VatNumber = subject.Nip;
+            customer.PostalCode = subject.KodPocztowy;
+            customer.City = subject.Miejscowosc;
+            customer.Street = subject.Ulica;
+            customer.CustomerName = subject.Nazwa;
+            return customer;
+        }
+    }
+```
+Klasa pomocnicza do pobierania danych klienta z której skorzystaliśmy w kontrolerze. 
+```csharp
+    using Gus.Regon.BIR11.WebService;
+    using Gus.Regon.BIR11.Proxy;
+    ...
+    public static class GusHelper
+    {
+        public static Gus.Regon.BIR11.Proxy.Models.DaneSzukajPodmioty.DaneSzukajPodmioty.root GetByNip(string nip)
+        {
+            var clientOptions = new BirClientOptions()
+            {
+                EndpointAddress = "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc",
+                UserKey = "f3ccc9d63a3243bba830" 
+            };
+
+            IOptions<BirClientOptions> optionParameter = Options.Create(clientOptions);
+            var client = new Client(optionParameter);
+            var loginResponse = client.Zaloguj();
+
+            var searchParameters = new ParametryWyszukiwania { Nip = nip };
+
+            try
+            {
+                var response = client.DaneSzukajPodmioty(new DaneSzukajPodmiotyRequest { pParametryWyszukiwania = searchParameters });
+                if (string.IsNullOrEmpty(response.DaneSzukajPodmiotyResult))
+                {
+                    throw new UserFriendlyException("Customer not found.");
+                }
+                using var reader = new StringReader(response.DaneSzukajPodmiotyResult);
+                XmlSerializer xmlSerializerData = new XmlSerializer(typeof(Gus.Regon.BIR11.Proxy.Models.DaneSzukajPodmioty.DaneSzukajPodmioty.root));
+                return (Gus.Regon.BIR11.Proxy.Models.DaneSzukajPodmioty.DaneSzukajPodmioty.root)xmlSerializerData.Deserialize(reader);
+            }
+            catch (Exception ex)
+            {
+                var value = client.GetValue(new GetValueRequest { Body = new GetValueRequestBody { pNazwaParametru = "KomunikatKod" } });
+                throw new UserFriendlyException(ex);
+            }
+            finally
+            {
+                client.Wyloguj(new WylogujRequest { pIdentyfikatorSesji = loginResponse.ZalogujResult });
+            }
+        }
+    }
+```
 
 
 ### Moduł Conditional Appearance
 
-W fakturach chcemy na niebiesko wyświetlać te które są zapłacone, a na czerwono niezapłacone przeterminowane.
+W XAF w celu warunkowej modyfikacji niektórych cech elementów interfejsu użytkownika np kolorowania, widoczności czy rodzaju fontu, możemy użyć modułu Conditional Appearance.
+Np w fakturach chcemy na niebiesko wyświetlać te które są zapłacone, a na czerwono niezapłacone przeterminowane:
 
 ```csharp
 ...
@@ -1460,10 +1555,10 @@ public class Invoice : BaseObject
 
 ...
 ```
-Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać złożonych warunków, zdecydowanie prościej jest wyliczyć ten warunek w zmiennej Overdue i jej użyć w regule Apperance/Criteria 
+Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać wpisywania złożonych warunków, ponieważ nie mamy tam weryfikacji składni na etapie programowania i nietrudno o pomyłkę. Zdecydowanie prościej jest wyliczyć ten warunek w zmiennej Overdue i jej użyć w regule Apperance/Criteria 
 
 
-Płatności które zostały już zaksięgowane na faktury chcemy wyświetlać na niebiesko
+W przypadku płatności, które zostały już zaksięgowane na faktury chcemy wyświetlać na niebiesko:
 
 ```csharp
 ...
@@ -1472,106 +1567,118 @@ public class Payment : XPObject
 {
 ...
 ```
-Więcej w tym temacie na stronie <a href="https://docs.devexpress.com/eXpressAppFramework/113286/conditional-appearance" target="_blank">DevExpress</a>
+Więcej w tym temacie na stronie DevExpress: <a href="https://docs.devexpress.com/eXpressAppFramework/113286/conditional-appearance" target="_blank">https://docs.devexpress.com/eXpressAppFramework/113286/conditional-appearance</a>
 
-# od tego miejsca II ARTYKUŁ !!!!!!!
 
-### Tree List Module
+## Generator danych testowych
 
-Chcemy teraz w produktach dołożyć podział na kategorie. Z tym, że kategorie mogą mieć podkategorie, te mogą mieć pod-podkategorie itd... Pomoże nam w tym TreeListEditor. 
-Zakładam, że przy tworzeniu projektów w wizardzie wybraliście także TreeEditor.
+Program do prezentacji użytkownikom czy nawet do testów, lepiej wygląda z listami i formatkami wypełnionymi danymi.Wygenerujemy w tym celu nieco danych testowych wykorzystując pakiet Bogus.
 
-Tworzymy klasę bazową, która implementuje interfejs ITreeNode, wymagany do hierarchicznego wyświetlania danych:
+W pliku Updater.cs dodajemy kod który wywoła metody wpisujące dane testowe:
+
 
 ```csharp
-[DefaultProperty(nameof(TreeListBaseObject.Caption))]
-[DefaultClassOptions]
-public class TreeListBaseObject : BaseObject, ITreeNode
+using Bogus;
+...
+public class Updater : ModuleUpdater
 {
-   private TreeListBaseObject parentObject;
-   private string caption;
-   public TreeListBaseObject(Session session) : base(session) { }
-   public string Caption
-   {
-      get { return caption; }
-      set { SetPropertyValue<string>(nameof(Caption), ref caption, value); }
-   }
-   [Browsable(false)]
-   [Association("TreeListBaseObject-TreeListBaseObject")]
-   public TreeListBaseObject ParentObject
-   {
-      get { return parentObject; }
-      set { SetPropertyValue<TreeListBaseObject>(nameof(ParentObject), ref parentObject, value); }
-   }
-   [Association("TreeListBaseObject-TreeListBaseObject"), Aggregated]
-   public XPCollection<TreeListBaseObject> NestedObjects
-   {
-      get { return GetCollection<TreeListBaseObject>(nameof(NestedObjects)); }
-   }
-   #region ITreeNode Members
-   IBindingList ITreeNode.Children
-   {
-      get { return NestedObjects; }
-   }
-   string ITreeNode.Name
-   {
-      get { return Caption; }
-   }
-   ITreeNode ITreeNode.Parent
-   {
-      get { return ParentObject; }
-   }
-   #endregion
+    ...
+    
+    public override void UpdateDatabaseAfterUpdateSchema()
+    {
+        base.UpdateDatabaseAfterUpdateSchema();
+    
+        ...
 
-}
+        PrepareTestData();
+        ObjectSpace.CommitChanges(); 
+    }
+    
+        private void PrepareTestData()
+        {
+            var rates = ObjectSpace.GetObjectsQuery<VatRate>().ToList();
+            if (rates.Count == 0)
+            {
+                rates.Add(NowaStawka("23%", 23M));
+                rates.Add(NowaStawka("0%", 0M));
+                rates.Add(NowaStawka("7%", 7M));
+                rates.Add(NowaStawka("ZW", 0M));
+            }
+
+            var cusFaker = new Faker<Customer>("pl")
+                .CustomInstantiator(f => ObjectSpace.CreateObject<Customer>())
+
+                .RuleFor(o => o.Notes, f => f.Company.CatchPhrase())
+                .RuleFor(o => o.CustomerName, f => f.Company.CompanyName())
+                .RuleFor(o => o.Segment, f => f.PickRandom<Segment>())
+                .RuleFor(o => o.City, f => f.Address.City())
+                .RuleFor(o => o.PostalCode, f => f.Address.ZipCode())
+                .RuleFor(o => o.Street, f => f.Address.StreetName())
+                .RuleFor(o => o.Phone, f => f.Person.Phone)
+                .RuleFor(o => o.Email, (f, c) => f.Internet.Email());
+            cusFaker.Generate(100);
+
+
+            var prodFaker = new Faker<Product>("pl")
+
+            .CustomInstantiator(f => ObjectSpace.CreateObject<Product>())
+                .RuleFor(o => o.ProductName, f => f.Commerce.ProductName())
+                .RuleFor(o => o.Notes, f => f.Commerce.ProductDescription())
+                .RuleFor(o => o.Symbol, f => f.Commerce.Product())
+                .RuleFor(o => o.UnitPrice, f => f.Random.Decimal(0.01M, 100M))
+                .RuleFor(o => o.VatRate, f => f.PickRandom(rates))
+                .RuleFor(o => o.GTIN, f => f.Commerce.Ean13());
+
+            prodFaker.Generate(100);
+
+
+            var customers = ObjectSpace.GetObjectsQuery<Customer>(true).ToList();
+
+
+            var orderFaker = new Faker<Invoice.Module.BusinessObjects.Invoice>("pl")
+            .CustomInstantiator(f => ObjectSpace.CreateObject<Invoice.Module.BusinessObjects.Invoice>())
+                .RuleFor(o => o.InvoiceNumber, f => f.Random.Int(0,24000000).ToString())
+                .RuleFor(o => o.InvoiceDate, f => f.Date.Past(2))
+                .RuleFor(o => o.DueDate, f => f.Date.Past(2))
+                .RuleFor(o => o.Customer, f => f.PickRandom(customers));
+            var orders = orderFaker.Generate(customers.Count * 10);
+
+            var products = ObjectSpace.GetObjectsQuery<Product>(true).ToList();
+
+            var itemsFaker = new Faker<InvoiceItem>()
+            .CustomInstantiator(f => ObjectSpace.CreateObject<InvoiceItem>())
+                .RuleFor(o => o.Invoice, f => f.PickRandom(orders))
+                .RuleFor(o => o.Product, f => f.PickRandom(products))
+                .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M));
+
+            var items = itemsFaker.Generate(orders.Count * 10);
+
+            var paymentsFaker = new Faker<Payment>()
+                 .CustomInstantiator(f => ObjectSpace.CreateObject<Payment>())
+                 .RuleFor(p => p.Amount, f => f.Random.Decimal(0.01M, 2000M))
+                  .RuleFor(o => o.Customer, f => f.PickRandom(customers))
+                  .RuleFor(o=>o.PaymentDescription ,f=>f.Lorem.Sentences(5))
+                 .RuleFor(p => p.PaymentDate, f => f.Date.Past(2));
+            var payments = paymentsFaker.Generate(orders.Count * 4);
+        }
+
+        private VatRate NowaStawka(string symbol, decimal val)
+        {
+            var vat = ObjectSpace.FindObject<VatRate>(CriteriaOperator.Parse("Symbol = ?", symbol));
+            if (vat == null)
+            {
+                vat = ObjectSpace.CreateObject<VatRate>();
+                vat.Symbol = symbol;
+                vat.Value = val;
+            }
+            return vat;
+        }
+    ...
+    
+}    
 ```
-Na bazie tej klasy zdefiniujemy kategorie ... rozwinąć
 
+W kolejnym artykule rozbudujemy nasz program o kolejne funkcjonalności, jak faktura korygująca, podział na działy firmy czy  kontrola dostępu do danych wg przynależności pracownika do wybranego działu. Zachęcamy czytelników do dyskusji i zgłaszania propozycji rozbudowy aplikacji.
 
-
-<a href="https://docs.devexpress.com/eXpressAppFramework/112836/application-shell-and-base-infrasctructure/tree-list-editors/tree-list-editors-module-overview" target="_blank">Więcej na stronie DevExpress</a>
-
-### Sprawdzianie klienta w GUS/Vies/US
-
-### Uruchomienie aplikacji w Docker (drugi artykuł)
-
-### Uruchomienie aplikacji na Azure (drugi artykuł)
-
-### Moduł Security (trzeci artykuł)
-
-### Rozbudowa aplikacji
-Dodamy podział na działy firmy, pracowników, ograniczymy pracownikom uprawnienia
-#### Pracownicy i Działy
-
-#### Ograniczenia dostępu pracownikom
-    * Kierownik może edytować tylko dane swoich podwładnych
-    * Pracownik nie może oglądać danych innych pracowników oprócz swoich
-    * Pracownik może edytować tylko faktury ze swojego działu
-    * Pracownik może edytować klientów, których opiekunem jest pracownik z jego działu
-    * Pracownik może sprzedawać produkty z kategorii do których ma dostęp 
-    * jakieś pomysły ?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Kod aplikacji, dostępny jest na GitHub pod adresem: <a href="https://github.com/kashiash/Invoice" target="_blank">https://github.com/kashiash/Invoice</a>
 

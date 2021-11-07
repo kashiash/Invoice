@@ -14,22 +14,24 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Bogus" Version="33.1.1" />
-    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.CloneObject" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.Dashboards" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.Objects" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.Office" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.Scheduler" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.Validation" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.2-pre-21250" />
-    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.2-pre-21250" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Dashboards" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Objects" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Office" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Scheduler" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Validation" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.2-beta" />
+    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.2-beta" />
+    <PackageReference Include="Gus.Regon.BIR11.Proxy" Version="0.1.6" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ApiModels\VatPayers\" />
   </ItemGroup>
 </Project>
