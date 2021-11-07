@@ -1398,6 +1398,8 @@ Kontroler dla wersji Blazor tworzymy w projekcie Invoice.Module.Blazor
     }
 ```
 
+![](BlazorOddRow.png)
+
 Win tworzymy w projekcie Invoice.Module.Win
 ```csharp
     public class GridViewController : ViewController<ListView>
@@ -1414,6 +1416,9 @@ Win tworzymy w projekcie Invoice.Module.Win
         }
     }
 ```
+
+![](WinOddRow.png)
+
 
 Musieliśmy zrobić 2 niezależne kontrolery dlatego ze sposób odwołania się do GridView dla obu platform jest odmienny.
 
