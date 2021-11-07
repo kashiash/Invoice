@@ -2,11 +2,6 @@
 ## Czyli jak zbudować apliakcję biznesową w 2 godziny
 
 
-<a href="#wstęp" target="_blank">Wstęp</a>
-<a href="#bierzemy-się-za-programowanie" target="_blank">Bierzemy się za programowanie</a>
-<a href="#generator-danych-testowych" target="_blank">Generator danych testowych</a>
-<a href="#rozbudowujemy-aplikację" target="_blank">Rozbudowujemy aplikację</a>
-
 ## Wstęp
 Proces tworzenia  oprogramowania składa się z różnych etapów, z których niektóre potrafimy robić dniami i nocami, oraz takie które odkładamy najdłużej jak się da i najchętniej delegujemy junior programmer’owi. W efekcie powstają smutne historie programistów, jak to zajmowali się cały czas np. nudnymi CRUD’ami, układali kontrolki na widokach albo czymś jeszcze gorszym. A o programistę teraz trudno ...
 
