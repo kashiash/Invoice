@@ -19,7 +19,7 @@ namespace Invoice.Module.BusinessObjects
 
     [Appearance("InvoiceIfPayed", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "SumOfPayments >= TotalBrutto", Context = "ListView", FontColor = "Blue", Priority = 101)]
 
-    [Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "OverDue = TRue", Context = "ListView", FontColor = "Red", Priority = 101)]
+    [Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "Overdue = TRue", Context = "ListView", FontColor = "Red", Priority = 101)]
 
     public class Invoice : CustomBaseObject
     {
@@ -27,7 +27,8 @@ namespace Invoice.Module.BusinessObjects
         { }
 
         //[Browsable(false)]
-        public bool OverDue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
+        public bool Overdue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
+
         DateTime paymentDate;
         decimal sumOfPayments;
         string notes;
