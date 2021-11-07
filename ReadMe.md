@@ -115,6 +115,9 @@ Produkty przydałoby się dzielić na grupy, a klientów klasyfikować wg ich wi
 
 Po dalszej analizie zależności pomiędzy tabelami powinny wyglądać mniej więcej tak:
 
+
+![](erd1.png)
+
 <div class="mermaid">
     erDiagram
       CUSTOMER ||--o{ INVOICE : get
@@ -1098,6 +1101,9 @@ Wymaganie: program ma umożliwiać rejestrowanie wpłat dokonanych przez kontrah
 Dostarczyć automat rozliczający wpłatę na faktury w kolejności daty płatności faktur.
 
 Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
+
+![](erd2.png)
+
 <div class="mermaid">
     erDiagram
       CUSTOMER ||--o{ INVOICE : get
