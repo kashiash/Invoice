@@ -1349,10 +1349,11 @@ Win tworzymy w projekcie Invoice.Module.Win
 Musieliśmy zrobić 2 niezależne kontrolery dlatego ze sposób odwołania się do GridView dla obu platform jest odmienny.
 
 
-Kolejny kontroler będzie przeznaczony dla obiektu Customer działający tylko dla ListView, tym razem będzie on wspólny dla obu wersji dlatego dodamy go w Invoice.Module. Stworzymy w nim akcję do wyszukiwania klientów z GUS (wykorzystam do tego  https://github.com/tailored-apps/Gus.Regon.BIR11.Proxy). 
+Kolejny kontroler będzie przeznaczony dla obiektu Customer działający tylko dla ListView, tym razem będzie on wspólny dla obu wersji dlatego dodamy go w Invoice.Module. Stworzymy w nim akcję do wyszukiwania klientów z GUS (wykorzystam do tego  https://github.com/tailored-apps/Gus.Regon.BIR11.Proxy). Instalujemy go jako pakiet nuget:
 
+`Install-Package Gus.Regon.BIR11.Proxy`
 
-Definiując kontroler wskazujemy, że ma być wywoływany tylko dla ListView wyświetlających obiekty klasy Customer (`ObjectViewController<ListView, Customer>`). W kontrolerze dodajemy akcję searchCustomerAction, która wyświetli pole na wstążce menu gdzie będzie można wpisać NIP klienta. Po naciśnięciu szukaj, program spróbuje odnaleźć go w bazie danych, jeśli nie znajdzie, odpyta serwis GUS o klienta z tym numerem NIP. (Uwaga w GUSHelper.cs trzeba wpisać poprawny klucz do API `UserKey`, który można otrzymać od administratora tego serwisu). 
+Definiując kontroler wskazujemy, że ma być wywoływany tylko dla ListView wyświetlających obiekty klasy Customer (`ObjectViewController<ListView, Customer>`). W kontrolerze dodajemy akcję typu **ParametrizedAction** o nazwie searchCustomerAction, która wyświetli pole na wstążce menu gdzie będzie można wpisać NIP klienta. Po naciśnięciu szukaj, program spróbuje odnaleźć go w bazie danych, jeśli nie znajdzie, odpyta serwis GUS o klienta z tym numerem NIP. (Uwaga w GUSHelper.cs trzeba wpisać poprawny klucz do API `UserKey`, który można otrzymać od administratora tego serwisu). 
 
 
 ```csharp
