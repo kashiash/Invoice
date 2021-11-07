@@ -942,12 +942,15 @@ Na liście dostępnych pól wybieramy pola, które chcemy mieć w sekcji pozycji
 
 W sekcji ReportDetail1 we wszystkich podsekcjach usuwamy kolumny ProductName, Quantity, UnitPrice (wystarczy kliknąć na polu PPM  i wybrać delete column). Tak jest prościej niż dodawać te pola osobno i potem wyrównywać szerokości z lista pozycji.
 W ReportDetail1.GroupFooter po kliknięciu PPM na polu mamy dostęp do właściwości tego pola, należy tam w polu Summary wybrać Group, co oznacza,że to pole ma zliczać sumę  w ramach grupy.
-W ReportDetail1.ReportFooter w podobny sposób wybieramy Summary: Report, co oznacza że będzie tam zliczana suma dla całego raportu - czyli wszystkich pozycji z ReportDetail1. Operacje ta powtarzamy dla poł Netto,Vat i Brutto.
+W ReportDetail1.ReportFooter w podobny sposób wybieramy Summary: Report, co oznacza że będzie tam zliczana suma dla całego raportu - czyli wszystkich pozycji z ReportDetail1. Operacje ta powtarzamy dla pól Netto, Vat i Brutto.
 
 W sekcji ReportDetail1.Detail ustawiamy Visiblity= false, co spowoduje, ze ta sekcja nie będzie drukowana na raporcie.
 
 Jeśli teraz byśmy kliknęli na Report Preview zobaczymy ze kolejne faktury pojawiają sie na tej samej kartce zaraz po poprzedniej. Należy ustawić przejście do nowej strony dla każdej z faktur. Żeby to osiągnąć wybierzmy sekcję Detail i w menu po prawej w polu PageBreak wybieramy Before Band Except First Entry.
 
+Jeśli program nie będzie służył do obsługi płatności w BTC, przydałoby się  zaznaczyć wszystkie pola z kwotami ustawić im format na {0:N2}.
+
+![](report5.png)
 
 ![](report3.png)
 Pozostaje dopasowanie szerokości kolumn, ustawienie rodzaju i rozmiaru czcionki, pogrubień itp. Tu każdy może to zrobić wg własnego gustu.
