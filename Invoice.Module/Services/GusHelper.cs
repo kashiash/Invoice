@@ -16,7 +16,7 @@ namespace Invoice.Module.Services
             var clientOptions = new BirClientOptions()
             {
                 EndpointAddress = "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc",
-                UserKey = "f3ccc9d63a3243bba830"
+                UserKey = ""
             };
 
             IOptions<BirClientOptions> optionParameter = Options.Create(clientOptions);
