@@ -1,5 +1,5 @@
 # eXpressApp Framework przyjacielem programisty
-## Czyli jak zbudować apliakcję biznesową w 2 godziny
+## Czyli jak zbudować aplikację biznesową w 2 godziny
 
 
 <a href="#wstęp" target="_blank">Wstęp</a>
@@ -1127,7 +1127,7 @@ Więcej na temat modyfikacji <a href="https://docs.devexpress.com/eXpressAppFram
 
 ### Wpłaty i rozrachunki
 
-Wymaganie: program ma umożliwiać rejestrowanie wpłat dokonanych przez kontrahenta. Jedna wpłata może dotyczyć spłacać cześć faktury, całą fakturę, lub wiele faktur. Klient może wskazać jakie faktury dotyczy wpłata, ale to osoba rozliczająca decyduje która faktura zostanie spłacona.
+Nowe wymaganie od użytkownika: program ma umożliwiać rejestrowanie wpłat dokonanych przez kontrahenta. Jedna wpłata może dotyczyć spłacać cześć faktury, całą fakturę, lub wiele faktur. Klient może wskazać jakie faktury dotyczy wpłata, ale to osoba rozliczająca decyduje która faktura zostanie spłacona.
 Dostarczyć automat rozliczający wpłatę na faktury w kolejności daty płatności faktur.
 
 Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
