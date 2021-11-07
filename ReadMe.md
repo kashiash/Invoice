@@ -916,8 +916,13 @@ W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyci
 ### Wydruk faktury
 
 
-
 ![](report1.png)
+
+![](report2.png)
+
+![](report3.png)
+
+![](report4.png)
 
 ### Dashboard
 
@@ -1353,7 +1358,7 @@ Kolejny kontroler będzie przeznaczony dla obiektu Customer działający tylko d
 
 `Install-Package Gus.Regon.BIR11.Proxy`
 
-Definiując kontroler wskazujemy, że ma być wywoływany tylko dla ListView wyświetlających obiekty klasy Customer (`ObjectViewController<ListView, Customer>`). W kontrolerze dodajemy akcję typu **ParametrizedAction** o nazwie searchCustomerAction, która wyświetli pole na wstążce menu gdzie będzie można wpisać NIP klienta. Po naciśnięciu szukaj, program spróbuje odnaleźć go w bazie danych, jeśli nie znajdzie, odpyta serwis GUS o klienta z tym numerem NIP. (Uwaga w GUSHelper.cs trzeba wpisać poprawny klucz do API `UserKey`, który można otrzymać od administratora tego serwisu). 
+Definiując kontroler wskazujemy, dla jakaich rodzajów widoku i na jakiej klasie powinien zostać aktywowany. W tym przypadku ma być wywoływany tylko dla ListView wyświetlających obiekty klasy Customer, co kreślamy podając te klasy jako parametry podczas deklarowania  konstruktora: (`ObjectViewController<ListView, Customer>`). W kontrolerze tworzymy akcję typu **ParametrizedAction** o nazwie searchCustomerAction, która wyświetli pole na wstążce menu, gdzie będzie można wpisać NIP klienta. Po naciśnięciu szukaj, zostanie wywołane zdarzenie Execute, w którym program spróbuje odnaleźć go w bazie danych, jeśli nie znajdzie, odpyta serwis GUS o klienta z tym numerem NIP. (Uwaga w GUSHelper.cs trzeba wpisać poprawny klucz do API `UserKey`, który można otrzymać od administratora tego serwisu). 
 
 
 ```csharp
@@ -1604,7 +1609,7 @@ public class Updater : ModuleUpdater
 }    
 ```
 
-W kolejnym artykule rozbudujemy nasz program o kolejne funkcjonalności, jak faktura korygująca, podział na działy firmy czy  kontrola dostępu do danych wg przynależności pracownika do wybranego działu. Zachęcamy czytelników do dyskusji i zglaszania propozycji rozbudowy aplikacji.
+W kolejnym artykule rozbudujemy nasz program o kolejne funkcjonalności, jak faktura korygująca, podział na działy firmy czy  kontrola dostępu do danych wg przynależności pracownika do wybranego działu. Zachęcamy czytelników do dyskusji i zgłaszania propozycji rozbudowy aplikacji.
 
 Kod aplikacji, dostępny jest na GitHub pod adresem: <a href="https://github.com/kashiash/Invoice" target="_blank">https://github.com/kashiash/Invoice</a>
 
