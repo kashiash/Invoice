@@ -1,7 +1,8 @@
 ﻿using Gus.Regon.BIR11.WebService;
+using Gus.Regon.BIR11.Proxy;
 using System;
 using System.IO;
-using Gus.Regon.BIR11.Proxy;
+
 using System.Xml.Serialization;
 using Microsoft.Extensions.Options;
 using DevExpress.ExpressApp;
