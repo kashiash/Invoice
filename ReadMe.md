@@ -22,8 +22,8 @@ Oczywiście niniejsze podejście ma tez swoje zalety:
 
 Niekiedy powyższe rozwiązanie jest jedynym wyjściem aby stworzyć właściwy system, często jednak wykonujemy systemy w których pewne funkcjonalności powtarzają się i faktycznie robienie tego samego w kółko zaczyna być nużące. Jest wiele rzeczy, które muszą zostać stworzone za każdym razem, kiedy tworzysz aplikacje biznesową, niektóre jej elementy są do siebie podobne, a jednocześnie na tyle rożne, że nie da się z tego zrobić raz i używać wielokrotnie w pozostałych przypadkach. Trzeba skonfigurować mapowania klas do bazy danych, zaprojektować formatki widoków, kontrolować dostęp współdzielony itp.
 
-Od lat powstają narzędzia, które próbują wyeliminować powtarzalne elementy systemu, które prawie zawsze robi się w podobny sposób niezależnie od tego czy jest to aplikacja do wystawiania faktur, czy program do diagnozowania i leczenia raka. Narzędzia tego typu zwane kiedyś RAD (Rapid Application Development) np. Power Builder, Clarion, Power Apps i wiele innych, w różnym stopniu pozwalają programistom na elastyczność podczas procesu tworzenia aplikacji. Jedne wymagały trzymania się konkretnych zasad i pozwalały na tworzenie aplikacji o dość ograniczonej funkcjonalności, inne pozwalały na większa elastyczność, nie mniej jednak bardzo często kończyło się na egzotycznych trikach by osiągnąć zamierzony cel. O skuteczności tych narzędzi świadczą systemy jakie powstały choćby w Polsce m.in. cała seria WaPro WF-MAG (KaPer,Gang,Fakir) czy Comarch ERP XL stworzone z wykorzystaniem Clarion’a, czy produkty rodziny Simple.ERP, tworzone za pomocą Power Builder’a i wiele innych. Power Apps nawet rozpychają się coraz bardziej w Azure. Nadal jednak pozostaje problem elastyczności tych narzędzi, automatyzacja wielu procesów wymaga ich ustandaryzowania, uproszczenia. 
-Gdzieś po środku pojawiają sie frameworki, które wyręczają w implementacji niektórych funkcjonalności np biblioteki ORM zwalniających nas z oprogramowywania warstwy komunikacji z bazami danych, czy automatycznego generowania warstwy prezentacji na podstawie modelu.
+Od lat powstają narzędzia, które próbują wyeliminować powtarzalne elementy systemu, które prawie zawsze robi się w podobny sposób niezależnie od tego czy jest to aplikacja do wystawiania faktur, czy program do diagnozowania i leczenia raka. Narzędzia tego typu zwane kiedyś RAD (Rapid Application Development) np. Power Builder, Clarion, LightSwitch zastąpiony obecnie przez Power Apps i wiele innych, w różnym stopniu pozwalają programistom na elastyczność podczas procesu tworzenia aplikacji. Jedne wymagały trzymania się konkretnych zasad i pozwalały na tworzenie aplikacji o dość ograniczonej funkcjonalności, inne pozwalały na większa elastyczność, nie mniej jednak bardzo często kończyło się na egzotycznych trikach by osiągnąć zamierzony cel. O skuteczności tych narzędzi świadczą systemy jakie powstały choćby w Polsce m.in. cała seria WaPro WF-MAG (KaPer,Gang,Fakir) czy Comarch ERP XL stworzone z wykorzystaniem Clarion’a, czy produkty rodziny Simple.ERP, tworzone za pomocą Power Builder’a i wiele innych. Power Apps nawet rozpychają się coraz bardziej w Azure. Nadal jednak pozostaje problem elastyczności tych narzędzi, automatyzacja wielu procesów wymaga ich ustandaryzowania, uproszczenia ergo pewnych kompromisów. 
+Gdzieś po środku pojawiają sie frameworki, które wyręczają w implementacji niektórych funkcjonalności np biblioteki ORM zwalniających nas z oprogramowywania warstwy komunikacji z bazami danych, czy automatycznego generowania warstwy prezentacji na podstawie modelu, które jednocześnie dają nam praktycznie pełną elastyczność dostępna w konkretnym języku programowania.
 
 Jednym z takich jest <a href="https://docs.devexpress.com/eXpressAppFramework/112670/expressapp-framework" target="_blank">DevExpress eXpressApp Framework (XAF)</a>.  <small>*Jest to narzędzie płatne, ale dostępna jest 30 dniowa wersja testowa, a efekt końcowy jest wart ceny licencji, narzędzie zdecydowanie przyspiesza proces tworzenia aplikacji, a jednocześnie firma oferuje bardzo dobry support techniczny, aktualizacje pojawiają się kilkanaście razy w roku*</small>
 
@@ -45,9 +45,9 @@ ExpressApp Framework znacznie ułatwia proces programowania, przejmując na sieb
 
 * XAF dostarczany jest z wbudowanymi modułami np. do Statystyk, Raportów czy kontroli dostępu. Wiele elementów aplikacji mamy gotowe na starcie.
 
-* Wsparcie techniczne od ludzi z DevExpress jest warte ponownego zasygnalizowania! Nie zdarzyło mi się, żebym nie otrzymał odpowiedzi w później niż po 48 godzinach od zgłoszenia.
+* Wsparcie techniczne od ludzi z DevExpress jest warte ponownego zasygnalizowania! Nie zdarzyło się nam, abyśmy nie otrzymali odpowiedzi w później niż 48 godzin od zgłoszenia.
 
-Należy jednak pamiętać, że nie będziemy mieli z XAF większego pożytku przy tworzeniu aplikacji innego rodzaju np takich jak gry, programy do obróbki grafiki, kolejnego portalu społecznościowego itp.
+Należy jednak pamiętać, że nie będziemy mieli z XAF większego pożytku przy tworzeniu aplikacji innego rodzaju np takich jak gry, programy do obróbki grafiki, kolejnego portalu społecznościowego itp. 
 
 
 
@@ -915,14 +915,39 @@ W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyci
 
 ### Wydruk faktury
 
+XAF dysponuje modułem obsługującym wydruki, wykorzystamy go aby przygotować wydruk faktury.
+W tym celu W menu bocznym przechodzimy do sekcji Report i wybieramy Reports. Na liście wydruków dodajemy nowy i w oknie wpisujemy nazwę naszego raportu oraz wybieramy klasę, na której ma być dostępny. Następnie naciskamy Finish, jeśli zapyta się o rodzaj wydruku wybierzemy blank bo to jedyny słuszny wariant dla programisty twardziela. Pojawi nam się okno kreatora wydruków czyli Report Desingner. 
 
 ![](report1.png)
 
+Report Designer jest na tyle intuicyjny, że jeśli robiliście wydruk w jakimkolwiek innym narzędziu np Crystal Reports czy MS SQL Reporting to tu nie powinniście mieć większych problemów.
+Standardowa polska faktura musi mieć dane klienta, sprzedawcy, listę sprzedanych artykułów i oczywiście podsumowanie z rozbiciem na stawki VAT.
+Sekcję Detail proponuję użyć jako nagłówek naszej faktury i dołożyć do niego dwukrotnie DetailReport wskazując na kolekcję źródłowa InvoiceItems. W efekcie końcowym powinniśmy mieć 3 sekcje Detail, DetailReport(InvoiceItems) i DetailReport1(InvoiceItems). Pierwszy z nich wyświetli nam listę pozycji faktury, a drugi pogrupujemy po Symbolu Stawki VAT, Wyliczymy Sumę wg grupy i sumę Wg Raportu co da nam podsumowanie w stawkach Vat i podsumowanie całej Faktury.
+W DetailReport dodajemy GroupHeader w którym umieścimy nagłówek pozycji
+W DetailReport1 dodajemy Grupowanie po stawce Vat, minimalizujemy GroupHeader - bo go nie potrzebujemy a jednocześnie nie da się go wyłączyć. A GroupFooter przeznaczamy na podsumowanie całej faktury.
+
 ![](report2.png)
 
+Do sekcji Detail dodajemy dane faktury jak numer, datę płatności, wystawienia i dane klienta
+
+Na liście dostępnych pól wybieramy pola, które chcemy mieć w sekcji pozycji dokumentu. Najlepiej wybrać wszystkie naraz w kolejności w jakiej maja być na fakturze (z wciśniętym Ctrl klikamy kolejno na Product.ProductName, Quantity, UnitPrice,VatRate.Symbol, Netto,Vat Brutto). I teraz klikając na jednym zaznaczonych pól lewym przyciskiem myszy (LPM) przeciągamy do sekcji DetailReport.Detail. W ten sposób mamy wszystkie wymagane kolumny w sekcji wydruku pozycji faktury Powtarzamy operację jeszcze 3-krotnie: przeciągamy tak samo do sekcji ReportDetail1.Detail, ReportDetail1.GroupFooter i ReportDetail1.ReportFooter. Teraz klikamy na liście pól Prawym klawiszem myszki i przeciągamy kolumny do sekcji nagłówka pozycji czyli ReportDetail.Header. Zwróćcie uwagę że tym razem zamiast pól z danymi zostały przeciągnięte nazwy tych pól. (LPM - przeciągamy pola na dane, PPM - przeciągamy nagłówek pola).
+
+W sekcji ReportDetail1 we wszystkich podsekcjach usuwamy kolumny ProductName, Quantity, UnitPrice (wystarczy kliknąć na polu PPM  i wybrać delete column). Tak jest prościej niż dodawać te pola osobno i potem wyrównywać szerokości z lista pozycji.
+W ReportDetail1.GroupFooter po kliknięciu PPM na polu mamy dostęp do właściwości tego pola, należy tam w polu Summary wybrać Group, co oznacza,że to pole ma zliczać sumę  w ramach grupy.
+W ReportDetail1.ReportFooter w podobny sposób wybieramy Summary: Report, co oznacza że będzie tam zliczana suma dla całego raportu - czyli wszystkich pozycji z ReportDetail1. Operacje ta powtarzamy dla poł Netto,Vat i Brutto.
+
+W sekcji ReportDetail1.Detail ustawiamy Visiblity= false, co spowoduje, ze ta sekcja nie będzie drukowana na raporcie.
+
+Jeśli teraz byśmy kliknęli na Report Preview zobaczymy ze kolejne faktury pojawiają sie na tej samej kartce zaraz po poprzedniej. Należy ustawić przejście do nowej strony dla każdej z faktur. Żeby to osiągnąć wybierzmy sekcję Detail i w menu po prawej w polu PageBreak wybieramy Before Band Except First Entry.
+
+
 ![](report3.png)
+Pozostaje dopasowanie szerokości kolumn, ustawienie rodzaju i rozmiaru czcionki, pogrubień itp. Tu każdy może to zrobić wg własnego gustu.
+Po wybraniu preview wydruk wygląda mniej więcej jak poniżej.
 
 ![](report4.png)
+
+Brakuje tekstu kwota słownie, dane sprzedawcy, ale to uzupełnimy w niedalekiej przyszłości.
 
 ### Dashboard
 
