@@ -952,11 +952,6 @@ Po wybraniu preview wydruk wygląda mniej więcej jak poniżej.
 
 Brakuje tekstu kwota słownie, dane sprzedawcy, ale to uzupełnimy w niedalekiej przyszłości.
 
-### Dashboard
-
-Opisanie procesu tworzenia dashboardu ...
-
-![](dash1.png)
 
 ### Jak to wszystko działa ...
 
