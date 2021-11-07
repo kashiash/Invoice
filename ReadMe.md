@@ -25,7 +25,7 @@ Oczywiście niniejsze podejście ma tez swoje zalety:
 *	Programiści mogą optymalizować system wg własnych potrzeb, co jest trudne do osiągnięcia bazując na zewnętrznych rozwiązaniach.
 *	Aplikacje nie muszą być tworzone wg zasad wymaganych przez zewnętrzne narzędzia/biblioteki.
 
-Niekiedy powyższe rozwiązanie jest jedynym wyjściem aby stworzyć właściwy system, często jednak wykonujemy systemy w których pewne funkcjonalności powtarzają się i faktycznie robienie tego samego w kółko zaczyna być nużące. Jest wiele rzeczy, które muszą zostać stworzone za każdym razem, kiedy tworzysz aplikacje biznesową, niektóre jej elementy są do siebie podobne, a jednocześnie na tyle rożne, że nie da się z tego zrobić raz i używać wielokrotnie w pozostałych przypadkach. Trzeba skonfigurować mapowania klas do bazy danych, zaprojektować formatki widoków, kontrolować dostęp współdzielony itp.
+Niekiedy powyższe rozwiązanie jest jedynym wyjściem aby stworzyć właściwy system, często jednak wykonujemy systemy w których pewne funkcjonalności powtarzają się i faktycznie robienie tego samego w kółko zaczyna być nużące. Jest wiele rzeczy, które muszą zostać stworzone za każdym razem, kiedy tworzysz aplikacje biznesową, niektóre jej elementy są do siebie podobne, a jednocześnie na tyle rożne, że nie da się tego zrobić raz i używać wielokrotnie w pozostałych przypadkach. Trzeba skonfigurować mapowania klas do bazy danych, zaprojektować formatki widoków, kontrolować dostęp współdzielony itp.
 
 Od lat powstają narzędzia, które próbują wyeliminować powtarzalne elementy systemu, które prawie zawsze robi się w podobny sposób niezależnie od tego czy jest to aplikacja do wystawiania faktur, czy program do diagnozowania i leczenia raka. Narzędzia tego typu zwane kiedyś RAD (Rapid Application Development) np. Power Builder, Clarion, LightSwitch zastąpiony obecnie przez Power Apps i wiele innych, w różnym stopniu pozwalają programistom na elastyczność podczas procesu tworzenia aplikacji. Jedne wymagały trzymania się konkretnych zasad i pozwalały na tworzenie aplikacji o dość ograniczonej funkcjonalności, inne pozwalały na większa elastyczność, nie mniej jednak bardzo często kończyło się na egzotycznych trikach by osiągnąć zamierzony cel. O skuteczności tych narzędzi świadczą systemy jakie powstały choćby w Polsce m.in. cała seria WaPro WF-MAG (KaPer,Gang,Fakir) czy Comarch ERP XL stworzone z wykorzystaniem Clarion’a, czy produkty rodziny Simple.ERP, tworzone za pomocą Power Builder’a i wiele innych. Power Apps nawet rozpychają się coraz bardziej w Azure. Nadal jednak pozostaje problem elastyczności tych narzędzi, automatyzacja wielu procesów wymaga ich ustandaryzowania, uproszczenia ergo pewnych kompromisów. 
 Gdzieś po środku pojawiają sie frameworki, które wyręczają w implementacji niektórych funkcjonalności np biblioteki ORM zwalniających nas z oprogramowywania warstwy komunikacji z bazami danych, czy automatycznego generowania warstwy prezentacji na podstawie modelu, które jednocześnie dają nam praktycznie pełną elastyczność dostępna w konkretnym języku programowania.
@@ -56,7 +56,7 @@ Należy jednak pamiętać, że nie będziemy mieli z XAF większego pożytku prz
 
 
 
-XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (Lista wspieranych serwerów baz danych: <a href="https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo" target="_blank">https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo</a> ). Komunikacja z baza danych jest poprzez klasy ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView) , które pozwalają na dodawanie, modyfikację czy przeglądanie danych. Wygenerowane widoki możemy dostosować do własnych potrzeb, jeśli to co proponuje XAF nie spełnia do końca naszych potrzeb.
+XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS SQL (Lista wspieranych serwerów baz danych: <a href="https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo" target="_blank">https://docs.devexpress.com/XPO/2114/product-information/database-systems-supported-by-xpo</a> ). Komunikacja z baza danych jest poprzez klasy ORM (XPO lub Entity Framework Core). ORM służy do mapowania struktur tabel bazy danych na klasy w modelu aplikacji. Zadeklarowane klasy modelujące naszą dziedzinę biznesową automatycznie są konwertowane na Widoki (ListView, DetailView), które pozwalają na dodawanie, modyfikację czy przeglądanie danych. Wygenerowane widoki możemy dostosować do własnych potrzeb, jeśli to co proponuje XAF nie spełnia do końca naszych potrzeb.
 
 **ListView** wyświetlają  kolekcje danych, pozwalają je sortować i przeszukiwać z wykorzystaniem zaawansowanych metod filtrowania.
 
@@ -71,7 +71,7 @@ XAF opiera się na architekturze MVC. Dane przechowujemy w bazie danych np. MS S
 
 #### Klasy biznesowe
 
-Model biznesowy definiujemy za pomocą klas określanych jako Business Object (BO), dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji. DevExpress dostarcza Business Class Library (<a href="https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces" target="_blank">https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces</a>) w której zdefiniowane są najczęściej używane BO (Address, Person, Note, Organization) oraz klasy potrzebne we wbudowanych modułach dodatkowych (m.in. Reports, Dashboards, Security). Nie jesteśmy ograniczeni do tych klas, możemy definiować własne, co zrobimy w dalszej części tego artykułu. DevExpress dostarcza nam kompletny kod źródłowy i lektura kodu powyższych klas jest najlepsza metoda nauki, jak definiować własne klasy. 
+Model biznesowy definiujemy za pomocą klas określanych jako Business Object (BO), dla których zostaną utworzone struktury tabel i relacji w bazie danych i jednocześnie zostaną utworzone widoki używane w interfejsie aplikacji. DevExpress dostarcza Business Class Library (<a href="https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces" target="_blank">https://docs.devexpress.com/eXpressAppFramework/112571/business-model-design-orm/built-in-business-classes-and-interfaces</a>) w której zdefiniowane są najczęściej używane BO (Address, Person, Note, Organization) oraz klasy potrzebne we wbudowanych modułach dodatkowych (m.in. Reports, Dashboards, Security). Nie jesteśmy ograniczeni do tych klas, możemy definiować własne, co zrobimy w dalszej części tego artykułu. DevExpress dostarcza nam kompletny kod źródłowy i lektura kodu powyższych klas jest najlepsza metodą nauki, jak definiować własne klasy. 
 
 #### Moduły rozszerzające
 
@@ -87,7 +87,7 @@ Kontrolery używamy głównie w dwóch sytuacjach:
 * Wykonania określonych akcji gdy Okno(Widok) jest tworzone lub zamykane.
 
     Przy otwarciu Okna, wszystkie kontrolery które są dla niego przeznaczone zostają aktywowane, co oznacza, że wywoływane są konkretne zdarzenia np Controller.Activated. Zdarzenia te można użyć w celu zaimplementowania funkcji związanych z bieżącym oknem lub jego widokiem.
-    Podczas zamykania wywoływane są kolejne zdarzenia np. Controller.Deactivated, gdzie także można oprogramowac dodatkowe funkcjonalności. *W uproszczeniu można je porównać do zdarzeń jakie mamy dostępne podczas używania formatki Form z WinForms np Activated, Load, Activated itp.*
+    Podczas zamykania wywoływane są kolejne zdarzenia np. Controller.Deactivated, gdzie także można oprogramować dodatkowe funkcjonalności. *W uproszczeniu można je porównać do zdarzeń jakie mamy dostępne podczas używania formatki Form z WinForms np Activated, Load, Activated itp.*
 
 * Rozszerzenie interfejsu użytkownika
   
@@ -104,19 +104,19 @@ W XAF rozróżniamy 4 rodzaje akcji:
 #### Application Model
 
 Application Model przechowuje wszystkie informacje potrzebne do zbudowania UI aplikacji. Np zawiera informacje jakie edytory przypisaliśmy dla poszczególnych typów danych, jak ułożone są kontrolki na ekranie i jakie etykiety przypisaliśmy poszczególnym polom. 
-Application Model automatycznie wypełniany jest danymi na podstawie zadeklarowanych klas BO oraz kontrolerów. MOdel można zmieniać za pomocą dedykowanego edytora zintegrowanego w Visual Studio lub zwykłym edytorem tekstowym ponieważ jest on zapisywany jako plik XML.
+Application Model automatycznie wypełniany jest danymi na podstawie zadeklarowanych klas BO oraz kontrolerów. Model można zmieniać za pomocą dedykowanego edytora zintegrowanego w Visual Studio lub zwykłym edytorem tekstowym ponieważ jest on zapisywany jako plik XML.
 
 
 # Bierzemy się za programowanie
 
 Wyobraźmy sobie "standardową" specyfikację wymagań: 
 
-***Zróbcie program do fakturowania tak aby było dobrze! Da radę na jutro ?***
+***Zróbcie program do fakturowania tak aby było dobrze! Da radę na jutro?***
 
-W zależności od poziomu asertywności należy przydałoby się zlecającego wysłać do dev/null, albo jeszcze dalej. W końcu analiza tego zagadnienia w szczegółach to materiał na kolejny artykuł. Zróbmy jednak prostą analizę zagadnienia:
+W zależności od poziomu asertywności należy/przydałoby się zlecającego wysłać do dev/null, albo jeszcze dalej. W końcu analiza tego zagadnienia w szczegółach to materiał na kolejny artykuł. Zróbmy jednak prostą analizę zagadnienia:
 
 Fakturę wystawia się firmie lub osobie fizycznej - tu można zrobić uproszczenie i  dane osoby wpisywać do danych firmy. Na fakturze umieszcza się sprzedawane produkty - czyli potrzebujemy rejestr produktów.
-Produkty przydałoby się dzielić na grupy, a klientów klasyfikować wg ich wielkości. Takie instytucje jak GUS udostępniają API pozwalającego pobrać dane każdego podmiotu prowadzącego działalność gospodarczą. Dobrze, żeby nasz program pozwala na weryfikacje takich danych -przyspieszy to proces wpisywania kontrahenta i jednocześnie wzrośnie poziom <a href="https://pl.wikipedia.org/wiki/Mana_(fantasy)" target="_blank">Many</a> w firmie.
+Produkty przydałoby się dzielić na grupy, a klientów klasyfikować wg ich wielkości. Takie instytucje jak GUS udostępniają API pozwalającego pobrać dane każdego podmiotu prowadzącego działalność gospodarczą. Dobrze, żeby nasz program pozwalał na weryfikacje takich danych -przyspieszy to proces wpisywania kontrahenta i jednocześnie wzrośnie poziom <a href="https://pl.wikipedia.org/wiki/Mana_(fantasy)" target="_blank">Many</a> w firmie.
 
 Po dalszej analizie zależności pomiędzy tabelami powinny wyglądać mniej więcej tak:
 
@@ -138,7 +138,7 @@ W skrócie: należy zdefiniować klasy, które odzwierciedlą tabele bazy danych
 Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS. Zmodyfikować w modelu domyślne widoki wg naszych upodobań - w końcu nie każdemu będzie się podobało to co domyślnie zaproponuje XAF.
 
 1. Tworzymy nowy projekt w VS.
-2. Z dostępnych szablonów wybieramy DevExpress v21.2 XAF Template Gallery (c#) 
+2. Z dostępnych szablonów wybieramy DevExpress v21.2 XAF Template Gallery (C#). 
 
 ![](start1.png)
 3. Po wpisaniu nazwy projektu i zatwierdzeniu pojawi się okno XAF Solution Wizard Klikamy *Run wizard*.
@@ -146,7 +146,7 @@ Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS
 
 ![](start2.png)
 
-    Ważne jest aby upewnić się, że wybraliśmy framework .Net Core oraz język programowania C#. Gdybyśmy wybrali NetFramework zamiast NetCore
+    Ważne jest aby upewnić się, że wybraliśmy framework .Net Core oraz język programowania C#. Gdybyśmy wybrali NetFramework zamiast NetCore.
 
 4. Wybieramy docelowe platformy - proponuję wybrać obie jednocześnie, dzięki temu uzyskamy aplikacje WinForms oraz Web Blazor.
 
@@ -156,7 +156,7 @@ Opcjonalnie dodać kilka kontrolerów i akcji np do weryfikacji klienta w US/GUS
 
 ![](start4.png)
 
-6. Na oknie Choose Security wybieramy *Standard* i wybieramy obie metody uwierzytelniania
+6. Na oknie Choose Security wybieramy *Standard* i wybieramy obie metody uwierzytelniania.
 
 ![](start5.png)
 
@@ -874,7 +874,7 @@ Wersja WinForms
 Wersja Blazor
 ![](blazor1.png)
 
-I nasza aplikacja do fakturowania jest prawie gotowa. Patrząc na powyższy obrazek zostają nam drobne rzeczy do poprawy: w miejscu w miejscu faktury widzimy identyfikator, zamiast bardziej czytelnej dla ludzi nazwy lub numeru faktury. Załatwi to dla nas atrybut *XafDefaultProperty*. W parametrze atrybuty wskazujemy nazwę pola, które chcemy wyświetlać zamiast wartości z identyfikatora. *Standardowo XAF szuka pierwszego pola w którego nazwie występuje słowo `Name` i to pole jest brane jako domyślne.*
+I nasza aplikacja do fakturowania jest prawie gotowa. Patrząc na powyższy obrazek zostają nam drobne rzeczy do poprawy: w miejscu faktury widzimy identyfikator, zamiast bardziej czytelnej dla ludzi nazwy lub numeru faktury. Załatwi to dla nas atrybut *XafDefaultProperty*. W parametrze atrybuty wskazujemy nazwę pola, które chcemy wyświetlać zamiast wartości z identyfikatora. *Standardowo XAF szuka pierwszego pola w którego nazwie występuje słowo `Name` i to pole jest brane jako domyślne.*
 ```csharp
 ...
 [XafDefaultProperty(nameof(InvoiceNumber))]
@@ -924,31 +924,31 @@ W efekcie mamy aplikację która pozwala na prostą sprzedaż, którą po nabyci
 ### Wydruk faktury
 
 XAF dysponuje modułem obsługującym wydruki, wykorzystamy go aby przygotować wydruk faktury.
-W tym celu W menu bocznym przechodzimy do sekcji Report i wybieramy Reports. Na liście wydruków dodajemy nowy i w oknie wpisujemy nazwę naszego raportu oraz wybieramy klasę, na której ma być dostępny. Następnie naciskamy Finish, jeśli zapyta się o rodzaj wydruku wybierzemy blank bo to jedyny słuszny wariant dla programisty twardziela. Pojawi nam się okno kreatora wydruków czyli Report Desingner. 
+W tym celu w menu bocznym przechodzimy do sekcji Report i wybieramy Reports. Na liście wydruków dodajemy nowy i w oknie wpisujemy nazwę naszego raportu oraz wybieramy klasę, na której ma być dostępny. Następnie naciskamy Finish, jeśli zapyta się o rodzaj wydruku wybierzemy blank bo to jedyny słuszny wariant dla programisty twardziela. Pojawi nam się okno kreatora wydruków czyli Report Desingner. 
 
 ![](report1.png)
 
 Report Designer jest na tyle intuicyjny, że jeśli robiliście wydruk w jakimkolwiek innym narzędziu np Crystal Reports czy MS SQL Reporting to tu nie powinniście mieć większych problemów.
 Standardowa polska faktura musi mieć dane klienta, sprzedawcy, listę sprzedanych artykułów i oczywiście podsumowanie z rozbiciem na stawki VAT.
-Sekcję Detail proponuję użyć jako nagłówek naszej faktury i dołożyć do niego dwukrotnie DetailReport wskazując na kolekcję źródłowa InvoiceItems. W efekcie końcowym powinniśmy mieć 3 sekcje Detail, DetailReport(InvoiceItems) i DetailReport1(InvoiceItems). Pierwszy z nich wyświetli nam listę pozycji faktury, a drugi pogrupujemy po Symbolu Stawki VAT, Wyliczymy Sumę wg grupy i sumę Wg Raportu co da nam podsumowanie w stawkach Vat i podsumowanie całej Faktury.
-W DetailReport dodajemy GroupHeader w którym umieścimy nagłówek pozycji
+Sekcję Detail proponuję użyć jako nagłówek naszej faktury i dołożyć do niego dwukrotnie DetailReport wskazując na kolekcję źródłowa InvoiceItems. W efekcie końcowym powinniśmy mieć 3 sekcje Detail, DetailReport(InvoiceItems) i DetailReport1(InvoiceItems). Pierwszy z nich wyświetli nam listę pozycji faktury, a drugi pogrupujemy po Symbolu Stawki VAT, Wyliczymy Sumę wg grupy i sumę wg Raportu co da nam podsumowanie w stawkach Vat i podsumowanie całej Faktury.
+W DetailReport dodajemy GroupHeader w którym umieścimy nagłówek pozycji.
 W DetailReport1 dodajemy Grupowanie po stawce Vat, minimalizujemy GroupHeader - bo go nie potrzebujemy a jednocześnie nie da się go wyłączyć. A GroupFooter przeznaczamy na podsumowanie całej faktury.
 
 ![](report2.png)
 
 Do sekcji Detail dodajemy dane faktury jak numer, datę płatności, wystawienia i dane klienta
 
-Na liście dostępnych pól wybieramy pola, które chcemy mieć w sekcji pozycji dokumentu. Najlepiej wybrać wszystkie naraz w kolejności w jakiej maja być na fakturze (z wciśniętym Ctrl klikamy kolejno na Product.ProductName, Quantity, UnitPrice,VatRate.Symbol, Netto,Vat Brutto). I teraz klikając na jednym zaznaczonych pól lewym przyciskiem myszy (LPM) przeciągamy do sekcji DetailReport.Detail. W ten sposób mamy wszystkie wymagane kolumny w sekcji wydruku pozycji faktury Powtarzamy operację jeszcze 3-krotnie: przeciągamy tak samo do sekcji ReportDetail1.Detail, ReportDetail1.GroupFooter i ReportDetail1.ReportFooter. Teraz klikamy na liście pól Prawym klawiszem myszki i przeciągamy kolumny do sekcji nagłówka pozycji czyli ReportDetail.Header. Zwróćcie uwagę że tym razem zamiast pól z danymi zostały przeciągnięte nazwy tych pól. (LPM - przeciągamy pola na dane, PPM - przeciągamy nagłówek pola).
+Na liście dostępnych pól wybieramy pola, które chcemy mieć w sekcji pozycji dokumentu. Najlepiej wybrać wszystkie naraz w kolejności w jakiej maja być na fakturze (z wciśniętym Ctrl klikamy kolejno na Product.ProductName, Quantity, UnitPrice,VatRate.Symbol, Netto,Vat Brutto). I teraz klikając na jednym zaznaczonych pól lewym przyciskiem myszy (LPM) przeciągamy do sekcji DetailReport.Detail. W ten sposób mamy wszystkie wymagane kolumny w sekcji wydruku pozycji faktury. Powtarzamy operację jeszcze 3-krotnie: przeciągamy tak samo do sekcji ReportDetail1.Detail, ReportDetail1.GroupFooter i ReportDetail1.ReportFooter. Teraz klikamy na liście pól Prawym klawiszem myszki i przeciągamy kolumny do sekcji nagłówka pozycji czyli ReportDetail.Header. Zwróćcie uwagę że tym razem zamiast pól z danymi zostały przeciągnięte nazwy tych pól. (LPM - przeciągamy pola na dane, PPM - przeciągamy nagłówek pola).
 
-W sekcji ReportDetail1 we wszystkich podsekcjach usuwamy kolumny ProductName, Quantity, UnitPrice (wystarczy kliknąć na polu PPM  i wybrać delete column). Tak jest prościej niż dodawać te pola osobno i potem wyrównywać szerokości z lista pozycji.
-W ReportDetail1.GroupFooter po kliknięciu PPM na polu mamy dostęp do właściwości tego pola, należy tam w polu Summary wybrać Group, co oznacza,że to pole ma zliczać sumę  w ramach grupy.
-W ReportDetail1.ReportFooter w podobny sposób wybieramy Summary: Report, co oznacza że będzie tam zliczana suma dla całego raportu - czyli wszystkich pozycji z ReportDetail1. Operacje ta powtarzamy dla pól Netto, Vat i Brutto.
+W sekcji ReportDetail1 we wszystkich podsekcjach usuwamy kolumny ProductName, Quantity, UnitPrice (wystarczy kliknąć na polu PPM  i wybrać delete column). Tak jest prościej niż dodawać te pola osobno i potem wyrównywać szerokości z listą pozycji.
+W ReportDetail1.GroupFooter po kliknięciu PPM na polu mamy dostęp do właściwości tego pola, należy tam w polu Summary wybrać Group, co oznacza, że to pole ma zliczać sumę  w ramach grupy.
+W ReportDetail1.ReportFooter w podobny sposób wybieramy Summary: Report, co oznacza że będzie tam zliczana suma dla całego raportu - czyli wszystkich pozycji z ReportDetail1. Operacje tą powtarzamy dla pól Netto, Vat i Brutto.
 
-W sekcji ReportDetail1.Detail ustawiamy Visiblity= false, co spowoduje, ze ta sekcja nie będzie drukowana na raporcie.
+W sekcji ReportDetail1.Detail ustawiamy Visiblity = false, co spowoduje, ze ta sekcja nie będzie drukowana na raporcie.
 
 Jeśli teraz byśmy kliknęli na Report Preview zobaczymy ze kolejne faktury pojawiają sie na tej samej kartce zaraz po poprzedniej. Należy ustawić przejście do nowej strony dla każdej z faktur. Żeby to osiągnąć wybierzmy sekcję Detail i w menu po prawej w polu PageBreak wybieramy Before Band Except First Entry.
 
-Jeśli program nie będzie służył do obsługi płatności w BTC, przydałoby się  zaznaczyć wszystkie pola z kwotami ustawić im format na {0:N2}.
+Jeśli program nie będzie służył do obsługi płatności w BTC, przydałoby się zaznaczyć wszystkie pola z kwotami ustawić im format na {0:N2}.
 
 ![](report5.png)
 
@@ -971,7 +971,7 @@ Obsługa współdzielonego dostępu do bazy danych wymagana jest w każdej powa�
 
 #### Odroczone usuwanie danych (Deferred Deletion)
 
-Jeśli nasz klasy BO dziedziczą po XPObject, XPCustomObject lub BaseObject włączone jest Deferrd Deletion. Oznacza to, że w momencie usuwania danych, XPO nie usuwa fizycznie rekordu z bazy, tylko oznacza go jako usuniętego wypełniając pole GCRecord. Podczas wyświetlania kolekcji danych (np na ListView), pobierane są jedynie rekordy, w których GCRecord ma wartość NULL.Pobierane są jedynie gdy pobieramy dane z którymi były w relacji (usunięty rekord jest widoczny, ale nie można go edytować). To rozwiązanie pozwala uniknąć błędów w czasie usuwania lub późniejszego dostępu do danych które były powiązane z usuniętym obiektem.
+Jeśli nasze klasy BO dziedziczą po XPObject, XPCustomObject lub BaseObject włączone jest Deferrd Deletion. Oznacza to, że w momencie usuwania danych, XPO nie usuwa fizycznie rekordu z bazy, tylko oznacza go jako usuniętego wypełniając pole GCRecord. Podczas wyświetlania kolekcji danych (np na ListView), pobierane są jedynie rekordy, w których GCRecord ma wartość NULL.Pobierane są jedynie gdy pobieramy dane z którymi były w relacji (usunięty rekord jest widoczny, ale nie można go edytować). To rozwiązanie pozwala uniknąć błędów w czasie usuwania lub późniejszego dostępu do danych które były powiązane z usuniętym obiektem.
 Usunięty w ten sposób rekord można odzyskać wstawiając do pola GCRecord wartość NULL.
 
 Tworząc obiekty biznesowe w bieżącej aplikacji, w większości użyłem klas XPO, które można podzielić wg ich funkcjonalności i przeznaczenia:
@@ -989,7 +989,7 @@ Tworząc obiekty biznesowe w bieżącej aplikacji, w większości użyłem klas 
 
 #### Object Space
 
-Wszystkie operacje związane z bazą danych odbywają się poprzez ObjectSpace. Object Space pozwala nam na edycję czy przeszukiwanie danych jako transakcji. Każdy tworzony widok posiada swój ObjectSpace, który zajmuje się dostarczeniem danych do widoku, rejestruje zmiany obiektów widoku i pozwala je zapisać w bazie danych. Dostęp do ObjectSpace mamy poprzez `View.ObjectSpace`. Możemy z niego korzystać np w kontrolerach. Nie mniej jednak View.ObjectSpace jest przewidziany do operacji związanych z obsługiwanym widokiem. Jeśli chcemy przeprowadzać złożone operacje na wielu danych lepiej jest utworzyć osobny ObjectSpace za pomocą komendy `Application.CreateObjectSpace`.
+Wszystkie operacje związane z bazą danych odbywają się poprzez ObjectSpace. ObjectSpace pozwala nam na edycję czy przeszukiwanie danych jako transakcji. Każdy tworzony widok posiada swój ObjectSpace, który zajmuje się dostarczeniem danych do widoku, rejestruje zmiany obiektów widoku i pozwala je zapisać w bazie danych. Dostęp do ObjectSpace mamy poprzez `View.ObjectSpace`. Możemy z niego korzystać np w kontrolerach. Nie mniej jednak View.ObjectSpace jest przewidziany do operacji związanych z obsługiwanym widokiem. Jeśli chcemy przeprowadzać złożone operacje na wielu danych lepiej jest utworzyć osobny ObjectSpace za pomocą komendy `Application.CreateObjectSpace`.
 
 Więcej na stronach DevExpress:
 <a href="https://docs.devexpress.com/eXpressAppFramework/113710/data-manipulation-and-business-logic/ways-to-implement-business-logic?p=net5" target="_blank">https://docs.devexpress.com/eXpressAppFramework/113710/data-manipulation-and-business-logic/ways-to-implement-business-logic?p=net5</a>
@@ -1090,7 +1090,7 @@ Następnie klasy, w których chcemy przechowywać takie informacje, zmodyfikujem
 
 Wprowadzimy teraz drobne zmiany w interfejsie użytkownika za pomocą Edytora Modelu:
 W SolutionExplorer odszukujemy projekt Invoice.Module a w nim plik Model.DesignedDiffs.xafml. 
-Po otwarciu Edytora Modelu, idziemy do Views/Invoice.Module.BusinessObjects/Customeer/Customer_DetailView i tam pojawi nam się domyślne okno przygotowane do edycji danych klienta. Klikając PPM na oknie pojawi się opcja Customize Layout i uruchomi się edytor pozwalający na modyfikację widoku. W tym przypadku pole notes zajmuje 30% ekranu, a nie jest tak istotne jak np lista Invoices. Dlatego Grupę Invoices zamienimy na TabbedGroup, Na polu Notes utworzymy nową grupę i ta grupę przeciągniemy jako drugą zakładkę w InvoicesTabbedGroup. 
+Po otwarciu Edytora Modelu, idziemy do Views/Invoice.Module.BusinessObjects/Customeer/Customer_DetailView i tam pojawi nam się domyślne okno przygotowane do edycji danych klienta. Klikając PPM na oknie pojawi się opcja Customize Layout i uruchomi się edytor pozwalający na modyfikację widoku. W tym przypadku pole notes zajmuje 30% ekranu, a nie jest tak istotne jak np lista Invoices. Dlatego Grupę Invoices zamienimy na TabbedGroup, na polu Notes utworzymy nową grupę i ta grupę przeciągniemy jako drugą zakładkę w InvoicesTabbedGroup. 
 ![](lay1.png)
 
 Modyfikacje Layoutu w wyżej przedtawiony sposób są nieuniknione, żaden automat nie zrobi tego dokładnie jak wymyśli to sobie użytkownik, dlatego biegłość w definiowaniu widoku jest przydatna. Dla tych którzy uruchomili program na swoim komputerze proponuję otworzyć ten DetailView dla klienta i klikając PPM wybrać Customize Layout. Taka mała niespodzianka, rzadko dostępna w aplikacjach tego typu ...
@@ -1313,7 +1313,7 @@ public decimal RegisterPayments2Invoice(BusinessObjects.Invoice invoice)
 ```
 Tu należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma rozrachunków jest mniejsza niż kwota wpłaty. 
 
-W fakturze dodajemy podobną kolekcję, która będzie przechowywała informacje o rozrachunkach tej faktury. Następnie dodajemy metodę, która pozwoli nam wyliczyć saldo faktury. Metoda ta będzie wywoływana z obiektu InvoicePayment gdy przypiszemy ja do faktury, lub gdy zmieni się kwota.
+W fakturze dodajemy podobną kolekcję, która będzie przechowywała informacje o rozrachunkach tej faktury. Następnie dodajemy metodę, która pozwoli nam wyliczyć saldo faktury. Metoda ta będzie wywoływana z obiektu InvoicePayment gdy przypiszemy ją do faktury, lub gdy zmieni się kwota.
 
 ```csharp
 [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
@@ -1420,14 +1420,14 @@ Win tworzymy w projekcie Invoice.Module.Win
 ![](WinOddRow.png)
 
 
-Musieliśmy zrobić 2 niezależne kontrolery dlatego ze sposób odwołania się do GridView dla obu platform jest odmienny.
+Musieliśmy zrobić 2 niezależne kontrolery dlatego że sposób odwołania się do GridView dla obu platform jest odmienny.
 
 
-Kolejny kontroler będzie przeznaczony dla obiektu Customer działający tylko dla ListView, tym razem będzie on wspólny dla obu wersji dlatego dodamy go w Invoice.Module. Stworzymy w nim akcję do wyszukiwania klientów z GUS (wykorzystam do tego  https://github.com/tailored-apps/Gus.Regon.BIR11.Proxy). Instalujemy go jako pakiet nuget:
+Kolejny kontroler będzie przeznaczony dla obiektu Customer działający tylko dla ListView, tym razem będzie on wspólny dla obu wersji dlatego dodamy go w Invoice.Module. Stworzymy w nim akcję do wyszukiwania klientów z GUS (wykorzystam do tego https://github.com/tailored-apps/Gus.Regon.BIR11.Proxy). Instalujemy go jako pakiet nuget:
 
 `Install-Package Gus.Regon.BIR11.Proxy`
 
-Definiując kontroler wskazujemy, dla jakaich rodzajów widoku i na jakiej klasie powinien zostać aktywowany. W tym przypadku ma być wywoływany tylko dla ListView wyświetlających obiekty klasy Customer, co kreślamy podając te klasy jako parametry podczas deklarowania  konstruktora: (`ObjectViewController<ListView, Customer>`). W kontrolerze tworzymy akcję typu **ParametrizedAction** o nazwie searchCustomerAction, która wyświetli pole na wstążce menu, gdzie będzie można wpisać NIP klienta. Po naciśnięciu szukaj, zostanie wywołane zdarzenie Execute, w którym program spróbuje odnaleźć go w bazie danych, jeśli nie znajdzie, odpyta serwis GUS o klienta z tym numerem NIP. (Uwaga w GUSHelper.cs trzeba wpisać poprawny klucz do API `UserKey`, który można otrzymać od administratora tego serwisu). 
+Definiując kontroler wskazujemy, dla jakaich rodzajów widoku i na jakiej klasie powinien zostać aktywowany. W tym przypadku ma być wywoływany tylko dla ListView wyświetlających obiekty klasy Customer, co określamy podając te klasy jako parametry podczas deklarowania  konstruktora: (`ObjectViewController<ListView, Customer>`). W kontrolerze tworzymy akcję typu **ParametrizedAction** o nazwie searchCustomerAction, która wyświetli pole na wstążce menu, gdzie będzie można wpisać NIP klienta. Po naciśnięciu szukaj, zostanie wywołane zdarzenie Execute, w którym program spróbuje odnaleźć go w bazie danych, jeśli nie znajdzie, odpyta serwis GUS o klienta z tym numerem NIP. (Uwaga w GUSHelper.cs trzeba wpisać poprawny klucz do API `UserKey`, który można otrzymać od administratora tego serwisu https://api.stat.gov.pl/Home/RegonApi). 
 
 
 ```csharp
@@ -1502,7 +1502,7 @@ Klasa pomocnicza do pobierania danych klienta z której skorzystaliśmy w kontro
             var clientOptions = new BirClientOptions()
             {
                 EndpointAddress = "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc",
-                UserKey = "f3ccc9d63a3243bba830" 
+                UserKey = "" 
             };
 
             IOptions<BirClientOptions> optionParameter = Options.Create(clientOptions);
@@ -1678,7 +1678,7 @@ public class Updater : ModuleUpdater
 }    
 ```
 
-W kolejnym artykule rozbudujemy nasz program o kolejne funkcjonalności, jak faktura korygująca, podział na działy firmy czy  kontrola dostępu do danych wg przynależności pracownika do wybranego działu. Zachęcamy czytelników do dyskusji i zgłaszania propozycji rozbudowy aplikacji.
+W kolejnym artykule rozbudujemy nasz program o kolejne funkcjonalności, jak faktura korygująca, podział na działy firmy czy kontrola dostępu do danych wg przynależności pracownika do wybranego działu. Zachęcamy czytelników do dyskusji i zgłaszania propozycji rozbudowy aplikacji.
 
 Kod aplikacji, dostępny jest na GitHub pod adresem: <a href="https://github.com/kashiash/Invoice" target="_blank">https://github.com/kashiash/Invoice</a>
 
