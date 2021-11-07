@@ -1,5 +1,5 @@
 # eXpressApp Framework przyjacielem programisty
-## Czyli jak zbudować apliakcję biznesową w 2 godziny
+## Czyli jak zbudować aplikację biznesową w 2 godziny
 
 
 <a href="#wstęp" target="_blank">Wstęp</a>
