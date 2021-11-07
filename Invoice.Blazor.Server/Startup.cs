@@ -33,6 +33,7 @@ using DevExpress.ExpressApp.WebApi.Swashbuckle;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.OData;
 using Invoice.WebApi.JWT;
+using Invoice.Module.BusinessObjects;
 
 namespace Invoice.Blazor.Server {
     public class Startup {
@@ -152,6 +153,9 @@ namespace Invoice.Blazor.Server {
             });
             services.AddXafWebApi(options => {
                 // Use options.BusinessObject<YourBusinessObject>() to make the Business Object available in the Web API and generate the GET, POST, PUT, and DELETE HTTP methods for it.
+                options.BusinessObject<Customer>();
+                options.BusinessObject<Product>();
+                options.BusinessObject<ProductGroup>();
             });
             services.AddControllers().AddOData(options => {
                 options
