@@ -14,6 +14,7 @@ Standardowy proces tworzenia oprogramowania stawia przed programistami następuj
 *	 Najprostsze czynności jak przeglądanie czy przechowywanie danych są czasochłonne. Programiści muszą dbać o każdy aspekt tworzonej aplikacji – od zarządzania danymi na poziomie serwerów danych, po dostarczenie edytorów do każdego edytowanego pola.
 *	Im bardziej złożony system, tym więcej kodu, tym więcej nieuchronnych błędów. Do celów testowych potrzeba znaczną ilość czasu i zasobów ludzkich.
 *	Utrzymanie tak stworzonego systemu nie jest trywialne. Nawet trzymając się wszelkich zasad programowania, wiele zadań będzie wymagało modyfikacji aplikacji w wielu miejscach. Jej rozbudowa jest kosztowna i koszt ten rośnie wraz ze złożonością systemu.
+
 Oczywiście niniejsze podejście ma tez swoje zalety:
 *	Każdy aspekt powstającego sytemu jest w pełni kontrolowany przez programistów. Nie są uzależnieni od ograniczeń czy nawet błędów zewnętrznych bibliotek. Wszystko co stworzyli mogą modyfikować i poprawiać w prostszy sposób.
 *	Programiści mogą optymalizować system wg własnych potrzeb, co jest trudne do osiągnięcia bazując na zewnętrznych rozwiązaniach.
@@ -175,7 +176,7 @@ Kilka słów o powyższej strukturze projektów:
 
     Tutaj definiujemy Edytory i Kontrolery dedykowane dla platformy Blazor. Uwaga klasy BO zdefiniowane tutaj nie będą widziane w aplikacji Win! 
 
-* Invoice.Module.Win
+* Invoice.Win
   
     Praktycznie jest to projekt z którego powstaje plik wykonywalny aplikacji. Ewentualne zmiany w tym projekcie obejmować mogą pliki Program.cs oraz WinApplication.cs i konfiguracji. Tutaj nie należy definiować kontrolerów ani klas BO. Nie będą one widoczne dla mechanizmów XAF i nie zostaną uwzględnione w modelu aplikacji.
     
@@ -1028,7 +1029,7 @@ Opisanie procesu tworzenia dashboardu ...
 
 ### Jak to wszystko działa ...
 
-Chociaż architektura XAF pomaga programistom zaoszczędzić znaczną ilość czasu, sama architektura nie kontroluje każdego aspektu procesu tworzenia oprogramowania. Nadal należy stosować się do dobrych praktyk, tworzyć testy jednostkowe i co ważne dla rozbudowanych aplikacji dobrze rozpoznać dziedzinę i zaprojektować architekturę tworzonej aplikacji.
+Chociaż XAF pomaga programistom zaoszczędzić znaczną ilość czasu, sama architektura nie kontroluje każdego aspektu procesu tworzenia oprogramowania. Nadal należy stosować się do dobrych praktyk, tworzyć testy jednostkowe i co ważne dla rozbudowanych aplikacji dobrze rozpoznać dziedzinę i zaprojektować architekturę tworzonej aplikacji. Wbrew pozorom to nie jest narzędzie dla początkujących programistów.
 Część klas można wyklikać w edytorze lub zaimportować z istniejącej bazy danych i uruchomić działająca aplikację bez napisania linijki kodu, ale do tworzenia złożonych aplikacji nadal niezbędna jest znajomość Visual Studio, programowania obiektowego, tworzenia zapytań LINQ itp. Dobrze jest znać dobre praktyki dla używanych technologii. Kluczowa jest znajomość samych zasad funkcjonowania XAF i XPO.
 
 #### Kontrola wspóldzielonego dostepu do danych (Optimistic Locking)
@@ -1045,18 +1046,27 @@ Tworząc obiekty biznesowe w bieżącej aplikacji, w większości użyłem klas 
 
 | Typ Obiektu XPO | Wbudowany OID | Deferred Deletion | Optimistic Locking |                            Uwagi                             |
 | :-------------: | :-----------: | :---------------: | :----------------: | :----------------------------------------------------------: |
-|    XPObject     |      TAK      |        TAK        |        TAK         | Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji |
+|XPObject     |      TAK      |        TAK        |        TAK         | Domyślny typ dla aplikacji XAF, najlepszy dla nowo tworzonych aplikacji |
 |  XPLiteObject   |      NIE      |        NIE        |        NIE         | Typ używany dla zaimportowanych BO z bazy danych, gdy zależy nam aby nie modyfikować struktury istniejącej bazy danych |
 | XPCustomObject  |      NIE      |        TAK        |        TAK         | Typ używany dla zaimportowanych BO z bazy danych, gdzie chcemy użyć wbudowanego mechanizmu DD i OL |
 | PersistentBase  |      NIE      |        NIE        |        TAK         | Praktycznie nie używany w XAF, służy jako bazowy do pozostałych |
 |  XPBaseObject   |      NIE      |        NIE        |        TAK         |                             j.w.                             |
 |   BaseObject    |      TAK      |        TAK        |        TAK         | W sytuacji gdy potrzebujemy użyć GUID w polu identyfikatora, można użyć tego typu zamiast XPObject |
 
+#### Object Space
+
+Wszystkie operacje związane z bazą danych odbywają się poprzez ObjectSpace. Object Space pozwala nam na edycję czy przeszukiwanie danych jako transakcji. Każdy tworzony widok posiada swój ObjectSpace, który zajmuje się dostarczeniem danych do widoku, rejestruje zmiany obiektów widoku i pozwala je zapisać w bazie danych. Dostęp do ObjectSpace mamy poprzez `View.ObjectSpace`. Możemy z niego korzystać np w kontrolerach. Nie mniej jednak View.ObjectSpace jest przewidziany do operacji związanych z obsługiwanym widokiem. Jeśli chcemy przeprowadzać złożone operacje na wielu danych lepiej jest utworzyć osobny ObjectSpace za pomocą komendy `Application.CreateObjectSpace`.
+
+Więcej na stronach DevExpress:
+<a href="https://docs.devexpress.com/eXpressAppFramework/113710/data-manipulation-and-business-logic/ways-to-implement-business-logic?p=net5" target="_blank">https://docs.devexpress.com/eXpressAppFramework/113710/data-manipulation-and-business-logic/ways-to-implement-business-logic?p=net5</a>
+
+<a href="https://docs.devexpress.com/eXpressAppFramework/113711/data-manipulation-and-business-logic/create-read-update-and-delete-data?p=net5" target="_blank">https://docs.devexpress.com/eXpressAppFramework/113711/data-manipulation-and-business-logic/create-read-update-and-delete-data?p=net5</a>
+
 
 
 ## Rozbudowujemy aplikację
 
-W przypadku niektórych danych chcielibyśmy mieć informację o tym, kto i kiedy utworzył rekord lub go modyfikował. Napiszemy w tym celu klasę **CustomBaseObject**, która będzie wypleniać te dane. 
+W przypadku niektórych danych chcielibyśmy mieć informację o tym, kto i kiedy utworzył rekord lub go modyfikował. Napiszemy w tym celu klasę **CustomBaseObject**, która będzie wypełniać te dane. 
 
 ```csharp
 [NonPersistent]
@@ -1395,15 +1405,18 @@ public void FindPaymentsForInvoice()
 }
 ```
 
-Tu też należy zwrócić uwagę na atrybut Action - jest to najprostsza metoda utworzenia akcji - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
+Tu też należy zwrócić uwagę na atrybut Action - nie potrzebujemy tworzyć kontrolera. W atrybucie określamy jaki ma być napis na przycisku, ikonę oraz warunek kiedy akcja ma być aktywna - w tym przypadku wtedy gdy suma wpłat nie spłaca wartości faktury.
 
 ### Kontrolery
 
-Kontrolery pozwalają na roszerzanie interfejsu użytkownika oraz wykonywanie pewnych akcji w momencie otwierania lub zamykania widoku, są one pewnego rodzaju kontenerami w których są przechowywane akcje określone dla wybranych widoków oraz obiektów.
+Kontrolery pozwalają na rozszerzanie interfejsu użytkownika oraz wykonywanie pewnych akcji w momencie otwierania lub zamykania widoku, są one pewnego rodzaju kontenerami w których są przechowywane akcje określone dla wybranych widoków oraz obiektów.
 
-Pierwszy kontroler posłuży do zmiany koloru nieparzystych wierszy na listach, a dokładniej to dwa kontrolery, ponieważ trzeba stworzyć osobny kontroler dla wersji Win oraz wersji Blazor.
 
-Blazor tworzymy w projekcie Invoice.Module.Blazor
+
+Pierwszy kontroler posłuży do zmiany koloru nieparzystych wierszy na listach, a dokładniej to dwa kontrolery, ponieważ trzeba stworzyć osobny kontroler dla wersji Win oraz wersji Blazor. 
+Kontroler wywoływany jest dla każdego tworzonego ListView ( `ViewController<ListView>` ), odnajduje w nim GridListEditor i ustawia mu odpowiednie właściwości. Oczywiście można to było zmienić w modelu, ale musielibyśmy zrobić dla każdej klasy.
+
+Kontroler dla wersji Blazor tworzymy w projekcie Invoice.Module.Blazor
 ```csharp
     public class GridViewController : ViewController<ListView>
     {
@@ -1436,9 +1449,13 @@ Win tworzymy w projekcie Invoice.Module.Win
     }
 ```
 
+Musieliśmy zrobić 2 niezależne kontrolery dlatego ze sposób odwołania się do GridView dla obu platform jest odmienny.
+
 ![](oddRow.png)
 
-Kolejny kontroler będzie przeznaczony dla obiektu Customer działający tylko dla ListView, tym razem będzie on wspólny dla obu wersji, stworzymy w nim akcję do wyszukiwania klientów z GUS. 
+Kolejny kontroler będzie przeznaczony dla obiektu Customer działający tylko dla ListView, tym razem będzie on wspólny dla obu wersji, stworzymy w nim akcję do wyszukiwania klientów z GUS (wykorzystam do tego dowolny nuget znaleziony w sieci). 
+
+Definiując kontroler wskazujemy, że ma być wywoływany tylko dla ListView wyświetlających obiekty klasy Customer (`ObjectViewController<ListView, Customer>`). W kontrolerze dodajemy akcję searchCustomerAction, która wyświetli pole na wstążce menu gdzie będzie można wpisać NIP klienta. Po naciśnięciu szukaj, program spróbuje odnaleźć go w bazie danych, jeśli nie znajdzie, odpyta serwis GUS o klienta z tym numerem NIP. (Uwaga w GUSHelper.cs trzeba wpisać poprawny klucz do API, który można otrzymać od administratora tego serwisu). 
 
 
 ```csharp
@@ -1502,6 +1519,7 @@ Kolejny kontroler będzie przeznaczony dla obiektu Customer działający tylko d
 
 ### Moduł Conditional Appearance
 
+W XAF w celu modyfikacji warunkowej niektórych cech elementów interfejsu użytkownika np kolorowania, widoczności czy rodzaju fontu, możemy użyć modułu Conditional Appearance.
 W fakturach chcemy na niebiesko wyświetlać te które są zapłacone, a na czerwono niezapłacone przeterminowane.
 
 ```csharp
@@ -1518,10 +1536,10 @@ public class Invoice : BaseObject
 
 ...
 ```
-Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać złożonych warunków, zdecydowanie prościej jest wyliczyć ten warunek w zmiennej Overdue i jej użyć w regule Apperance/Criteria 
+Z tego względu że kryteria do kolorowania pisane są w języku wewnętrznym DevExpress, należy unikać wpisywania złożonych warunków, ponieważ nie mamy tam weryfikacji składni na etapie programowania i nietrudno o pomyłkę. Zdecydowanie prościej jest wyliczyć ten warunek w zmiennej Overdue i jej użyć w regule Apperance/Criteria 
 
 
-Płatności które zostały już zaksięgowane na faktury chcemy wyświetlać na niebiesko
+W przypadku płatności, które zostały już zaksięgowane na faktury chcemy wyświetlać na niebiesko:
 
 ```csharp
 ...
@@ -1531,6 +1549,11 @@ public class Payment : XPObject
 ...
 ```
 Więcej w tym temacie na stronie <a href="https://docs.devexpress.com/eXpressAppFramework/113286/conditional-appearance" target="_blank">DevExpress</a>
+
+
+W kolejnym artykule rozbudujemy nasz program o kolejne funkcjonalności, jak faktura korygująca, podział na działy firmy czy  kontrola dostępu do danych wg przynależności pracownika do wybranego działu. Zachęcamy czytelników do dyskusji i zglaszania propozycji rozbudowy aplikacji.
+
+Kod aplikacji, dostępny jest na GitHub pod adresem: <a href="https://github.com/kashiash/Invoice" target="_blank">https://github.com/kashiash/Invoice</a>
 
 # od tego miejsca II ARTYKUŁ !!!!!!!
 
