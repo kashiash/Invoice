@@ -1072,7 +1072,6 @@ Rozbudujemy nasza aplikacje o możliwość rejestrowania wpłat:
     erDiagram
       CUSTOMER ||--o{ INVOICE : get
       INVOICE ||--|{ INVOICEITEM : contains
-
       PRODUCT ||--|{ INVOICEITEM : in
       VATRATE ||--|{ PRODUCT : use
       VATRATE ||--|{ INVOICEITEM : use
