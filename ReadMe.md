@@ -1082,10 +1082,40 @@ Następnie klasy, w których chcemy przechowywać takie informacje, zmodyfikujem
 
 Wprowadzimy teraz drobne zmiany w interfejsie użytkownika za pomocą Edytora Modelu:
 W SolutionExplorer odszukujemy projekt Invoice.Module a w nim plik Model.DesignedDiffs.xafml. 
-Po otwarciu Edytora Modelu, 
-
-
+Po otwarciu Edytora Modelu, idziemy do Views/Invoice.Module.BusinessObjects/Customeer/Customer_DetailView i tam pojawi nam się domyślne okno przygotowane do edycji danych klienta. Klikając PPM na oknie pojawi się opcja Customize Layout i uruchomi się edytor pozwalający na modyfikację widoku. W tym przypadku pole notes zajmuje 30% ekranu, a nie jest tak istotne jak np lista Invoices. Dlatego Grupę Invoices zamienimy na TabbedGroup, Na polu Notes utworzymy nową grupę i ta grupę przeciągniemy jako drugą zakładkę w InvoicesTabbedGroup. 
 ![](lay1.png)
+
+Modyfikacje Layoutu w wyżej przedtawiony sposób są nieuniknione, żaden automat nie zrobi tego dokładnie jak wymyśli to sobie użytkownik, dlatego biegłość w definiowaniu widoku jest przydatna. Dla tych którzy uruchomili program na swoim komputerze proponuję otworzyć ten DetailView dla klienta i klikając PPM wybrać Customize Layout. Taka mała niespodzianka, rzadko dostępna w aplikacjach tego typu ...
+
+Podobny efekt można uzyskać stosując DetailViewLayoutAttribute dodając je do pól które chcemy zebrać w jednej grupie:
+
+```csharp
+    public class Customer : CustomBaseObject
+    {
+        ...
+        [Association]
+        [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
+        public XPCollection<Invoice> Invoices
+        {
+            get
+            {
+                return GetCollection<Invoice>(nameof(Invoices));
+            }
+        }
+
+        [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Size(SizeAttribute.Unlimited)]
+        
+        public string Notes
+        {
+            get => notes;
+            set => SetPropertyValue(nameof(Notes), ref notes, value);
+        }
+        ..
+    }
+```
+Podobnie możemy zrobić praktycznie w każdej klasie gdzie występuje jakaś kolekcja i pole string z rozmiarem Unlimited.
+
 
 
 Więcej na temat modyfikacji <a href="https://docs.devexpress.com/eXpressAppFramework/112833/getting-started/in-depth-tutorial-winforms-webforms/ui-customization/customize-the-view-items-layout" target="_blank">widoków</a>
