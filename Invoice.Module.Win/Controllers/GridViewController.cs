@@ -15,6 +15,8 @@ namespace Invoice.Module.Win.Controllers
                 GridView gridView = gridListEditor.GridView;
                 gridView.OptionsView.EnableAppearanceOddRow = true;
                 gridView.Appearance.OddRow.BackColor = Color.FromArgb(244, 244, 244);
+                
+               gridListEditor.Grid.UseEmbeddedNavigator = true;
             }
         }
     }
