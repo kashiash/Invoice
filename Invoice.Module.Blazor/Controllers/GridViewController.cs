@@ -1,4 +1,5 @@
-﻿using DevExpress.ExpressApp;
+﻿using DevExpress.Blazor;
+using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Blazor.Editors.Grid;
 
 namespace Invoice.Module.Blazor.Controllers
@@ -12,6 +13,16 @@ namespace Invoice.Module.Blazor.Controllers
             {
                 IDxDataGridAdapter dataGridAdapter = gridListEditor.GetDataGridAdapter();
                 dataGridAdapter.DataGridModel.CssClass += " table-striped";
+
+                dataGridAdapter.DataGridModel.ColumnResizeMode = DataGridColumnResizeMode.Component;
+                dataGridAdapter.DataGridModel.ShowFilterRow = true;
+                foreach (var column in gridListEditor.Columns)
+                {
+                    if (column.Width < 150)
+                    {
+                        column.Width = 150;
+                    }
+                }
             }
         }
     }
