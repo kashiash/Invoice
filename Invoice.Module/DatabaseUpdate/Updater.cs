@@ -54,7 +54,7 @@ namespace Invoice.Module.DatabaseUpdate {
 			userAdmin.Roles.Add(adminRole);
 
 
-         //   PrepareTestData();
+         //  PrepareTestData();
 
             ObjectSpace.CommitChanges(); //This line persists created object(s).
         }
@@ -88,6 +88,7 @@ namespace Invoice.Module.DatabaseUpdate {
                 .RuleFor(o => o.Phone, f => f.Person.Phone)
                 .RuleFor(o => o.Email, (f, c) => f.Internet.Email());
             cusFaker.Generate(100);
+            ObjectSpace.CommitChanges(); //This line persists created object(s).
 
 
             var prodFaker = new Faker<Product>("pl")
@@ -102,6 +103,7 @@ namespace Invoice.Module.DatabaseUpdate {
 
             prodFaker.Generate(100);
 
+            ObjectSpace.CommitChanges(); //This line persists created object(s).
 
             var customers = ObjectSpace.GetObjectsQuery<Customer>(true).ToList();
 
@@ -115,6 +117,8 @@ namespace Invoice.Module.DatabaseUpdate {
             var orders = orderFaker.Generate(customers.Count * 10);
 
             var products = ObjectSpace.GetObjectsQuery<Product>(true).ToList();
+            ObjectSpace.CommitChanges(); //This line persists created object(s).
+
 
             var itemsFaker = new Faker<InvoiceItem>()
             .CustomInstantiator(f => ObjectSpace.CreateObject<InvoiceItem>())
@@ -123,6 +127,8 @@ namespace Invoice.Module.DatabaseUpdate {
                 .RuleFor(o => o.Quantity, f => f.Random.Decimal(0.01M, 100M));
 
             var items = itemsFaker.Generate(orders.Count * 10);
+            ObjectSpace.CommitChanges(); //This line persists created object(s).
+
 
             var paymentsFaker = new Faker<Payment>()
                  .CustomInstantiator(f => ObjectSpace.CreateObject<Payment>())
@@ -131,6 +137,8 @@ namespace Invoice.Module.DatabaseUpdate {
                   .RuleFor(o=>o.PaymentDescription ,f=>f.Lorem.Sentences(5))
                  .RuleFor(p => p.PaymentDate, f => f.Date.Past(2));
             var payments = paymentsFaker.Generate(orders.Count * 4);
+            ObjectSpace.CommitChanges(); //This line persists created object(s).
+
         }
 
         private VatRate NowaStawka(string symbol, decimal val)
