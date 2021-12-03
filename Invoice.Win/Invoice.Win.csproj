@@ -42,6 +42,7 @@
     <PackageReference Include="DevExpress.RichEdit.Export" Version="21.2.3" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj" />
     <ProjectReference Include="..\Invoice.Module.Win\Invoice.Module.Win.csproj">
       <Private>True</Private>
     </ProjectReference>

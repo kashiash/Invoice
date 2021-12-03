@@ -14,16 +14,18 @@ using DevExpress.ExpressApp.Updating;
 using DevExpress.ExpressApp.Model.Core;
 using DevExpress.ExpressApp.Model.DomainLogics;
 using DevExpress.ExpressApp.Model.NodeGenerators;
-using DevExpress.Xpo;
 using DevExpress.ExpressApp.Xpo;
 
-namespace GUS.Module {
+namespace KodyPocztowe.Module {
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.ModuleBase.
-    public sealed partial class GUSModule : ModuleBase {
-        public GUSModule() {
+    public sealed partial class KodyPocztoweModule : ModuleBase {
+        public KodyPocztoweModule() {
             InitializeComponent();
         }
-
+        public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {
+            ModuleUpdater updater = new DatabaseUpdate.Updater(objectSpace, versionFromDB);
+            return new ModuleUpdater[] { updater };
+        }
         public override void Setup(XafApplication application) {
             base.Setup(application);
             // Manage various aspects of the application UI and behavior at the module level.

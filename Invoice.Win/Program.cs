@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Windows.Forms;
-
+using Common.Module.Utils;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Win;
@@ -30,8 +30,11 @@ namespace Invoice.Win {
             Tracing.Initialize();
             InvoiceWindowsFormsApplication winApplication = new InvoiceWindowsFormsApplication();
             winApplication.GetSecurityStrategy().RegisterXPOAdapterProviders();
-            if(ConfigurationManager.ConnectionStrings["ConnectionString"] != null) {
-                winApplication.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+
+
+            if (ConfigurationManager.ConnectionStrings["ConnectionString"] != null)
+            {
+                winApplication.ConnectionString = AppSettings.ConnectionString;
             }
 #if EASYTEST
             if(ConfigurationManager.ConnectionStrings["EasyTestConnectionString"] != null) {
@@ -39,7 +42,7 @@ namespace Invoice.Win {
             }
 #endif
 #if DEBUG
-            if(System.Diagnostics.Debugger.IsAttached && winApplication.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
+            if (System.Diagnostics.Debugger.IsAttached && winApplication.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
                 winApplication.DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
             }
 #endif

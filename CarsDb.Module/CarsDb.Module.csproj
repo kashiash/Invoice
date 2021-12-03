@@ -1,10 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Deterministic>false</Deterministic>
     <AssemblyVersion>1.0.*</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <Configurations>Debug;Release;EasyTest</Configurations>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
+    <DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Model.DesignedDiffs.xafml" />
@@ -13,37 +22,18 @@
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="34.0.1" />
     <PackageReference Include="DevExpress.ExpressApp" Version="21.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Dashboards" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Objects" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Office" Version="21.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Scheduler" Version="21.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors" Version="21.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.Validation" Version="21.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="21.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.3" />
     <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.3" />
     <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.3" />
-    <PackageReference Include="Gus.Regon.BIR11.Proxy" Version="0.1.6" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CarsDb.Module\CarsDb.Module.csproj" />
     <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj" />
-    <ProjectReference Include="..\GUS.Module\GUS.Module.csproj" />
-    <ProjectReference Include="..\KodyPocztowe.Module\KodyPocztowe.Module.csproj" />
-    <ProjectReference Include="..\Waluty.Module\WalutyModule.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="UnusableNodes.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-    </None>
   </ItemGroup>
 </Project>
