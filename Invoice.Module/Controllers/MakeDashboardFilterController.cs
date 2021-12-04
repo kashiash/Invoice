@@ -14,11 +14,14 @@ namespace Invoice.Module.Controllers
     {
         private const string DashboardViewId = "MakeModelsDashboardView";
         private DashboardViewItem MakeItem;
+        
         private DashboardViewItem ModelItem;
         private DashboardViewItem SpecificationItem;
         private DashboardViewItem TrimItem;
 
-
+        private bool MakeWasSelected;
+        private bool ModelWasSelected;
+        private bool TrimWasSelected;
 
         private void FilterModelListView(ListView masterListView, ListView detailListView)
         {
@@ -48,6 +51,23 @@ namespace Invoice.Module.Controllers
             }
         }
 
+        private void FilterSpecListView(ListView masterListView, ListView detailListView)
+        {
+            detailListView.CollectionSource.Criteria.Clear();
+            //List<object> searchedObjects = new List<object>();
+            //foreach (object obj in masterListView.SelectedObjects)
+            //{
+            //    searchedObjects.Add(detailListView.ObjectSpace.GetKeyValue(obj));
+            //}
+            if (masterListView.SelectedObjects.Count > 0)
+            {
+                var obj = masterListView.SelectedObjects[0];
+                var oid = detailListView.ObjectSpace.GetKeyValue(obj);
+               // detailListView.CollectionSource.Criteria["SelectedTrim"] = new InOperator("id_car_trim.id_car_trim", searchedObjects);
+                detailListView.CollectionSource.Criteria["SelectedTrim"] = new BinaryOperator("id_car_trim.id_car_trim", oid);
+            }
+        }
+
         private void MakeItem_ControlCreated(object sender, EventArgs e)
         {
             DashboardViewItem dashboardItem = (DashboardViewItem)sender;
@@ -60,7 +80,10 @@ namespace Invoice.Module.Controllers
         }
         private void makeListView_SelectionChanged(object sender, EventArgs e)
         {
+            MakeWasSelected = true;
             FilterModelListView((ListView)MakeItem.InnerView, (ListView)ModelItem.InnerView);
+            MakeWasSelected = false;
+            modelListView_SelectionChanged(sender, e);
         }
         private void DisableNavigationActions(Frame frame)
         {
@@ -84,7 +107,13 @@ namespace Invoice.Module.Controllers
 
         private void modelListView_SelectionChanged(object sender, EventArgs e)
         {
-            FilterTrimListView((ListView)ModelItem.InnerView, (ListView)TrimItem.InnerView);
+            if (!MakeWasSelected)
+            {
+                ModelWasSelected = true;
+                FilterTrimListView((ListView)ModelItem.InnerView, (ListView)TrimItem.InnerView);
+                ModelWasSelected = false;
+                trimListView_SelectionChanged(sender, e);
+            }
         }
 
         private void TrimItem_ControlCreated(object sender, EventArgs e)
@@ -99,6 +128,18 @@ namespace Invoice.Module.Controllers
         }
 
         private void trimListView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (!ModelWasSelected)
+            {
+                TrimWasSelected = true;
+                FilterSpecListView((ListView)TrimItem.InnerView, (ListView)SpecificationItem.InnerView);
+                TrimWasSelected = false;
+          
+            }
+        }
+
+
+        private void SpecItem_ControlCreated(object sender, EventArgs e)
         {
            // throw new NotImplementedException();
         }
@@ -127,11 +168,17 @@ namespace Invoice.Module.Controllers
                 if (TrimItem != null)
                 {
                     if (TrimItem.Frame != null)
-                        DisableNavigationActions(ModelItem.Frame);
+                        DisableNavigationActions(TrimItem.Frame);
                     else
                         TrimItem.ControlCreated += TrimItem_ControlCreated;
                 }
-
+                if (SpecificationItem != null)
+                {
+                    if (SpecificationItem.Frame != null)
+                        DisableNavigationActions(SpecificationItem.Frame);
+                    else
+                        SpecificationItem.ControlCreated += SpecItem_ControlCreated;
+                }
             }
         }
 

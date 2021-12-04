@@ -18,8 +18,8 @@ namespace KrajeWaluty.DatabaseUpdate {
         }
         public override void UpdateDatabaseAfterUpdateSchema() {
             base.UpdateDatabaseAfterUpdateSchema();
-            DodajKraje(ObjectSpace);
-            ObjectSpace.CommitChanges(); 
+           // DodajKraje(ObjectSpace);
+           // ObjectSpace.CommitChanges(); 
         }
         public override void UpdateDatabaseBeforeUpdateSchema() {
             base.UpdateDatabaseBeforeUpdateSchema();
