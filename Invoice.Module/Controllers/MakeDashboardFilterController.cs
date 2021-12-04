@@ -63,8 +63,9 @@ namespace Invoice.Module.Controllers
             {
                 var obj = masterListView.SelectedObjects[0];
                 var oid = detailListView.ObjectSpace.GetKeyValue(obj);
-               // detailListView.CollectionSource.Criteria["SelectedTrim"] = new InOperator("id_car_trim.id_car_trim", searchedObjects);
+                // detailListView.CollectionSource.Criteria["SelectedTrim"] = new InOperator("id_car_trim.id_car_trim", searchedObjects);
                 detailListView.CollectionSource.Criteria["SelectedTrim"] = new BinaryOperator("id_car_trim.id_car_trim", oid);
+
             }
         }
 
