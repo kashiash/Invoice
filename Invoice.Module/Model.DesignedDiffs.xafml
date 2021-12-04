@@ -3,6 +3,59 @@
   <BOModel>
     <Class Name="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser" Caption="Base User" />
   </BOModel>
+  <NavigationItems>
+    <Items>
+      <Item Id="Default" Index="0" Caption="Kartoteki">
+        <Items>
+          <Item Id="@31c4f3b8-9388-4597-befd-61d5ac80e0a6" ViewId="MakeModelsDashboardView" IsNewNode="True" />
+          <Item Id="Event_ListView" Removed="True" />
+          <Item Id="ProductGroup_ListView" Removed="True" />
+          <Item Id="TreeListBaseObject_ListView" Removed="True" />
+          <Item Id="VatRate_ListView" Removed="True" />
+          <Item Id="WalutyKursyDashboard" ViewId="WalutyKursyDashboard" IsNewNode="True" />
+        </Items>
+      </Item>
+      <Item Id="Reports" Index="1" />
+      <Item Id="Administracyjne" Index="2" />
+      <Item Id="@b19b1e98-493a-44c1-a9c5-26ca5809c8e2" Caption="Tests" IsNewNode="True">
+        <Items IsNewNode="True">
+          <Item Id="Event_ListView" ViewId="Event_ListView" ObjectKey="" IsNewNode="True" />
+          <Item Id="TreeListBaseObject_ListView" ViewId="TreeListBaseObject_ListView" ObjectKey="" IsNewNode="True" />
+        </Items>
+      </Item>
+      <Item Id="GUS" Removed="True" />
+      <Item Id="Słowniki">
+        <Items>
+          <Item Id="car_make_ListView" Index="0" Caption="Marki" />
+          <Item Id="car_model_ListView" Index="1" />
+          <Item Id="car_generation_ListView" Index="2" Removed="True" />
+          <Item Id="car_equipment_ListView" Removed="True" />
+          <Item Id="car_trim_ListView" Removed="True" />
+          <Item Id="car_type_ListView" Removed="True" />
+          <Item Id="GUS" IsNewNode="True">
+            <Items IsNewNode="True">
+              <Item Id="BasicLegalForm_ListView" ViewId="BasicLegalForm_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="CityGus_ListView" ViewId="CityGus_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="CommuneGus_ListView" ViewId="CommuneGus_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="CountryGus_ListView" ViewId="CountryGus_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="CountyGus_ListView" ViewId="CountyGus_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="FinancingForm_ListView" ViewId="FinancingForm_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="FoundingBody_ListView" ViewId="FoundingBody_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="PkdCode_ListView" ViewId="PkdCode_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="PropertyForm_ListView" ViewId="PropertyForm_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="ProvinceGus_ListView" ViewId="ProvinceGus_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="RegistrationAuthority_ListView" ViewId="RegistrationAuthority_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="RegistryType_ListView" ViewId="RegistryType_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="SpecificLegalForm_ListView" ViewId="SpecificLegalForm_ListView" ObjectKey="" IsNewNode="True" />
+              <Item Id="StreetGus_ListView" ViewId="StreetGus_ListView" ObjectKey="" IsNewNode="True" />
+            </Items>
+          </Item>
+          <Item Id="ProductGroup_ListView" ViewId="ProductGroup_ListView" ObjectKey="" IsNewNode="True" />
+          <Item Id="VatRate_ListView" ViewId="VatRate_ListView" ObjectKey="" IsNewNode="True" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
   <Options DataAccessMode="Server">
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
@@ -13,5 +66,37 @@
   </SchemaModules>
   <Views>
     <ListView Id="ApplicationUser_ListView" Caption="Users" />
+    <DashboardView Id="MakeModelsDashboardView" Caption="Marki i Modele" IsNewNode="True">
+      <Items IsNewNode="True">
+        <DashboardViewItem Id="Make" ViewId="car_make_ListView" Caption="Car Make" IsNewNode="True" />
+        <DashboardViewItem Id="Model" ViewId="car_model_ListView" IsNewNode="True" />
+        <DashboardViewItem Id="Specification" ViewId="car_specification_value_ListView" IsNewNode="True" />
+        <DashboardViewItem Id="Trim" ViewId="car_trim_ListView" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" ShowCaption="False" Direction="Horizontal" Index="0" RelativeSize="100" Caption="Main" IsNewNode="True">
+          <LayoutGroup Id="Auto2cf3b139-d83c-41f4-9062-4c4bd95757f1" ShowCaption="False" Caption="" Index="0" RelativeSize="49.86033519553072" IsNewNode="True">
+            <LayoutItem Id="Make" ViewItem="Make" Index="0" RelativeSize="49.95499549954995" IsNewNode="True" />
+            <LayoutItem Id="Trim" ViewItem="Trim" Index="1" RelativeSize="50.04500450045005" IsNewNode="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="Auto94764098-dd9e-4255-bb40-f8cfb96b9494" ShowCaption="False" Caption="" Index="1" RelativeSize="50.13966480446928" IsNewNode="True">
+            <LayoutItem Id="Model" ViewItem="Model" Index="0" RelativeSize="49.95499549954995" IsNewNode="True" />
+            <LayoutItem Id="Specification" ViewItem="Specification" Index="1" RelativeSize="50.04500450045005" IsNewNode="True" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DashboardView>
+    <DashboardView Id="WalutyKursyDashboard" Caption="Kursy walut" IsNewNode="True">
+      <Items IsNewNode="True">
+        <DashboardViewItem Id="Waluta" ViewId="Waluta_ListView" Index="0" IsNewNode="True" />
+        <DashboardViewItem Id="Kurs" ViewId="KursWaluty_ListView" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" ShowCaption="False" Direction="Horizontal" Index="0" RelativeSize="100" IsNewNode="True">
+          <LayoutItem Id="Waluta" ViewItem="Waluta" Index="0" RelativeSize="32.663316582914575" IsNewNode="True" />
+          <LayoutItem Id="Kurs" ViewItem="Kurs" Index="1" RelativeSize="67.33668341708542" IsNewNode="True" />
+        </LayoutGroup>
+      </Layout>
+    </DashboardView>
   </Views>
 </Application>
