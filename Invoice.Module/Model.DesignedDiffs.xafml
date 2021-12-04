@@ -70,18 +70,16 @@
       <Items IsNewNode="True">
         <DashboardViewItem Id="Make" ViewId="car_make_ListView" Caption="Car Make" IsNewNode="True" />
         <DashboardViewItem Id="Model" ViewId="car_model_ListView" IsNewNode="True" />
-        <DashboardViewItem Id="Specification" ViewId="car_specification_value_ListView" IsNewNode="True" />
         <DashboardViewItem Id="Trim" ViewId="car_trim_ListView" IsNewNode="True" />
       </Items>
       <Layout IsNewNode="True">
         <LayoutGroup Id="Main" ShowCaption="False" Direction="Horizontal" Index="0" RelativeSize="100" Caption="Main" IsNewNode="True">
-          <LayoutGroup Id="Auto2cf3b139-d83c-41f4-9062-4c4bd95757f1" ShowCaption="False" Caption="" Index="0" RelativeSize="49.86033519553072" IsNewNode="True">
-            <LayoutItem Id="Make" ViewItem="Make" Index="0" RelativeSize="49.95499549954995" IsNewNode="True" />
-            <LayoutItem Id="Trim" ViewItem="Trim" Index="1" RelativeSize="50.04500450045005" IsNewNode="True" />
+          <LayoutGroup Id="Auto2cf3b139-d83c-41f4-9062-4c4bd95757f1" ShowCaption="False" Caption="Auto2cf3b139-d83c-41f4-9062-4c4bd95757f1(2)" Index="0" RelativeSize="26.15499254843517" IsNewNode="True">
+            <LayoutItem Id="Make" ViewItem="Make" Index="0" RelativeSize="100" IsNewNode="True" />
           </LayoutGroup>
-          <LayoutGroup Id="Auto94764098-dd9e-4255-bb40-f8cfb96b9494" ShowCaption="False" Caption="" Index="1" RelativeSize="50.13966480446928" IsNewNode="True">
-            <LayoutItem Id="Model" ViewItem="Model" Index="0" RelativeSize="49.95499549954995" IsNewNode="True" />
-            <LayoutItem Id="Specification" ViewItem="Specification" Index="1" RelativeSize="50.04500450045005" IsNewNode="True" />
+          <LayoutGroup Id="Auto94764098-dd9e-4255-bb40-f8cfb96b9494" ShowCaption="False" Caption="Auto94764098-dd9e-4255-bb40-f8cfb96b9494(5)" Index="1" RelativeSize="73.84500745156483" Direction="Horizontal" IsNewNode="True">
+            <LayoutItem Id="Model" ViewItem="Model" Index="0" RelativeSize="34.006054490413725" IsNewNode="True" />
+            <LayoutItem Id="Trim" ViewItem="Trim" Index="1" RelativeSize="65.99394550958628" IsNewNode="True" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>

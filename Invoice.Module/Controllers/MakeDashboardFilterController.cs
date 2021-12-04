@@ -51,23 +51,6 @@ namespace Invoice.Module.Controllers
             }
         }
 
-        private void FilterSpecListView(ListView masterListView, ListView detailListView)
-        {
-            detailListView.CollectionSource.Criteria.Clear();
-            //List<object> searchedObjects = new List<object>();
-            //foreach (object obj in masterListView.SelectedObjects)
-            //{
-            //    searchedObjects.Add(detailListView.ObjectSpace.GetKeyValue(obj));
-            //}
-            if (masterListView.SelectedObjects.Count > 0)
-            {
-                var obj = masterListView.SelectedObjects[0];
-                var oid = detailListView.ObjectSpace.GetKeyValue(obj);
-                // detailListView.CollectionSource.Criteria["SelectedTrim"] = new InOperator("id_car_trim.id_car_trim", searchedObjects);
-                detailListView.CollectionSource.Criteria["SelectedTrim"] = new BinaryOperator("id_car_trim.id_car_trim", oid);
-
-            }
-        }
 
         private void MakeItem_ControlCreated(object sender, EventArgs e)
         {
@@ -130,13 +113,13 @@ namespace Invoice.Module.Controllers
 
         private void trimListView_SelectionChanged(object sender, EventArgs e)
         {
-            if (!ModelWasSelected)
-            {
-                TrimWasSelected = true;
-                FilterSpecListView((ListView)TrimItem.InnerView, (ListView)SpecificationItem.InnerView);
-                TrimWasSelected = false;
+            //if (!ModelWasSelected)
+            //{
+            //    TrimWasSelected = true;
+            //    FilterSpecListView((ListView)TrimItem.InnerView, (ListView)SpecificationItem.InnerView);
+            //    TrimWasSelected = false;
           
-            }
+            //}
         }
 
 
@@ -153,7 +136,7 @@ namespace Invoice.Module.Controllers
                 MakeItem = (DashboardViewItem)View.FindItem(FilterMakeID);
                 ModelItem = (DashboardViewItem)View.FindItem(FilterModelId);
                 TrimItem = (DashboardViewItem)View.FindItem(FilterTrimId);
-                SpecificationItem = (DashboardViewItem)View.FindItem(FilterSpecId);
+           
 
                 if (MakeItem != null)
                 {
@@ -173,13 +156,7 @@ namespace Invoice.Module.Controllers
                     else
                         TrimItem.ControlCreated += TrimItem_ControlCreated;
                 }
-                if (SpecificationItem != null)
-                {
-                    if (SpecificationItem.Frame != null)
-                        DisableNavigationActions(SpecificationItem.Frame);
-                    else
-                        SpecificationItem.ControlCreated += SpecItem_ControlCreated;
-                }
+
             }
         }
 
@@ -213,11 +190,11 @@ namespace Invoice.Module.Controllers
             FilterMakeID = "Make";
             FilterModelId = "Model";
             FilterTrimId = "Trim";
-            FilterSpecId = "Specification";
+
         }
         public string FilterMakeID { get; set; }
         public string FilterModelId { get; set; }
         public string FilterTrimId { get; set; }
-        public string FilterSpecId { get; set; }
+
     }
 }
