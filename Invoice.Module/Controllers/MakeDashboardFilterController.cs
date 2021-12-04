@@ -114,7 +114,7 @@ namespace Invoice.Module.Controllers
                 {
                     if (ModelItem.Frame != null)
                         DisableNavigationActions(ModelItem.Frame);
-                    else
+                
                         ModelItem.ControlCreated += ModelItem_ControlCreated;
                 }
                 if (TrimItem != null)
