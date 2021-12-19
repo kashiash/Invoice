@@ -96,7 +96,7 @@ namespace Invoice.Module.DatabaseUpdate {
             //userAdmin.Roles.Add(adminRole);
 
 
-            //PrepareTestData();
+           // PrepareTestData();
             ObjectSpace.CommitChanges(); //This line persists created object(s).
         }
         public override void UpdateDatabaseBeforeUpdateSchema() {
