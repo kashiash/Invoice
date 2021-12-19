@@ -4,9 +4,34 @@
     <Items>
       <Item Id="Default">
         <Items>
-          <Item Id="Event_ListView" Removed="True" />
+          <Item Id="Customer_ListView" Index="0" />
+          <Item Id="Invoice_ListView" Index="1" />
+          <Item Id="MyDetails" Index="2" Removed="True" />
+          <Item Id="Payment_ListView" Index="3" />
+          <Item Id="Product_ListView" Index="4" />
+          <Item Id="PermissionPolicyRole_ListView" Index="5" Removed="True" />
+          <Item Id="ApplicationUser_ListView" Index="6" Removed="True" />
+          <Item Id="@31c4f3b8-9388-4597-befd-61d5ac80e0a6" Index="7" />
+          <Item Id="WalutyKursyDashboard" Index="8" />
         </Items>
       </Item>
+      <Item Id="Słowniki" Index="1" />
+      <Item Id="Użytkownicy" Caption="Użytkownicy" Index="2" IsNewNode="True">
+        <Items IsNewNode="True">
+          <Item Id="MyDetails" Index="0" ObjectKey="@CurrentUserID" ViewId="ApplicationUser_DetailView" Caption="My Details" ImageName="BO_MyDetails" IsNewNode="True" />
+          <Item Id="ApplicationUser_ListView" ObjectKey="" ViewId="ApplicationUser_ListView" Index="1" IsNewNode="True" />
+          <Item Id="PermissionPolicyRole_ListView" Index="2" ObjectKey="" ViewId="PermissionPolicyRole_ListView" IsNewNode="True" />
+        </Items>
+      </Item>
+      <Item Id="Administracyjne" Index="3" />
+      <Item Id="Reports" Index="4" />
+      <Item Id="@b19b1e98-493a-44c1-a9c5-26ca5809c8e2" Removed="True" />
     </Items>
   </NavigationItems>
+  <Options DataAccessMode="Queryable" />
+  <SchemaModules>
+    <SchemaModule Name="CloneObjectModule" Version="21.2.4.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.4.0" IsNewNode="True" />
+  </SchemaModules>
 </Application>

@@ -6,7 +6,6 @@ using DevExpress.Persistent.Base;
 using DevExpress.ExpressApp.Updating;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp.Xpo;
-using DevExpress.Persistent.BaseImpl;
 using KrajeWaluty.Module.BusinessObjects;
 using System.Globalization;
 

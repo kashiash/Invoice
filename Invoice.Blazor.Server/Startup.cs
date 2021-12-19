@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using DevExpress.ExpressApp.Security;
 using DevExpress.Blazor.Reporting;
 using DevExpress.ExpressApp.ReportsV2.Blazor;
-using DevExpress.ExpressApp.Dashboards.Blazor;
-using DevExpress.ExpressApp.Office.Blazor;
 using DevExpress.ExpressApp.Blazor.Services;
 using DevExpress.Persistent.Base;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -28,11 +26,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
-using DevExpress.ExpressApp.WebApi.Services;
-using DevExpress.ExpressApp.WebApi.Swashbuckle;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.OData;
-using Invoice.WebApi.JWT;
 
 namespace Invoice.Blazor.Server {
 
@@ -51,8 +45,6 @@ namespace Invoice.Blazor.Server {
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(typeof(Microsoft.AspNetCore.SignalR.HubConnectionHandler<>), typeof(ProxyHubConnectionHandler<>));
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddHttpContextAccessor();
@@ -91,26 +83,16 @@ namespace Invoice.Blazor.Server {
                 options.DefaultPolicy = new AuthorizationPolicyBuilder(
                     JwtBearerDefaults.AuthenticationScheme)
                         .RequireAuthenticatedUser()
-                        .RequireXafAuthentication()
                         .Build();
             });
-            services.AddXafWebApi(options => {
-                // Use options.BusinessObject<YourBusinessObject>() to make the Business Object available in the Web API and generate the GET, POST, PUT, and DELETE HTTP methods for it.
-            });
-            services.AddControllers().AddOData(options => {
-                options
-                    .AddRouteComponents("api/odata", new XafApplicationEdmModelBuilder(services).GetEdmModel())
-                    .EnableQueryFeatures(100);
-            });
+            services.AddControllers();
             services.AddSwaggerGen(c => {
-                c.EnableAnnotations();
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "DXApplication1 API",
                     Version = "v1",
                     Description = @"Use AddXafWebApi(options) in the DXApplication1.Blazor.Server\Startup.cs file to make Business Objects available in the Web API."
                 });
-                c.SchemaFilter<XpoSchemaFilter>();
                 c.AddSecurityDefinition("JWT", new OpenApiSecurityScheme()
                 {
                     Type = SecuritySchemeType.Http,

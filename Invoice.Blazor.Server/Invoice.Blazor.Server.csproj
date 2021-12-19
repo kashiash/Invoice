@@ -5,6 +5,8 @@
     <AssemblyVersion>1.0.*</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <Configurations>Debug;Release;EasyTest</Configurations>
+    <UserSecretsId>7cc0ba39-409b-4cde-bea6-6090290b7168</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Model.xafml" />
@@ -39,6 +41,7 @@
     <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.20.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
   <ItemGroup>
@@ -49,5 +52,13 @@
     <ProjectReference Include="..\Invoice.Module\Invoice.Module.csproj">
       <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="UnusableNodes.xml">
+      <DependentUpon>Model.xafml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="JWT\" />
   </ItemGroup>
 </Project>

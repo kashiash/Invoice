@@ -71,6 +71,10 @@ namespace Invoice.Module.Services
             {
                 customer.Phone = data.PhoneNumber;
             }
+            if (string.IsNullOrWhiteSpace(customer.CustomerName))
+            {
+                customer.CustomerName = data.Name;
+            }
             MapPkdList(customer, data);
         }
 

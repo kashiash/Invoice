@@ -9,8 +9,8 @@ using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Security.Strategy;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp.Xpo;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
+using DevExpress.Persistent.BaseImpl;
 
 namespace CarsDb.Module.DatabaseUpdate {
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater

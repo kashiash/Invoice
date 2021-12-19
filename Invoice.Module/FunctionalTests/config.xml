@@ -19,11 +19,4 @@
 	<TestDatabases>
 		<Database xsi:type="TestMSSQLDatabase" Server="(localdb)\mssqllocaldb" DBName="InvoiceEasyTest"/>
 	</TestDatabases>
-
-	<Aliases>
-		<Alias Name="WinAdapterFileName" Value="[WinAppBin]\DevExpress.ExpressApp.EasyTest.WinAdapter.v21.2.dll" />
-		<Alias Name="BlazorAdapterAssemblyPath" Value="[BlazorAppPath]\bin\EasyTest\net5.0\DevExpress.ExpressApp.EasyTest.BlazorAdapter.v21.2.dll" />
-		<Alias Name="WinAppBin" Value="[ConfigPath]\..\..\Invoice.Win\Bin\EasyTest\net5.0-windows" />
-		<Alias Name="BlazorAppPath" Value="[ConfigPath]\..\..\Invoice.Blazor.Server" />
-	</Aliases>
 </Options>

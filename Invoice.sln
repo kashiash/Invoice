@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Module", "Invoice.Module\Invoice.Module.csproj", "{4E39E838-28BB-4950-8BFC-4B1D11274D00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.WebApi", "Invoice.WebApi\Invoice.WebApi.csproj", "{690A910F-9F33-4994-A1AE-3BF0BABB7167}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Module.Win", "Invoice.Module.Win\Invoice.Module.Win.csproj", "{5138D4CE-83DA-49A5-818C-3B2A34796FBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Win", "Invoice.Win\Invoice.Win.csproj", "{AF192ACD-82B5-4643-AD2E-70E1C9327659}"
@@ -44,12 +42,6 @@ Global
 		{4E39E838-28BB-4950-8BFC-4B1D11274D00}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
 		{4E39E838-28BB-4950-8BFC-4B1D11274D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E39E838-28BB-4950-8BFC-4B1D11274D00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{690A910F-9F33-4994-A1AE-3BF0BABB7167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{690A910F-9F33-4994-A1AE-3BF0BABB7167}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{690A910F-9F33-4994-A1AE-3BF0BABB7167}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
-		{690A910F-9F33-4994-A1AE-3BF0BABB7167}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
-		{690A910F-9F33-4994-A1AE-3BF0BABB7167}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{690A910F-9F33-4994-A1AE-3BF0BABB7167}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5138D4CE-83DA-49A5-818C-3B2A34796FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5138D4CE-83DA-49A5-818C-3B2A34796FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5138D4CE-83DA-49A5-818C-3B2A34796FBF}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
