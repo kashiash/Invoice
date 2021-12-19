@@ -1,4 +1,5 @@
-﻿using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using DevExpress.Xpo;
@@ -34,12 +35,16 @@ namespace Invoice.Module.BusinessObjects
             set { SetPropertyValue(nameof(AssignedTo), ref assignedTo, value); }
         }
         DateTime startDate;
+        [ModelDefault("DisplayFormat", "{0:g}")]
+        [ModelDefault("EditMask", "g")]
         public DateTime StartDate
         {
             get { return startDate; }
             set { SetPropertyValue(nameof(startDate), ref startDate, value); }
         }
         DateTime endDate;
+        [ModelDefault("DisplayFormat", "{0:g}")]
+        [ModelDefault("EditMask", "g")]
         public DateTime EndDate
         {
             get { return endDate; }
