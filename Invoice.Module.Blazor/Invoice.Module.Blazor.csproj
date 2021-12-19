@@ -14,6 +14,7 @@
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Editors\FileDataEditor\FileDataRenderer.razor" />
     <None Include="Editors\UploadAssignedFileEditor\UploadAssignedFileEditorRenderer.razor" />
   </ItemGroup>
   <ItemGroup>

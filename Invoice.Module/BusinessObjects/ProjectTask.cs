@@ -73,7 +73,14 @@ namespace Invoice.Module.BusinessObjects
         public Project Project
         {
             get { return project; }
-            set { SetPropertyValue(nameof(Project), ref project, value); }
+            set
+            {
+                bool modified = SetPropertyValue(nameof(Project), ref project, value);
+                if (!IsSaving && !IsLoading && modified && project != null)
+                {
+                    AssignedTo = Project.Manager;
+                }
+            }
         }
 
 
@@ -81,13 +88,9 @@ namespace Invoice.Module.BusinessObjects
         {
             base.AfterConstruction();
             StartDate = DateTime.Now;
-            if (Project != null)
-            {
-                AssignedTo = Project.Manager;
-            }
         }
     }
-   
+
 
     public enum ProjectTaskStatus
     {

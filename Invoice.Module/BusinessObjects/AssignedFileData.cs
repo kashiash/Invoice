@@ -7,6 +7,8 @@ namespace Invoice.Module.BusinessObjects
     public class AssignedFileData : FileAttachmentBase
     {
         public AssignedFileData(Session session) : base(session) { }
+        string notes;
+        string description;
         ProjectTask task;
         Project project;
         private Customer customer;
@@ -24,7 +26,7 @@ namespace Invoice.Module.BusinessObjects
             get => project;
             set
             {
-               
+
                 var modified = SetPropertyValue(nameof(Project), ref project, value);
                 if (modified && !IsLoading && !IsSaving)
                 {
@@ -33,7 +35,7 @@ namespace Invoice.Module.BusinessObjects
             }
         }
 
-        
+
         [Association("ProjectTask-AssignedFileData")]
         public ProjectTask Task
         {
@@ -47,6 +49,23 @@ namespace Invoice.Module.BusinessObjects
                 }
             }
         }
+
+
+        [Size(200)]
+        public string Description
+        {
+            get => description;
+            set => SetPropertyValue(nameof(Description), ref description, value);
+        }
+
+        
+        [Size(SizeAttribute.Unlimited)]
+        public string Notes
+        {
+            get => notes;
+            set => SetPropertyValue(nameof(Notes), ref notes, value);
+        }
+
 
         public override void AfterConstruction()
         {

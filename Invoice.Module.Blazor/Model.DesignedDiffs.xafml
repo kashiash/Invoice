@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
   <BOModel>
+    <Class Name="DevExpress.Persistent.BaseImpl.FileAttachmentBase">
+      <OwnMembers>
+        <Member Name="File" PropertyEditorType="Invoice.Module.Blazor.Editors.FileDataEditor.CustomFileDataPropertyEditor" />
+      </OwnMembers>
+    </Class>
     <Class Name="Invoice.Module.BusinessObjects.ProjectTask">
       <OwnMembers>
         <Member Name="EndDate" PropertyEditorType="Invoice.Module.Blazor.Editors.CustomDateTimePropertyEditor" />
