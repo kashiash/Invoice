@@ -22,3 +22,8 @@ app {
     height: 100%;
     z-index: 100001;
 }
+
+.xafPopup.dxbs-popup {
+    max-width: 98vw !important;
+    height: 92vh !important;
+}

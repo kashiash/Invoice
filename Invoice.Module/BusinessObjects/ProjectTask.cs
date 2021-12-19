@@ -77,6 +77,15 @@ namespace Invoice.Module.BusinessObjects
         }
 
 
+        public override void AfterConstruction()
+        {
+            base.AfterConstruction();
+            StartDate = DateTime.Now;
+            if (Project != null)
+            {
+                AssignedTo = Project.Manager;
+            }
+        }
     }
    
 

@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using DevExpress.Blazor
+@using DevExpress.Xpo
+@using DevExpress.ExpressApp.Xpo
+@using DevExpress.ExpressApp
+@using Invoice.Module.BusinessObjects.NonPersistent
+@inject NavigationManager NavigationManager
+
+
+<div id="dropZone" class="card custom-drop-zone jumbotron w-100 m-0">
+    <span class="drop-file-icon mb-3"></span>
+    <span class="text-center">Drag and Drop File Here</span><span class="m-1 text-center">or</span>
+    <button id="selectButton" class="btn border-primary btn-primary m-1">Select File</button>
+</div>
+
+<DxUpload Name="myFile"
+          Visible="@UploadVisible"
+          ExternalSelectButtonCssSelector="#selectButton"
+          ExternalDropZoneCssSelector="#dropZone"
+          MaxFileSize="15000000"
+          ExternalDropZoneDragOverCssClass="bg-light border-secondary text-dark"
+          UploadUrl="@GetUploadUrl($"api/Upload/UploadFile?taskId={Data.Task}&projectId={Data.Project}&customerId={Data.Customer}")"
+          SelectedFilesChanged="@SelectedFilesChanged"
+          CssClass="w-100"
+          AllowMultiFileUpload="true"
+          UploadMode="UploadMode.OnButtonClick">
+</DxUpload>
+
+@code {
+    [Parameter]
+    public UploadAssignedFileEditorModel Model { get; set; }
+
+    public AssignedFileDataTemp Data => Model.Value as AssignedFileDataTemp;
+
+    public bool UploadVisible { get; set; } = false;
+
+    protected void SelectedFilesChanged(IEnumerable<UploadFileInfo> files)
+    {
+        UploadVisible = files.ToList().Count > 0;
+        InvokeAsync(StateHasChanged);
+    }
+
+    protected string GetUploadUrl(string url)
+    {
+        return NavigationManager.ToAbsoluteUri(url).AbsoluteUri;
+    }
+
+
+    public static RenderFragment Create(UploadAssignedFileEditorModel componentModel) =>
+    @<UploadAssignedFileEditorRenderer Model=@componentModel />;
+}
