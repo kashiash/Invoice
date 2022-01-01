@@ -14,7 +14,9 @@ using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using Invoice.Module.BusinessObjects;
 using Bogus;
 
-namespace Invoice.Module.DatabaseUpdate {
+
+namespace Invoice.Module.DatabaseUpdate
+{
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater
     public class Updater : ModuleUpdater {
         public Updater(IObjectSpace objectSpace, Version currentDBVersion) :

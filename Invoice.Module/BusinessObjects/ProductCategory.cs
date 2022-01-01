@@ -1,6 +1,7 @@
 ﻿using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +12,37 @@ namespace Invoice.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [NavigationItem("Others")]
-    public class ProductGroup : XPObject
+    public class ProductCategory : XPObject
     {
-        public ProductGroup(Session session) : base(session)
+        public ProductCategory(Session session) : base(session)
         { }
 
 
+        bool forceRefreshProductSymbol;
         string notes;
-        string groupName;
+        string categoryName;
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string GroupName
+        public string CategoryName
         {
-            get => groupName;
-            set => SetPropertyValue(nameof(GroupName), ref groupName, value);
+            get => categoryName;
+            set => SetPropertyValue(nameof(CategoryName), ref categoryName, value);
         }
 
-        [Association("Product-Products")]
+        
+        public bool ForceRefreshProductSymbol
+        {
+            get => forceRefreshProductSymbol;
+            set => SetPropertyValue(nameof(ForceRefreshProductSymbol), ref forceRefreshProductSymbol, value);
+        }
+
         [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
-        public XPCollection<Product> Products
+        [Association("ProductCategory-ProductCategoryAttributes"),Aggregated]
+        public XPCollection<ProductCategoryAttribute> ProductCategoryAttributes
         {
             get
             {
-                return GetCollection<Product>(nameof(Products));
+                return GetCollection<ProductCategoryAttribute>(nameof(ProductCategoryAttributes));
             }
         }
 

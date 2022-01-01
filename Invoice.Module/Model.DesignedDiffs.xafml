@@ -9,9 +9,7 @@
         <Items>
           <Item Id="@31c4f3b8-9388-4597-befd-61d5ac80e0a6" ViewId="MakeModelsDashboardView" IsNewNode="True" />
           <Item Id="Event_ListView" Removed="True" />
-          <Item Id="ProductGroup_ListView" Removed="True" />
           <Item Id="TreeListBaseObject_ListView" Removed="True" />
-          <Item Id="VatRate_ListView" Removed="True" />
           <Item Id="WalutyKursyDashboard" ViewId="WalutyKursyDashboard" IsNewNode="True" />
         </Items>
       </Item>
@@ -60,9 +58,9 @@
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="21.1.6.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="21.1.6.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="21.1.6.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.4.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.4.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <ListView Id="ApplicationUser_ListView" Caption="Users" />
@@ -84,6 +82,12 @@
         </LayoutGroup>
       </Layout>
     </DashboardView>
+    <ListView Id="Product_ProductAssignedAttributeValues_ListView" AllowEdit="True">
+      <Columns>
+        <ColumnInfo Id="ProductAttribute" Width="166" />
+        <ColumnInfo Id="SelectedValue" Width="143" />
+      </Columns>
+    </ListView>
     <DashboardView Id="WalutyKursyDashboard" Caption="Kursy walut" IsNewNode="True">
       <Items IsNewNode="True">
         <DashboardViewItem Id="Waluta" ViewId="Waluta_ListView" Index="0" IsNewNode="True" />

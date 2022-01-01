@@ -2,7 +2,6 @@
 using CarsDb.Module.BusinessObjects;
 
 using kashiash.utils;
-using kashiash.utils;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
