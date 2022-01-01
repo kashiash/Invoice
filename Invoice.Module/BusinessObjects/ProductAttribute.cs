@@ -36,13 +36,7 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(DefaultValue), ref defaultValue, value);
         }
 
-        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
-        [Size(SizeAttribute.Unlimited)]
-        public string Notes
-        {
-            get => notes;
-            set => SetPropertyValue(nameof(Notes), ref notes, value);
-        }
+
         [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Association("ProductAttribute-Values")]
         public XPCollection<ProductAttributeAvaiableValue> Values
@@ -62,6 +56,14 @@ namespace Invoice.Module.BusinessObjects
             {
                 return GetCollection<ProductCategoryAttribute>(nameof(Categories));
             }
+        }
+
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Size(SizeAttribute.Unlimited)]
+        public string Notes
+        {
+            get => notes;
+            set => SetPropertyValue(nameof(Notes), ref notes, value);
         }
 
 

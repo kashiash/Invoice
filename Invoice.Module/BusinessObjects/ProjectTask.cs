@@ -15,6 +15,8 @@ namespace Invoice.Module.BusinessObjects
     public class ProjectTask : BaseObject
     {
         public ProjectTask(Session session) : base(session) { }
+        decimal productsTotal;
+        decimal resourcesTotal;
         string subject;
         [Size(255)]
         public string Subject
@@ -50,15 +52,44 @@ namespace Invoice.Module.BusinessObjects
             get { return endDate; }
             set { SetPropertyValue(nameof(endDate), ref endDate, value); }
         }
-        string notes;
-        [Size(SizeAttribute.Unlimited)]
-        public string Notes
+
+
+        public decimal ResourcesTotal
         {
-            get { return notes; }
-            set { SetPropertyValue(nameof(Notes), ref notes, value); }
+            get => resourcesTotal;
+            set => SetPropertyValue(nameof(ResourcesTotal), ref resourcesTotal, value);
+        }
+
+        
+        public decimal ProductsTotal
+        {
+            get => productsTotal;
+            set => SetPropertyValue(nameof(ProductsTotal), ref productsTotal, value);
         }
 
 
+
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Association("ProjectTask-TaskResources"),Aggregated]
+        public XPCollection<TaskResource> TaskResources
+        {
+            get
+            {
+                return GetCollection<TaskResource>(nameof(TaskResources));
+            }
+        }
+
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Association("ProjectTask-TaskProducts"), Aggregated]
+        public XPCollection<TaskProduct> TaskProducts
+        {
+            get
+            {
+                return GetCollection<TaskProduct>(nameof(TaskProducts));
+            }
+        }
+
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Association("ProjectTask-AssignedFileData")]
         public XPCollection<AssignedFileData> AssignedFileData
         {
@@ -82,6 +113,18 @@ namespace Invoice.Module.BusinessObjects
                 }
             }
         }
+
+
+        string notes;
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Size(SizeAttribute.Unlimited)]
+        public string Notes
+        {
+            get { return notes; }
+            set { SetPropertyValue(nameof(Notes), ref notes, value); }
+        }
+
+
 
 
         public override void AfterConstruction()

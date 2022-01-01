@@ -1,4 +1,5 @@
-﻿using DevExpress.Persistent.Base;
+﻿using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using DevExpress.Xpo;
@@ -36,19 +37,14 @@ namespace Invoice.Module.BusinessObjects
             get { return manager; }
             set { SetPropertyValue(nameof(Manager), ref manager, value); }
         }
-        string description;
-        [Size(SizeAttribute.Unlimited)]
-        public string Description
-        {
-            get { return description; }
-            set { SetPropertyValue(nameof(Description), ref description, value); }
-        }
+
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Association, Aggregated]
         public XPCollection<ProjectTask> Tasks
         {
             get { return GetCollection<ProjectTask>(nameof(Tasks)); }
         }
-
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Association("Project-AssignedFileData")]
         public XPCollection<AssignedFileData> AssignedFileData
         {
@@ -56,6 +52,15 @@ namespace Invoice.Module.BusinessObjects
             {
                 return GetCollection<AssignedFileData>(nameof(AssignedFileData));
             }
+        }
+
+        string description;
+        [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Size(SizeAttribute.Unlimited)]
+        public string Description
+        {
+            get { return description; }
+            set { SetPropertyValue(nameof(Description), ref description, value); }
         }
     }
 }
