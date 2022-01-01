@@ -1,4 +1,5 @@
-﻿using DevExpress.Persistent.BaseImpl;
+﻿using DevExpress.Persistent.Base;
+using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Invoice.Module.BusinessObjects
         { }
 
 
+   
         string unit;
         string notes;
         decimal total;
@@ -27,21 +29,53 @@ namespace Invoice.Module.BusinessObjects
             get => projectTask;
             set => SetPropertyValue(nameof(ProjectTask), ref projectTask, value);
         }
-
+        [ImmediatePostData]
         public Product Product
         {
             get => product;
-            set => SetPropertyValue(nameof(Product), ref product, value);
+            set
+            {
+                var modified = SetPropertyValue(nameof(Product), ref product, value);
+                if (modified && !IsLoading && !IsSaving && Product != null)
+                {
+                    unitPrice = Product.UnitPrice;
+
+                    RecalculateItem();
+                }
+            }
         }
 
 
+
+        private void RecalculateItem()
+        {
+            Total = Quantity * UnitPrice;
+        }
+
+        [ImmediatePostData]
         public decimal Quantity
         {
             get => quantity;
-            set => SetPropertyValue(nameof(Quantity), ref quantity, value);
+            set
+            {
+
+                var modified = SetPropertyValue(nameof(Quantity), ref quantity, value);
+                if (modified && !IsLoading && !IsSaving )
+                {
+                    RecalculateItem();
+                }
+            }
         }
 
-        
+        decimal unitPrice;
+
+        public decimal UnitPrice
+        {
+            get => unitPrice;
+            set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
+        }
+
+
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
         public string Unit
         {

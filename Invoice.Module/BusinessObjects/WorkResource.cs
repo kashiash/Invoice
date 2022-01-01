@@ -13,6 +13,7 @@ namespace Invoice.Module.BusinessObjects
         { }
 
 
+        decimal unitPrice;
         string resourceName;
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
@@ -20,6 +21,13 @@ namespace Invoice.Module.BusinessObjects
         {
             get => resourceName;
             set => SetPropertyValue(nameof(ResourceName), ref resourceName, value);
+        }
+
+        
+        public decimal UnitPrice
+        {
+            get => unitPrice;
+            set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
         }
 
     }

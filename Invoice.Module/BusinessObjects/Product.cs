@@ -28,16 +28,17 @@ namespace Invoice.Module.BusinessObjects
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
         public string Symbol { get => symbol; set => SetPropertyValue(nameof(Symbol), ref symbol, value); }
 
-
-        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string ShortName { get => shortName; set => SetPropertyValue(nameof(ShortName), ref shortName, value); }
-
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
         public string ProductName
         {
             get => productName;
             set => SetPropertyValue(nameof(ProductName), ref productName, value);
         }
+
+        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+        public string ShortName { get => shortName; set => SetPropertyValue(nameof(ShortName), ref shortName, value); }
+
+
 
 
         //   [Association("ProductCategory-Products")]
