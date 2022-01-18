@@ -13,6 +13,7 @@
       </OwnMembers>
     </Class>
   </BOModel>
+  <Options DataAccessMode="Queryable" />
   <SchemaModules>
     <SchemaModule Name="CloneObjectModule" Version="21.2.4.0" IsNewNode="True" />
     <SchemaModule Name="SchedulerModuleBase" Version="21.2.4.0" IsNewNode="True" />

@@ -10,7 +10,7 @@ app {
 .header-logo {
     width: 200px;
     height: 40px;
-    background: url('../images/Logo.png') no-repeat;
+    background: url('../images/Logo.svg') no-repeat;
 }
 
 #blazor-error-ui {

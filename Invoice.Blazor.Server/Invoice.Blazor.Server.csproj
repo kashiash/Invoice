@@ -9,6 +9,12 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="JWT\**" />
+    <Content Remove="JWT\**" />
+    <EmbeddedResource Remove="JWT\**" />
+    <None Remove="JWT\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Model.xafml" />
   </ItemGroup>
   <ItemGroup>
@@ -57,8 +63,5 @@
     <None Update="UnusableNodes.xml">
       <DependentUpon>Model.xafml</DependentUpon>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="JWT\" />
   </ItemGroup>
 </Project>
