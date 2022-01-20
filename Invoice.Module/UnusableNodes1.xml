@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <NavigationItems Id="NavigationItems">
+    <Items Id="Items">
+      <Item Id="Default">
+        <Items Id="Items">
+          <Item Id="@3da9bebc-61fc-41d3-91e2-bffb5899a12b" ViewId="WalutyKursyDasboard" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
+</Application>

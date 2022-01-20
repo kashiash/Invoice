@@ -28,9 +28,7 @@
             // 
             this.RequiredModuleTypes.Add(typeof(Invoice.Module.InvoiceModule));
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Blazor.SystemModule.SystemBlazorModule));
-			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Dashboards.Blazor.DashboardsBlazorModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.FileAttachments.Blazor.FileAttachmentsBlazorModule));
-			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Office.Blazor.OfficeBlazorModule));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.ReportsV2.Blazor.ReportsBlazorModuleV2));
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.Validation.Blazor.ValidationBlazorModule));
         }

@@ -45,6 +45,16 @@ namespace Invoice.Module.Services
             gusOrganizationMapper.MapGusOrganization(customer);
             gusAddressMapper.MapGusAddress(customer);
 
+            if (string.IsNullOrWhiteSpace(customer.CustomerName))
+            {
+                customer.CustomerName = data.Name;
+            }
+
+            if (string.IsNullOrWhiteSpace(customer.Symbol))
+            {
+                customer.Symbol = data.ShortName;
+            }
+
             if (string.IsNullOrWhiteSpace(customer.City))
             {
                 customer.City = customer.CityGus?.Name;
@@ -60,6 +70,10 @@ namespace Invoice.Module.Services
             if (string.IsNullOrWhiteSpace(customer.Phone))
             {
                 customer.Phone = data.PhoneNumber;
+            }
+            if (string.IsNullOrWhiteSpace(customer.CustomerName))
+            {
+                customer.CustomerName = data.Name;
             }
             MapPkdList(customer, data);
         }

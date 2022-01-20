@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Invoice.Module.BusinessObjects
 {
     [DefaultClassOptions]
+    [NavigationItem("Others")]
     public class VatRate : XPLiteObject
     {
         public VatRate(Session session) : base(session)

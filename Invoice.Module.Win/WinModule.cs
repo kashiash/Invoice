@@ -28,7 +28,6 @@ namespace Invoice.Module.Win {
         }
         public InvoiceWindowsFormsModule() {
             InitializeComponent();
-            DevExpress.ExpressApp.Editors.FormattingProvider.UseMaskSettings = true;
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {
             return ModuleUpdater.EmptyModuleUpdaters;

@@ -5,7 +5,15 @@
     <AssemblyVersion>1.0.*</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <Configurations>Debug;Release;EasyTest</Configurations>
+    <UserSecretsId>7cc0ba39-409b-4cde-bea6-6090290b7168</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="JWT\**" />
+    <Content Remove="JWT\**" />
+    <EmbeddedResource Remove="JWT\**" />
+    <None Remove="JWT\**" />
+  </ItemGroup>
   <ItemGroup>
     <None Remove="Model.xafml" />
   </ItemGroup>
@@ -15,38 +23,45 @@
     </Content>
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'EasyTest' ">
-    <PackageReference Include="DevExpress.ExpressApp.EasyTest.BlazorAdapter" Version="21.2.3" />
+    <PackageReference Include="DevExpress.ExpressApp.EasyTest.BlazorAdapter" Version="21.2.4" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Blazor" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Dashboards.Blazor" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.FileAttachment.Blazor" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Office.Blazor" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Blazor" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Validation.Blazor" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.3" />
-    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.WebApi" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.3" />
-    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.3" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Blazor" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Dashboards.Blazor" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.FileAttachment.Blazor" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Office.Blazor" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Blazor" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Validation.Blazor" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.WebApi" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.20.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj" />
     <ProjectReference Include="..\Invoice.Module.Blazor\Invoice.Module.Blazor.csproj">
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\Invoice.Module\Invoice.Module.csproj">
       <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="UnusableNodes.xml">
+      <DependentUpon>Model.xafml</DependentUpon>
+    </None>
   </ItemGroup>
 </Project>

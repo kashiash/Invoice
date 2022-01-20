@@ -1,9 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
+  <BOModel>
+    <Class Name="DevExpress.Persistent.BaseImpl.FileAttachmentBase">
+      <OwnMembers>
+        <Member Name="File" PropertyEditorType="Invoice.Module.Blazor.Editors.FileDataEditor.CustomFileDataPropertyEditor" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Invoice.Module.BusinessObjects.ProjectTask">
+      <OwnMembers>
+        <Member Name="EndDate" PropertyEditorType="Invoice.Module.Blazor.Editors.CustomDateTimePropertyEditor" />
+        <Member Name="StartDate" PropertyEditorType="Invoice.Module.Blazor.Editors.CustomDateTimePropertyEditor" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <Options DataAccessMode="Queryable" />
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="21.2.2.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="21.2.2.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="21.2.2.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.4.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.4.0" IsNewNode="True" />
   </SchemaModules>
   <ViewItems>
     <PropertyEditor Name="PropertyEditors">

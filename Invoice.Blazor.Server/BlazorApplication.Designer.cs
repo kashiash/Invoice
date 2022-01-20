@@ -33,10 +33,8 @@
             this.cloneObjectModule = new DevExpress.ExpressApp.CloneObject.CloneObjectModule();
             this.conditionalAppearanceModule = new DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule();
             this.dashboardsModule = new DevExpress.ExpressApp.Dashboards.DashboardsModule();
-            this.dashboardsBlazorModule = new DevExpress.ExpressApp.Dashboards.Blazor.DashboardsBlazorModule();
             this.fileAttachmentsBlazorModule = new DevExpress.ExpressApp.FileAttachments.Blazor.FileAttachmentsBlazorModule();
             this.officeModule = new DevExpress.ExpressApp.Office.OfficeModule();
-            this.officeBlazorModule = new DevExpress.ExpressApp.Office.Blazor.OfficeBlazorModule();
             this.reportsModuleV2 = new DevExpress.ExpressApp.ReportsV2.ReportsModuleV2();
             this.reportsBlazorModuleV2 = new DevExpress.ExpressApp.ReportsV2.Blazor.ReportsBlazorModuleV2();
             this.schedulerModuleBase = new DevExpress.ExpressApp.Scheduler.SchedulerModuleBase();
@@ -83,10 +81,8 @@
             this.Modules.Add(this.cloneObjectModule);
             this.Modules.Add(this.conditionalAppearanceModule);
             this.Modules.Add(this.dashboardsModule);
-            this.Modules.Add(this.dashboardsBlazorModule);
             this.Modules.Add(this.fileAttachmentsBlazorModule);
             this.Modules.Add(this.officeModule);
-            this.Modules.Add(this.officeBlazorModule);
             this.Modules.Add(this.reportsModuleV2);
             this.Modules.Add(this.reportsBlazorModuleV2);
             this.Modules.Add(this.schedulerModuleBase);
@@ -111,10 +107,8 @@
         private DevExpress.ExpressApp.CloneObject.CloneObjectModule cloneObjectModule;
         private DevExpress.ExpressApp.ConditionalAppearance.ConditionalAppearanceModule conditionalAppearanceModule;
         private DevExpress.ExpressApp.Dashboards.DashboardsModule dashboardsModule;
-        private DevExpress.ExpressApp.Dashboards.Blazor.DashboardsBlazorModule dashboardsBlazorModule;
         private DevExpress.ExpressApp.FileAttachments.Blazor.FileAttachmentsBlazorModule fileAttachmentsBlazorModule;
         private DevExpress.ExpressApp.Office.OfficeModule officeModule;
-        private DevExpress.ExpressApp.Office.Blazor.OfficeBlazorModule officeBlazorModule;
         private DevExpress.ExpressApp.ReportsV2.ReportsModuleV2 reportsModuleV2;
         private DevExpress.ExpressApp.ReportsV2.Blazor.ReportsBlazorModuleV2 reportsBlazorModuleV2;
         private DevExpress.ExpressApp.Scheduler.SchedulerModuleBase schedulerModuleBase;

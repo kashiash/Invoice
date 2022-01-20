@@ -99,7 +99,7 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Segment), ref segment, value);
         }
 
-        [Association]
+        [Association, DevExpress.Xpo.Aggregated]
         [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
         public XPCollection<Invoice> Invoices
         {
@@ -110,12 +110,32 @@ namespace Invoice.Module.BusinessObjects
         }
 
         [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
-        [Association("Customer-Payments")]
+        [Association("Customer-Payments"), DevExpress.Xpo.Aggregated]
         public XPCollection<Payment> Payments
         {
             get
             {
                 return GetCollection<Payment>(nameof(Payments));
+            }
+        }
+
+        [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
+        [Association("Customer-Projects"), DevExpress.Xpo.Aggregated]
+        public XPCollection<Project> Projects
+        {
+            get
+            {
+                return GetCollection<Project>(nameof(Projects));
+            }
+        }
+        [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]
+
+        [Association("Customer-AssignedFileData"), DevExpress.Xpo.Aggregated]
+        public XPCollection<AssignedFileData> Files
+        {
+            get
+            {
+                return GetCollection<AssignedFileData>(nameof(Files));
             }
         }
 

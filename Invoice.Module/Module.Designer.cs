@@ -50,6 +50,10 @@
 			this.AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.HCategory));
 		
 			this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase));
+
+			this.RequiredModuleTypes.Add(typeof(KrajeWaluty.KrajeWalutyModule));
+			this.RequiredModuleTypes.Add(typeof(KodyPocztowe.Module.KodyPocztoweModule));
+			this.RequiredModuleTypes.Add(typeof(CarsDb.Module.CarsDbModule));
 		}
 
 		#endregion

@@ -22,26 +22,27 @@
     <EmbeddedResource Include="Images\Logo.svg" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'EasyTest' ">
-    <PackageReference Include="DevExpress.ExpressApp.EasyTest.WinAdapter" Version="21.2.3" />
+    <PackageReference Include="DevExpress.ExpressApp.EasyTest.WinAdapter" Version="21.2.4" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Dashboards.Win" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.FileAttachment.Win" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Office.Win" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Win" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Scheduler.Win" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors.Win" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Validation.Win" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Win" Version="21.2.3" />
-    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.3" />
-    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.3" />
-    <PackageReference Include="DevExpress.RichEdit.Export" Version="21.2.3" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Dashboards.Win" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.FileAttachment.Win" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Office.Win" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Win" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Scheduler.Win" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors.Win" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Validation.Win" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Win" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.RichEdit.Export" Version="21.2.4" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonLibrary\CommonLibrary.csproj" />
     <ProjectReference Include="..\Invoice.Module.Win\Invoice.Module.Win.csproj">
       <Private>True</Private>
     </ProjectReference>
