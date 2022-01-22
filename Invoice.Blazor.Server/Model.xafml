@@ -34,4 +34,30 @@
     <SchemaModule Name="SchedulerModuleBase" Version="21.2.4.0" IsNewNode="True" />
     <SchemaModule Name="SystemModule" Version="21.2.4.0" IsNewNode="True" />
   </SchemaModules>
+  <Views>
+    <DetailView Id="AuthenticationStandardLogonParameters_Blazor_DetailView">
+      <Items>
+        <StaticText Id="LogonText" Caption="LogonText" />
+        <PropertyEditor Id="Password" Caption="Password" />
+        <StaticText Id="PasswordHint" Text="This demo app does not require a password for login use Admin or User" Caption="PasswordHint" IsNewNode="True" />
+        <PropertyEditor Id="UserName" Caption="UserName" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="RootGroup" Direction="Vertical" RelativeSize="100">
+            <LayoutGroup Id="EditorsGroup" RelativeSize="100">
+              <LayoutGroup Id="Text" Caption="Text(4)" RelativeSize="6.427221172022684">
+                <LayoutItem Id="LogonText" RelativeSize="100" />
+              </LayoutGroup>
+              <LayoutGroup Id="Editors" RelativeSize="93.57277882797732">
+                <LayoutItem Id="UserName" Index="0" RelativeSize="10.1010101010101" />
+                <LayoutItem Id="Password" Index="1" RelativeSize="9.292929292929292" />
+                <LayoutItem Id="PasswordHint" ViewItem="PasswordHint" Index="2" RelativeSize="80.60606060606061" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
 </Application>
