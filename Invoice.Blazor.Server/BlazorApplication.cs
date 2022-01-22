@@ -10,12 +10,18 @@ using DevExpress.ExpressApp.Xpo;
 using Invoice.Blazor.Server.Services;
 using Common.Module.Utils;
 
-namespace Invoice.Blazor.Server {
-    public partial class InvoiceBlazorApplication : BlazorApplication {
-        public InvoiceBlazorApplication() {
+namespace Invoice.Blazor.Server
+{
+    public partial class InvoiceBlazorApplication : BlazorApplication
+    {
+        public InvoiceBlazorApplication()
+        {
             InitializeComponent();
         }
-        protected override void OnSetupStarted() {
+
+
+        protected override void OnSetupStarted()
+        {
             base.OnSetupStarted();
             IConfiguration configuration = ServiceProvider.GetRequiredService<IConfiguration>();
             //if(configuration.GetConnectionString("ConnectionString") != null) {
@@ -29,42 +35,51 @@ namespace Invoice.Blazor.Server {
             }
 #endif
 #if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached && CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
+            if (System.Diagnostics.Debugger.IsAttached && CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema)
+            {
                 DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
             }
 #endif
         }
-        protected override void CreateDefaultObjectSpaceProvider(CreateCustomObjectSpaceProviderEventArgs args) {
+        protected override void CreateDefaultObjectSpaceProvider(CreateCustomObjectSpaceProviderEventArgs args)
+        {
             IXpoDataStoreProvider dataStoreProvider = GetDataStoreProvider(args.ConnectionString, args.Connection);
             args.ObjectSpaceProviders.Add(new SecuredObjectSpaceProvider((ISelectDataSecurityProvider)Security, dataStoreProvider, true));
             args.ObjectSpaceProviders.Add(new NonPersistentObjectSpaceProvider(TypesInfo, null));
         }
-        private IXpoDataStoreProvider GetDataStoreProvider(string connectionString, System.Data.IDbConnection connection) {
+        private IXpoDataStoreProvider GetDataStoreProvider(string connectionString, System.Data.IDbConnection connection)
+        {
             XpoDataStoreProviderAccessor accessor = ServiceProvider.GetRequiredService<XpoDataStoreProviderAccessor>();
-            lock(accessor) {
-                if(accessor.DataStoreProvider == null) {
+            lock (accessor)
+            {
+                if (accessor.DataStoreProvider == null)
+                {
                     accessor.DataStoreProvider = XPObjectSpaceProvider.GetDataStoreProvider(connectionString, connection, true);
                 }
             }
             return accessor.DataStoreProvider;
         }
-        private void InvoiceBlazorApplication_DatabaseVersionMismatch(object sender, DatabaseVersionMismatchEventArgs e) {
+        private void InvoiceBlazorApplication_DatabaseVersionMismatch(object sender, DatabaseVersionMismatchEventArgs e)
+        {
 #if EASYTEST
             e.Updater.Update();
             e.Handled = true;
 #else
-            if(System.Diagnostics.Debugger.IsAttached) {
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
                 e.Updater.Update();
                 e.Handled = true;
             }
-            else {
+            else
+            {
                 string message = "The application cannot connect to the specified database, " +
                     "because the database doesn't exist, its version is older " +
                     "than that of the application or its schema does not match " +
                     "the ORM data model structure. To avoid this error, use one " +
                     "of the solutions from the https://www.devexpress.com/kb=T367835 KB Article.";
 
-                if(e.CompatibilityError != null && e.CompatibilityError.Exception != null) {
+                if (e.CompatibilityError != null && e.CompatibilityError.Exception != null)
+                {
                     message += "\r\n\r\nInner exception: " + e.CompatibilityError.Exception.Message;
                 }
                 throw new InvalidOperationException(message);

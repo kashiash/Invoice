@@ -27,3 +27,11 @@ app {
     max-width: 98vw !important;
     height: 92vh !important;
 }
+
+
+.logon-viewsite div[data-item-name="PasswordHint"] + .xaf-static-text {
+    width: 100%;
+    line-height: 1rem;
+    font-size: 0.7rem;
+    color: var(--gray);
+}

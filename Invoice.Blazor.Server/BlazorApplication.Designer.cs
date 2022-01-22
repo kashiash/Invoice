@@ -1,4 +1,7 @@
-﻿namespace Invoice.Blazor.Server {
+﻿using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Security;
+
+namespace Invoice.Blazor.Server {
     partial class InvoiceBlazorApplication {
         /// <summary> 
         /// Required designer variable.
@@ -90,11 +93,8 @@
             this.Modules.Add(this.validationBlazorModule);
             this.Modules.Add(this.viewVariantsModule);
             this.DatabaseVersionMismatch += new System.EventHandler<DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs>(this.InvoiceBlazorApplication_DatabaseVersionMismatch);
-
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
-
         }
-
         #endregion
 
         private DevExpress.ExpressApp.SystemModule.SystemModule module1;
