@@ -39,7 +39,7 @@
       <Items>
         <StaticText Id="LogonText" Caption="LogonText" />
         <PropertyEditor Id="Password" Caption="Password" />
-        <StaticText Id="PasswordHint" Text="This demo app does not require a password for login use Admin or User" Caption="PasswordHint" IsNewNode="True" />
+        <StaticText Id="PasswordHint" Text="This demo app does not require a password. For login use User or Admin" Caption="PasswordHint" IsNewNode="True" />
         <PropertyEditor Id="UserName" Caption="UserName" />
       </Items>
       <Layout>
