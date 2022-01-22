@@ -32,6 +32,7 @@
     <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.4" />
     <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.4" />
     <PackageReference Include="Gus.Regon.BIR11.Proxy" Version="0.1.6" />
+    <PackageReference Include="LiczbyNaSlowaNetCore" Version="1.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>

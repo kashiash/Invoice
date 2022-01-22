@@ -17,6 +17,7 @@ using DevExpress.ExpressApp.Model.DomainLogics;
 using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.Xpo;
 using DevExpress.ExpressApp.Xpo;
+using JKXAF.CustomFunctions;
 
 namespace Invoice.Module {
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.ModuleBase.
@@ -31,6 +32,7 @@ namespace Invoice.Module {
         public override void Setup(XafApplication application) {
             base.Setup(application);
             // Manage various aspects of the application UI and behavior at the module level.
+            DevExpress.Data.Filtering.CriteriaOperator.RegisterCustomFunction(new KwotaSlownie());
         }
         public override void CustomizeTypesInfo(ITypesInfo typesInfo) {
             base.CustomizeTypesInfo(typesInfo);
