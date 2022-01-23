@@ -8,4 +8,7 @@ https://programistamag.pl/w-najblizszym-wydaniu/
 
 ### Prezentacje video:
 #### Definiowanie wydruku faktury
+
+https://youtu.be/heZy5TJJw54
+
 https://vimeo.com/669139136
