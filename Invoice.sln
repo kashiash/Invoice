@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Module", "Invoice.Module\Invoice.Module.csproj", "{4E39E838-28BB-4950-8BFC-4B1D11274D00}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PobierzWaluty", "PobierzWaluty\PobierzWaluty.csproj", "{01CDD146-8A7B-4B57-B3BA-33644036393E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarsDb.Module", "CarsDb.Module\CarsDb.Module.csproj", "{3EAFA6BB-BACA-4859-BD9A-55B735E831C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityTestProject", "SecurityTestProject\SecurityTestProject.csproj", "{51216FF1-9647-4EAE-8A7E-BF432FA732B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -114,6 +116,12 @@ Global
 		{3EAFA6BB-BACA-4859-BD9A-55B735E831C6}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
 		{3EAFA6BB-BACA-4859-BD9A-55B735E831C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EAFA6BB-BACA-4859-BD9A-55B735E831C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51216FF1-9647-4EAE-8A7E-BF432FA732B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51216FF1-9647-4EAE-8A7E-BF432FA732B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51216FF1-9647-4EAE-8A7E-BF432FA732B7}.EasyTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{51216FF1-9647-4EAE-8A7E-BF432FA732B7}.EasyTest|Any CPU.Build.0 = Debug|Any CPU
+		{51216FF1-9647-4EAE-8A7E-BF432FA732B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51216FF1-9647-4EAE-8A7E-BF432FA732B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Core.All" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Core.All" Version="21.2.4" />
     <PackageReference Include="Npgsql" Version="5.0.11" />
   </ItemGroup>
 
