@@ -115,6 +115,41 @@
         </LayoutGroup>
       </Layout>
     </DashboardView>
+    <DetailView Id="Payment_DetailView">
+      <Items>
+        <ActionContainerViewItem Id="FindInvoicesAction" Caption="FindInvoicesAction" ActionContainer="FindInvoicesAction" IsNewNode="True" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="21.521035598705502">
+            <LayoutGroup Id="Payment" RelativeSize="100">
+              <LayoutItem Id="PaymentDate" Index="0" RelativeSize="30.075187969924812" />
+              <LayoutItem Id="Amount" Index="1" RelativeSize="21.05263157894737" />
+              <LayoutItem Id="SumOfPayments" Index="2" RelativeSize="21.05263157894737" />
+              <LayoutItem Id="PaymentBalance" Index="3" RelativeSize="27.81954887218045" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="PaymentsAndNotes" Index="1" RelativeSize="56.957928802588995">
+            <LayoutGroup Id="InvoicePayments" RelativeSize="100" Caption="Invoice Payments">
+              <LayoutItem Id="FindInvoicesAction" ViewItem="FindInvoicesAction" Index="0" RelativeSize="14.516129032258064" IsNewNode="True" />
+              <LayoutItem Id="InvoicePayments" ViewItem="InvoicePayments" Index="1" RelativeSize="85.48387096774194" IsNewNode="True" Removed="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PaymentDescription" RelativeSize="100">
+              <LayoutItem Id="PaymentDescription" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Notes" RelativeSize="100">
+              <LayoutItem Id="Notes" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutGroup Id="Auditing" Index="2" RelativeSize="21.521035598705502">
+            <LayoutItem Id="CreatedBy" RelativeSize="27.81954887218045" />
+            <LayoutItem Id="CreatedOn" RelativeSize="21.05263157894737" />
+            <LayoutItem Id="UpdatedBy" RelativeSize="21.05263157894737" />
+            <LayoutItem Id="UpdatedOn" RelativeSize="30.075187969924812" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <ListView Id="Product_ProductAssignedAttributeValues_ListView" AllowEdit="True">
       <Columns>
         <ColumnInfo Id="ProductAttribute" Width="166" />

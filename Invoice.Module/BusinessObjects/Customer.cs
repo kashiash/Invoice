@@ -340,7 +340,6 @@ namespace Invoice.Module.BusinessObjects
 
     public enum Segment
     { 
-        
         Corporate= 2,
         Consumer = 7,
         [XafDisplayName("Home Office")]
