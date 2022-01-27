@@ -64,6 +64,39 @@
   </SchemaModules>
   <Views>
     <ListView Id="ApplicationUser_ListView" Caption="Users" />
+    <ListView Id="Customer_ListView">
+      <Columns>
+        <ColumnInfo Id="BasicLegalForm" Width="205" Index="-1" />
+        <ColumnInfo Id="CityGus" Width="77" Index="-1" />
+        <ColumnInfo Id="CommuneGus" Width="120" Index="-1" />
+        <ColumnInfo Id="CountryGus" Width="103" Index="-1" />
+        <ColumnInfo Id="CountyGus" Width="98" Index="-1" />
+        <ColumnInfo Id="DateOfChangeOccurrence" Width="181" Index="-1" />
+        <ColumnInfo Id="DateOfCommencementBusiness" Width="222" Index="-1" />
+        <ColumnInfo Id="DateOfCreation" Width="128" Index="-1" />
+        <ColumnInfo Id="DateOfEntryToRegisterOfRecords" Width="240" Index="-1" />
+        <ColumnInfo Id="DateOfEntryToRegon" Width="163" Index="-1" />
+        <ColumnInfo Id="FinancingForm" Width="157" Index="-1" />
+        <ColumnInfo Id="FoundingBody" Width="151" Index="-1" />
+        <ColumnInfo Id="NumberInRegisterOfRecords" Width="211" Index="-1" />
+        <ColumnInfo Id="PostCityGus" Width="109" Index="-1" />
+        <ColumnInfo Id="PropertyForm" Width="133" Index="-1" />
+        <ColumnInfo Id="ProvinceGus" Width="108" Index="-1" />
+        <ColumnInfo Id="RegistrationAuthority" Width="162" Index="-1" />
+        <ColumnInfo Id="RegistryType" Width="190" Index="-1" />
+        <ColumnInfo Id="SpecificLegalForm" Width="196" Index="-1" />
+        <ColumnInfo Id="StreetGus" Width="91" Index="-1" />
+        <ColumnInfo Id="CustomerName" Width="146" />
+        <ColumnInfo Id="Symbol" Width="74" />
+        <ColumnInfo Id="VatNumber" Width="104" />
+        <ColumnInfo Id="Street" Width="63" />
+        <ColumnInfo Id="City" Width="49" />
+        <ColumnInfo Id="PostalCode" Width="103" />
+        <ColumnInfo Id="Email" Width="61" />
+        <ColumnInfo Id="Phone" Width="65" />
+        <ColumnInfo Id="Segment" Width="83" />
+      </Columns>
+    </ListView>
     <DashboardView Id="MakeModelsDashboardView" Caption="Marki i Modele" IsNewNode="True">
       <Items IsNewNode="True">
         <DashboardViewItem Id="Make" ViewId="car_make_ListView" Caption="Car Make" IsNewNode="True" />
