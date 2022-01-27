@@ -12,10 +12,10 @@ namespace GUS.Module.BusinessObjects
     [DefaultClassOptions]
     public class StreetGus : GusBaseObject
     {
-        public StreetGus(Session session) : base(session)
-        { }
+        public StreetGus(Session session) : base(session) { }
 
-
+        string propertyNumber;
+        string apartmentNumber;
         CityGus city;
 
         [Association("CityGus-Streets")]
@@ -23,6 +23,18 @@ namespace GUS.Module.BusinessObjects
         {
             get => city;
             set => SetPropertyValue(nameof(City), ref city, value);
+        }
+
+        public string ApartmentNumber
+        {
+            get => apartmentNumber;
+            set => SetPropertyValue(nameof(ApartmentNumber), ref apartmentNumber, value);
+        }
+
+        public string PropertyNumber
+        {
+            get => propertyNumber;
+            set => SetPropertyValue(nameof(PropertyNumber), ref propertyNumber, value);
         }
     }
 }

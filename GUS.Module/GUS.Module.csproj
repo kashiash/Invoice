@@ -18,6 +18,6 @@
     <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.4" />
     <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.4" />
     <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.4" />
-    <PackageReference Include="GusHelper" Version="1.0.1" />
+    <PackageReference Include="GusHelper" Version="1.0.2" />
   </ItemGroup>
 </Project>

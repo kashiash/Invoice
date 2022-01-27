@@ -49,12 +49,10 @@ namespace Invoice.Module.Services
             {
                 customer.CustomerName = data.Name;
             }
-
             if (string.IsNullOrWhiteSpace(customer.Symbol))
             {
                 customer.Symbol = data.ShortName;
             }
-
             if (string.IsNullOrWhiteSpace(customer.City))
             {
                 customer.City = customer.CityGus?.Name;
@@ -65,7 +63,7 @@ namespace Invoice.Module.Services
             }
             if (string.IsNullOrWhiteSpace(customer.Email))
             {
-                customer.Email = customer.Email;
+                customer.Email = data.Email;
             }
             if (string.IsNullOrWhiteSpace(customer.Phone))
             {
@@ -74,6 +72,10 @@ namespace Invoice.Module.Services
             if (string.IsNullOrWhiteSpace(customer.CustomerName))
             {
                 customer.CustomerName = data.Name;
+            }
+            if (string.IsNullOrWhiteSpace(customer.PostalCode))
+            {
+                customer.PostalCode = customer.CityGus?.Postcode;
             }
             MapPkdList(customer, data);
         }

@@ -116,6 +116,7 @@ namespace GUS.Module.Utils
                 cityGus.Symbol = data.Address.City.Symbol;
                 cityGus.Commune = CommuneGus;
             }
+            cityGus.Postcode = data.Address.City.Postcode;
 
             return cityGus;
         }
@@ -134,6 +135,7 @@ namespace GUS.Module.Utils
                 cityGus.Symbol = data.Address.PostOffice.Symbol;
                 cityGus.Commune = CommuneGus;
             }
+            cityGus.Postcode = data.Address.City.Postcode;
 
             return cityGus;
         }
@@ -181,6 +183,8 @@ namespace GUS.Module.Utils
                 streetGus.Name = data.Address.Street.Name;
                 streetGus.Symbol = data.Address.Street.Symbol;
                 streetGus.City = CityGus;
+                streetGus.ApartmentNumber = data.Address.Street.ApartmentNumber;
+                streetGus.PropertyNumber = data.Address.Street.PropertyNumber;
             }
 
             return streetGus;

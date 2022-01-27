@@ -12,10 +12,9 @@ namespace GUS.Module.BusinessObjects
     [DefaultClassOptions]
     public class CityGus : GusBaseObject
     {
-        public CityGus(Session session) : base(session)
-        { }
+        public CityGus(Session session) : base(session) { }
 
-
+        string postcode;
         CommuneGus commune;
 
         [Association("CommuneGus-Cities")]
@@ -34,5 +33,10 @@ namespace GUS.Module.BusinessObjects
             }
         }
 
+        public string Postcode
+        {
+            get => postcode;
+            set => SetPropertyValue(nameof(Postcode), ref postcode, value);
+        }
     }
 }
