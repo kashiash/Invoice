@@ -156,6 +156,12 @@
         <ColumnInfo Id="SelectedValue" Width="143" />
       </Columns>
     </ListView>
+    <ListView Id="VatRate_ListView">
+      <Columns>
+        <ColumnInfo Id="Symbol" Index="0" Width="74" />
+        <ColumnInfo Id="Value" Index="1" Width="61" />
+      </Columns>
+    </ListView>
     <DashboardView Id="WalutyKursyDashboard" Caption="Kursy walut" IsNewNode="True">
       <Items IsNewNode="True">
         <DashboardViewItem Id="Waluta" ViewId="Waluta_ListView" Index="0" IsNewNode="True" />
