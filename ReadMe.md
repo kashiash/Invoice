@@ -11,4 +11,3 @@ https://programistamag.pl/w-najblizszym-wydaniu/
 
 https://youtu.be/heZy5TJJw54
 
-https://vimeo.com/669139136
