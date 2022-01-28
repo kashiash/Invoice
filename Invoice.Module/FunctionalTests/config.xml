@@ -1,22 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Options xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<Applications>
-		<!-- Win -->
-		<Application
-			Name="InvoiceWin"
-			FileName="[WinAppBin]\Invoice.Win.exe"
-			AdapterFileName="[WinAdapterFileName]"
-			CommunicationPort="4100"/>
-		<!-- Blazor -->
 		<Application
 			Name="InvoiceBlazor"
 			Url="http://localhost:4030"
 			PhysicalPath="[BlazorAppPath]"
 			AdapterFileName="[BlazorAdapterAssemblyPath]"
 			Configuration="EasyTest"
+			Browser="Chrome"
 			IgnoreCase="true"/>
 	</Applications>
 	<TestDatabases>
 		<Database xsi:type="TestMSSQLDatabase" Server="(localdb)\mssqllocaldb" DBName="InvoiceEasyTest"/>
 	</TestDatabases>
+    <Aliases> 
+        <Alias Name="BlazorAppPath" Value="[ConfigPath]\..\..\Invoice.Blazor.Server" /> 
+        <Alias Name="BlazorAdapterAssemblyPath" Value="[BlazorAppPath]\bin\EasyTest\net5.0\DevExpress.ExpressApp.EasyTest.BlazorAdapter.v21.2.dll" /> 
+    </Aliases> 
 </Options>

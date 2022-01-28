@@ -1,0 +1,3 @@
+﻿#DropDB InvoiceEasyTest
+
+#Application InvoiceBlazor

@@ -7,9 +7,13 @@
     <Configurations>Debug;Release;EasyTest</Configurations>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="FunctionalTests\chromedriver.exe" />
     <None Remove="Model.DesignedDiffs.xafml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="chromedriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
   </ItemGroup>
   <ItemGroup>
@@ -52,5 +56,8 @@
     <None Update="UnusableNodes2.xml">
       <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 </Project>
