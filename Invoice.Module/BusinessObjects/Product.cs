@@ -1,13 +1,9 @@
 ﻿using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Invoice.Module.BusinessObjects
 {
@@ -26,26 +22,28 @@ namespace Invoice.Module.BusinessObjects
         string symbol;
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string Symbol { get => symbol; set => SetPropertyValue(nameof(Symbol), ref symbol, value); }
+        public string Symbol { get { return symbol; } set { SetPropertyValue(nameof(Symbol), ref symbol, value); } }
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
         public string ProductName
         {
-            get => productName;
-            set => SetPropertyValue(nameof(ProductName), ref productName, value);
+            get { return productName; }
+            set { SetPropertyValue(nameof(ProductName), ref productName, value); }
         }
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string ShortName { get => shortName; set => SetPropertyValue(nameof(ShortName), ref shortName, value); }
-
-
+        public string ShortName
+        {
+            get { return shortName; }
+            set { SetPropertyValue(nameof(ShortName), ref shortName, value); }
+        }
 
 
         //   [Association("ProductCategory-Products")]
         [ImmediatePostData]
         public ProductCategory Category
         {
-            get => category;
+            get { return category; }
             set
             {
                 var modified = SetPropertyValue(nameof(Category), ref category, value);
@@ -79,32 +77,39 @@ namespace Invoice.Module.BusinessObjects
                             }
                         }
 
-                        if (Category.ForceRefreshProductSymbol)
+                        if(Category.ForceRefreshProductSymbol)
                         {
                             SetSymbol();
                         }
                     }
-
                 }
             }
         }
 
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string GTIN { get => gTIN; set => SetPropertyValue(nameof(GTIN), ref gTIN, value); }
+        public string GTIN { get { return gTIN; } set { SetPropertyValue(nameof(GTIN), ref gTIN, value); } }
 
 
         VatRate vatRate;
         decimal unitPrice;
 
-        public decimal UnitPrice { get => unitPrice; set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value); }
+        public decimal UnitPrice
+        {
+            get { return unitPrice; }
+            set { SetPropertyValue(nameof(UnitPrice), ref unitPrice, value); }
+        }
 
 
-        public VatRate VatRate { get => vatRate; set => SetPropertyValue(nameof(VatRate), ref vatRate, value); }
+        public VatRate VatRate
+        {
+            get { return vatRate; }
+            set { SetPropertyValue(nameof(VatRate), ref vatRate, value); }
+        }
 
         [DetailViewLayout("GroupsAndNotes", LayoutGroupType.TabbedGroup, 100)]
         [Size(SizeAttribute.Unlimited)]
-        public string Notes { get => notes; set => SetPropertyValue(nameof(Notes), ref notes, value); }
+        public string Notes { get { return notes; } set { SetPropertyValue(nameof(Notes), ref notes, value); } }
 
         [Association("Product-Products")]
         [DetailViewLayout("GroupsAndNotes", LayoutGroupType.TabbedGroup, 100)]

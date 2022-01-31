@@ -2,10 +2,7 @@
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Invoice.Module.BusinessObjects
 {
@@ -14,7 +11,8 @@ namespace Invoice.Module.BusinessObjects
     public class ProductAttribute : XPObject
     {
         public ProductAttribute(Session session) : base(session)
-        { }
+        {
+        }
 
 
         ProductAttributeAvaiableValue defaultValue;
@@ -22,18 +20,14 @@ namespace Invoice.Module.BusinessObjects
         string name;
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string Name
-        {
-            get => name;
-            set => SetPropertyValue(nameof(Name), ref name, value);
-        }
+        public string Name { get { return name; } set { SetPropertyValue(nameof(Name), ref name, value); } }
 
 
         [DataSourceProperty(nameof(Values))]
         public ProductAttributeAvaiableValue DefaultValue
         {
-            get => defaultValue;
-            set => SetPropertyValue(nameof(DefaultValue), ref defaultValue, value);
+            get { return defaultValue; }
+            set { SetPropertyValue(nameof(DefaultValue), ref defaultValue, value); }
         }
 
 
@@ -41,31 +35,19 @@ namespace Invoice.Module.BusinessObjects
         [Association("ProductAttribute-Values")]
         public XPCollection<ProductAttributeAvaiableValue> Values
         {
-            get
-            {
-                return GetCollection<ProductAttributeAvaiableValue>(nameof(Values));
-            }
+            get { return GetCollection<ProductAttributeAvaiableValue>(nameof(Values)); }
         }
 
         [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Association("ProductAttribute-ProductCategoryAttributes")]
-     
+
         public XPCollection<ProductCategoryAttribute> Categories
         {
-            get
-            {
-                return GetCollection<ProductCategoryAttribute>(nameof(Categories));
-            }
+            get { return GetCollection<ProductCategoryAttribute>(nameof(Categories)); }
         }
 
         [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Size(SizeAttribute.Unlimited)]
-        public string Notes
-        {
-            get => notes;
-            set => SetPropertyValue(nameof(Notes), ref notes, value);
-        }
-
-
+        public string Notes { get { return notes; } set { SetPropertyValue(nameof(Notes), ref notes, value); } }
     }
 }

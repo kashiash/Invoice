@@ -2,20 +2,17 @@
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Xpo;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Invoice.Module.BusinessObjects
 {
     public class TaskProduct : BaseObject
     {
         public TaskProduct(Session session) : base(session)
-        { }
+        {
+        }
 
 
-   
         string unit;
         string notes;
         decimal total;
@@ -26,17 +23,18 @@ namespace Invoice.Module.BusinessObjects
         [Association("ProjectTask-TaskProducts")]
         public ProjectTask ProjectTask
         {
-            get => projectTask;
-            set => SetPropertyValue(nameof(ProjectTask), ref projectTask, value);
+            get { return projectTask; }
+            set { SetPropertyValue(nameof(ProjectTask), ref projectTask, value); }
         }
+
         [ImmediatePostData]
         public Product Product
         {
-            get => product;
+            get { return product; }
             set
             {
                 var modified = SetPropertyValue(nameof(Product), ref product, value);
-                if (modified && !IsLoading && !IsSaving && Product != null)
+                if(modified && !IsLoading && !IsSaving && Product != null)
                 {
                     unitPrice = Product.UnitPrice;
 
@@ -46,21 +44,16 @@ namespace Invoice.Module.BusinessObjects
         }
 
 
-
-        private void RecalculateItem()
-        {
-            Total = Quantity * UnitPrice;
-        }
+        private void RecalculateItem() { Total = Quantity * UnitPrice; }
 
         [ImmediatePostData]
         public decimal Quantity
         {
-            get => quantity;
+            get { return quantity; }
             set
             {
-
                 var modified = SetPropertyValue(nameof(Quantity), ref quantity, value);
-                if (modified && !IsLoading && !IsSaving )
+                if(modified && !IsLoading && !IsSaving)
                 {
                     RecalculateItem();
                 }
@@ -71,31 +64,18 @@ namespace Invoice.Module.BusinessObjects
 
         public decimal UnitPrice
         {
-            get => unitPrice;
-            set => SetPropertyValue(nameof(UnitPrice), ref unitPrice, value);
+            get { return unitPrice; }
+            set { SetPropertyValue(nameof(UnitPrice), ref unitPrice, value); }
         }
 
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string Unit
-        {
-            get => unit;
-            set => SetPropertyValue(nameof(Unit), ref unit, value);
-        }
+        public string Unit { get { return unit; } set { SetPropertyValue(nameof(Unit), ref unit, value); } }
 
-        public decimal Total
+        public decimal Total { get { return total; } set { SetPropertyValue(nameof(Total), ref total, value); } }
 
-        {
-            get => total;
-            set => SetPropertyValue(nameof(Total), ref total, value);
-        }
 
-        
         [Size(SizeAttribute.Unlimited)]
-        public string Notes
-        {
-            get => notes;
-            set => SetPropertyValue(nameof(Notes), ref notes, value);
-        }
+        public string Notes { get { return notes; } set { SetPropertyValue(nameof(Notes), ref notes, value); } }
     }
 }

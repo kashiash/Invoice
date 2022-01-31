@@ -2,29 +2,39 @@
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Invoice.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [XafDefaultProperty(nameof(InvoiceNumber))]
 
-    [Appearance("InvoiceIfPayed", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "SumOfPayments >= TotalBrutto", Context = "ListView", FontColor = "Blue", Priority = 101)]
+    [Appearance(
+        "InvoiceIfPayed",
+        AppearanceItemType = "ViewItem",
+        TargetItems = "*",
+        Criteria = "SumOfPayments >= TotalBrutto",
+        Context = "ListView",
+        FontColor = "Blue",
+        Priority = 101)]
 
-    [Appearance("InvoiceIfOverDue", AppearanceItemType = "ViewItem", TargetItems = "*", Criteria = "Overdue = TRue", Context = "ListView", FontColor = "Red", Priority = 101)]
+    [Appearance(
+        "InvoiceIfOverDue",
+        AppearanceItemType = "ViewItem",
+        TargetItems = "*",
+        Criteria = "Overdue = TRue",
+        Context = "ListView",
+        FontColor = "Red",
+        Priority = 101)]
 
     public class Invoice : CustomBaseObject
     {
         public Invoice(Session session) : base(session)
-        { }
+        {
+        }
 
         //[Browsable(false)]
         public bool Overdue => SumOfPayments < TotalBrutto && PaymentDate < DateTime.Now;
@@ -45,95 +55,81 @@ namespace Invoice.Module.BusinessObjects
         [RuleUniqueValue]
         public string InvoiceNumber
         {
-            get => invoiceNumber;
-            set => SetPropertyValue(nameof(InvoiceNumber), ref invoiceNumber, value);
+            get { return invoiceNumber; }
+            set { SetPropertyValue(nameof(InvoiceNumber), ref invoiceNumber, value); }
         }
-
 
 
         public DateTime InvoiceDate
         {
-            get => invoiceDate;
-            set => SetPropertyValue(nameof(InvoiceDate), ref invoiceDate, value);
+            get { return invoiceDate; }
+            set { SetPropertyValue(nameof(InvoiceDate), ref invoiceDate, value); }
         }
 
 
         public DateTime DueDate
         {
-            get => dueDate;
-            set => SetPropertyValue(nameof(DueDate), ref dueDate, value);
+            get { return dueDate; }
+            set { SetPropertyValue(nameof(DueDate), ref dueDate, value); }
         }
-
 
 
         public decimal SumOfPayments
         {
-            get => sumOfPayments;
-            set => SetPropertyValue(nameof(SumOfPayments), ref sumOfPayments, value);
+            get { return sumOfPayments; }
+            set { SetPropertyValue(nameof(SumOfPayments), ref sumOfPayments, value); }
         }
 
 
         public DateTime PaymentDate
         {
-            get => paymentDate;
-            set => SetPropertyValue(nameof(PaymentDate), ref paymentDate, value);
+            get { return paymentDate; }
+            set { SetPropertyValue(nameof(PaymentDate), ref paymentDate, value); }
         }
 
         [Association]
         public Customer Customer
         {
-            get => customer;
-            set => SetPropertyValue(nameof(Customer), ref customer, value);
+            get { return customer; }
+            set { SetPropertyValue(nameof(Customer), ref customer, value); }
         }
 
         [ModelDefault("AllowEdit", "False")]
         public decimal TotalNetto
         {
-            get => totalNetto;
-            set => SetPropertyValue(nameof(TotalNetto), ref totalNetto, value);
+            get { return totalNetto; }
+            set { SetPropertyValue(nameof(TotalNetto), ref totalNetto, value); }
         }
 
         [ModelDefault("AllowEdit", "False")]
         public decimal TotalVat
         {
-            get => totalVat;
-            set => SetPropertyValue(nameof(TotalVat), ref totalVat, value);
+            get { return totalVat; }
+            set { SetPropertyValue(nameof(TotalVat), ref totalVat, value); }
         }
 
         [ModelDefault("AllowEdit", "False")]
         public decimal TotalBrutto
         {
-            get => totalBrutto;
-            set => SetPropertyValue(nameof(TotalBrutto), ref totalBrutto, value);
+            get { return totalBrutto; }
+            set { SetPropertyValue(nameof(TotalBrutto), ref totalBrutto, value); }
         }
 
         [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Association, DevExpress.Xpo.Aggregated]
         public XPCollection<InvoiceItem> InvoiceItems
         {
-            get
-            {
-                return GetCollection<InvoiceItem>(nameof(InvoiceItems));
-            }
+            get { return GetCollection<InvoiceItem>(nameof(InvoiceItems)); }
         }
+
         [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
         [Association, DevExpress.Xpo.Aggregated]
-        public XPCollection<InvoicePayment> Payments
-        {
-            get
-            {
-                return GetCollection<InvoicePayment>(nameof(Payments));
-            }
-        }
+        public XPCollection<InvoicePayment> Payments { get { return GetCollection<InvoicePayment>(nameof(Payments)); } }
 
         [Size(SizeAttribute.Unlimited)]
         [DetailViewLayoutAttribute("ItemsNotes", LayoutGroupType.TabbedGroup, 100)]
 
-        public string Notes
-        {
-            get => notes;
-            set => SetPropertyValue(nameof(Notes), ref notes, value);
-        }
+        public string Notes { get { return notes; } set { SetPropertyValue(nameof(Notes), ref notes, value); } }
 
         internal void RecalculateTotals(bool forceChangeEvents = true)
         {
@@ -146,7 +142,7 @@ namespace Invoice.Module.BusinessObjects
             decimal tmpVAT = 0m;
             decimal tmpBrutto = 0m;
 
-            foreach (var rec in InvoiceItems)
+            foreach(var rec in InvoiceItems)
             {
                 tmpNetto += rec.Netto;
                 tmpVAT += rec.Vat;
@@ -156,7 +152,7 @@ namespace Invoice.Module.BusinessObjects
             TotalVat = tmpVAT;
             TotalBrutto = tmpBrutto;
 
-            if (forceChangeEvents)
+            if(forceChangeEvents)
             {
                 OnChanged(nameof(TotalNetto), oldNetto, TotalNetto);
                 OnChanged(nameof(TotalVat), oldVAT, TotalVat);
@@ -170,10 +166,10 @@ namespace Invoice.Module.BusinessObjects
 
             decimal tempSumOfPayemnts = 0m;
             paymentDate = DateTime.MinValue;
-            foreach (var payment in Payments.OrderBy(w => w.Payment?.PaymentDate))
+            foreach(var payment in Payments.OrderBy(w => w.Payment?.PaymentDate))
             {
                 tempSumOfPayemnts += payment.Amount;
-                if (paymentDate != payment.Payment.PaymentDate && tempSumOfPayemnts >= TotalBrutto)
+                if(paymentDate != payment.Payment.PaymentDate && tempSumOfPayemnts >= TotalBrutto)
                 {
                     paymentDate = payment.Payment.PaymentDate;
                 }
@@ -181,22 +177,24 @@ namespace Invoice.Module.BusinessObjects
 
             sumOfPayments = tempSumOfPayemnts;
 
-            if (forceChangeEvents)
+            if(forceChangeEvents)
             {
                 OnChanged(nameof(SumOfPayments), oldSumOfPayments, sumOfPayments);
             }
         }
 
-        [Action(Caption = "Find payments",TargetObjectsCriteria = "SumOfPayments < TotalBrutto", ImageName = "BO_Skull",AutoCommit =true)]
+        [Action(
+            Caption = "Find payments",
+            TargetObjectsCriteria = "SumOfPayments < TotalBrutto",
+            ImageName = "BO_Skull",
+            AutoCommit =true)]
         public void FindPaymentsForInvoice()
         {
-            if (Customer != null)
+            if(Customer != null)
             {
-                var payments = customer.Payments
-                    .Where(i => i.SumOfPayments < i.Amount)
-                    .OrderBy(i => i.PaymentDate);
+                var payments = customer.Payments.Where(i => i.SumOfPayments < i.Amount).OrderBy(i => i.PaymentDate);
 
-                foreach (var payment in payments)
+                foreach(var payment in payments)
                 {
                     _ = payment.RegisterPayments2Invoice(this);
                 }

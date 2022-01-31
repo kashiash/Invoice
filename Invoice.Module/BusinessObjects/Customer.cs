@@ -19,6 +19,7 @@ namespace Invoice.Module.BusinessObjects
         { }
 
 
+        Employee manager;
         string phone;
         string email;
         Segment segment;
@@ -84,7 +85,7 @@ namespace Invoice.Module.BusinessObjects
             set => SetPropertyValue(nameof(Email), ref email, value);
         }
 
-        
+
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
         public string Phone
         {
@@ -107,6 +108,14 @@ namespace Invoice.Module.BusinessObjects
             {
                 return GetCollection<Invoice>(nameof(Invoices));
             }
+        }
+
+
+        
+        public Employee Manager
+        {
+            get => manager;
+            set => SetPropertyValue(nameof(Manager), ref manager, value);
         }
 
         [DetailViewLayoutAttribute("InvoicesNotes", LayoutGroupType.TabbedGroup, 100)]

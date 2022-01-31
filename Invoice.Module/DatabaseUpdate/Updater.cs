@@ -31,11 +31,11 @@ namespace Invoice.Module.DatabaseUpdate
             //    theObject.Name = name;
             //}
 
-            ApplicationUser sampleUser = ObjectSpace.FirstOrDefault<ApplicationUser>(u => u.UserName == "User");
+            ApplicationUser sampleUser = ObjectSpace.FirstOrDefault<Employee>(u => u.UserName == "User2");
             if (sampleUser == null)
             {
-                sampleUser = ObjectSpace.CreateObject<ApplicationUser>();
-                sampleUser.UserName = "User";
+                sampleUser = ObjectSpace.CreateObject<Employee>();
+                sampleUser.UserName = "User2";
                 // Set a password if the standard authentication type is used
                 sampleUser.SetPassword("");
 
@@ -45,13 +45,32 @@ namespace Invoice.Module.DatabaseUpdate
                 ((ISecurityUserWithLoginInfo)sampleUser).CreateUserLoginInfo(SecurityDefaults.PasswordAuthentication, ObjectSpace.GetKeyValueAsString(sampleUser));
             }
             PermissionPolicyRole defaultRole = CreateDefaultRole();
+            var userRole = GetUserRole();
             sampleUser.Roles.Add(defaultRole);
+            sampleUser.Roles.Add(userRole);
 
-            ApplicationUser userAdmin = ObjectSpace.FirstOrDefault<ApplicationUser>(u => u.UserName == "Admin");
+            //Sam is a manager and he can do everything with his own department
+            Employee managerSam = ObjectSpace.FindObject<Employee>(CriteriaOperator.Parse("UserName == 'Sam'"));
+            if (managerSam == null)
+            {
+                managerSam = ObjectSpace.CreateObject<Employee>();
+                managerSam.UserName = "Sam";
+                managerSam.FirstName = "Sam";
+                managerSam.LastName = "Jackson";
+                managerSam.IsActive = true;
+                managerSam.SetPassword("");
+                //managerSam.Department = devDepartment;
+                managerSam.Roles.Add(GetManagerRole());
+                managerSam.Save();
+            }
+            managerSam.Roles.Add(defaultRole);
+            managerSam.Roles.Add(userRole);
+
+            ApplicationUser userAdmin = ObjectSpace.FirstOrDefault<Employee>(u => u.UserName == "AdminX");
             if (userAdmin == null)
             {
-                userAdmin = ObjectSpace.CreateObject<ApplicationUser>();
-                userAdmin.UserName = "Admin";
+                userAdmin = ObjectSpace.CreateObject<Employee>();
+                userAdmin.UserName = "AdminX";
                 // Set a password if the standard authentication type is used
                 userAdmin.SetPassword("");
 
@@ -70,6 +89,7 @@ namespace Invoice.Module.DatabaseUpdate
             adminRole.IsAdministrative = true;
             userAdmin.Roles.Add(adminRole);
             ObjectSpace.CommitChanges(); //This line persists created object(s).
+
 
 
             //CreateDefaultRole();
@@ -98,7 +118,7 @@ namespace Invoice.Module.DatabaseUpdate
             //userAdmin.Roles.Add(adminRole);
 
 
-           // PrepareTestData();
+            // PrepareTestData();
             ObjectSpace.CommitChanges(); //This line persists created object(s).
         }
         public override void UpdateDatabaseBeforeUpdateSchema() {
@@ -107,6 +127,61 @@ namespace Invoice.Module.DatabaseUpdate
             //    RenameColumn("DomainObject1Table", "OldColumnName", "NewColumnName");
             //}
         }
+
+
+        private PermissionPolicyRole GetUserRole()
+        {
+            PermissionPolicyRole userRole = ObjectSpace.FindObject<PermissionPolicyRole>(new BinaryOperator("Name", "Users"));
+            if (userRole == null)
+            {
+                userRole = ObjectSpace.CreateObject<PermissionPolicyRole>();
+                userRole.Name = "Users";
+
+                userRole.AddNavigationPermission("Application/NavigationItems/Items/Default/Items/MyDetails", SecurityPermissionState.Allow);
+                userRole.AddNavigationPermission("Application/NavigationItems/Items/Default/Items/Employee_ListView", SecurityPermissionState.Allow);
+                userRole.AddNavigationPermission("Application/NavigationItems/Items/Default/Items/EmployeeTask_ListView", SecurityPermissionState.Allow);
+
+                userRole.AddObjectPermission<Employee>(SecurityOperations.Read, "Department.Employees[Oid = CurrentUserId()]", SecurityPermissionState.Allow);
+                userRole.AddMemberPermission<Employee>(SecurityOperations.Write, "ChangePasswordOnFirstLogon;StoredPassword;FirstName;LastName", "Oid=CurrentUserId()", SecurityPermissionState.Allow);
+                userRole.AddMemberPermission<Employee>(SecurityOperations.Write, "Tasks", "Department.Employees[Oid = CurrentUserId()]", SecurityPermissionState.Allow);
+
+                userRole.SetTypePermission<PermissionPolicyRole>(SecurityOperations.Read, SecurityPermissionState.Allow);
+
+                userRole.AddObjectPermission<ProjectTask>(SecurityOperations.ReadWriteAccess, "AssignedTo.Department.Employees[Oid = CurrentUserId()]", SecurityPermissionState.Allow);
+                userRole.AddMemberPermission<ProjectTask>(SecurityOperations.Write, "AssignedTo", "AssignedTo.Department.Employees[Oid = CurrentUserId()]", SecurityPermissionState.Allow);
+
+                userRole.AddObjectPermission<Department>(SecurityOperations.Read, "Employees[Oid=CurrentUserId()]", SecurityPermissionState.Allow);
+            }
+            return userRole;
+        }
+        //Managers can access and fully edit (including create and delete capabilities) data from their own department. However, they cannot access data from other departments.
+        private PermissionPolicyRole GetManagerRole()
+        {
+            PermissionPolicyRole managerRole = ObjectSpace.FindObject<PermissionPolicyRole>(new BinaryOperator("Name", "Managers"));
+            if (managerRole == null)
+            {
+                managerRole = ObjectSpace.CreateObject<PermissionPolicyRole>();
+                managerRole.Name = "Managers";
+
+                managerRole.AddNavigationPermission("Application/NavigationItems/Items/Default/Items/MyDetails", SecurityPermissionState.Allow);
+                managerRole.AddNavigationPermission("Application/NavigationItems/Items/Default/Items/Department_ListView", SecurityPermissionState.Allow);
+                managerRole.AddNavigationPermission("Application/NavigationItems/Items/Default/Items/Employee_ListView", SecurityPermissionState.Allow);
+                managerRole.AddNavigationPermission("Application/NavigationItems/Items/Default/Items/EmployeeTask_ListView", SecurityPermissionState.Allow);
+
+                managerRole.AddObjectPermission<Department>(SecurityOperations.FullObjectAccess, "Employees[Oid=CurrentUserId()]", SecurityPermissionState.Allow);
+
+                managerRole.SetTypePermission<Employee>(SecurityOperations.Create, SecurityPermissionState.Allow);
+                managerRole.AddObjectPermission<Employee>(SecurityOperations.FullObjectAccess, "IsNull(Department) || Department.Employees[Oid=CurrentUserId()]", SecurityPermissionState.Allow);
+
+                managerRole.SetTypePermission<ProjectTask>(SecurityOperations.Create, SecurityPermissionState.Allow);
+                managerRole.AddObjectPermission<ProjectTask>(SecurityOperations.FullObjectAccess,
+                    "IsNull(AssignedTo) || IsNull(AssignedTo.Department) || AssignedTo.Department.Employees[Oid=CurrentUserId()]", SecurityPermissionState.Allow);
+
+                managerRole.SetTypePermission<PermissionPolicyRole>(SecurityOperations.Read, SecurityPermissionState.Allow);
+            }
+            return managerRole;
+        }
+
 
         private void PrepareTestData()
         {
