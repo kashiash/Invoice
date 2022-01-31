@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Invoice.Module.BusinessObjects.NonPersistent
 {
     [DomainComponent]
-    [DefaultClassOptions]
+  //  [DefaultClassOptions]
     public class UploadAssignedFileData : NonPersistentBaseObject
     {
         
