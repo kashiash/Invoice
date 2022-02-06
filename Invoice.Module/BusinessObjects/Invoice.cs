@@ -152,6 +152,8 @@ namespace Invoice.Module.BusinessObjects
             TotalVat = tmpVAT;
             TotalBrutto = tmpBrutto;
 
+            var a = totalBrutto;
+
             if(forceChangeEvents)
             {
                 OnChanged(nameof(TotalNetto), oldNetto, TotalNetto);
@@ -169,7 +171,7 @@ namespace Invoice.Module.BusinessObjects
             foreach(var payment in Payments.OrderBy(w => w.Payment?.PaymentDate))
             {
                 tempSumOfPayemnts += payment.Amount;
-                if(paymentDate != payment.Payment.PaymentDate && tempSumOfPayemnts >= TotalBrutto)
+                if(paymentDate != payment?.Payment?.PaymentDate && tempSumOfPayemnts >= TotalBrutto)
                 {
                     paymentDate = payment.Payment.PaymentDate;
                 }

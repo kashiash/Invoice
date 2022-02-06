@@ -1,4 +1,6 @@
-﻿namespace Invoice.Module {
+﻿using LlamachantFramework.Module;
+
+namespace Invoice.Module {
 	partial class InvoiceModule {
 		/// <summary> 
 		/// Required designer variable.
@@ -54,6 +56,8 @@
 			this.RequiredModuleTypes.Add(typeof(KrajeWaluty.KrajeWalutyModule));
 			this.RequiredModuleTypes.Add(typeof(KodyPocztowe.Module.KodyPocztoweModule));
 			this.RequiredModuleTypes.Add(typeof(CarsDb.Module.CarsDbModule));
+
+			this.RequiredModuleTypes.Add(typeof(LlamachantFrameworkModule));
 		}
 
 		#endregion

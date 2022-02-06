@@ -17,8 +17,7 @@
       <Item Id="Administracyjne" Index="2" />
       <Item Id="@b19b1e98-493a-44c1-a9c5-26ca5809c8e2" Caption="Tests" IsNewNode="True">
         <Items IsNewNode="True">
-          <Item Id="Event_ListView" ViewId="Event_ListView" ObjectKey="" IsNewNode="True" />
-          <Item Id="TreeListBaseObject_ListView" ViewId="TreeListBaseObject_ListView" ObjectKey="" IsNewNode="True" />
+          <Item Id="Event_ListView" ViewId="Event_ListView" ObjectKey="" ImageName="Update" IsNewNode="True" />
         </Items>
       </Item>
       <Item Id="GUS" Removed="True" />
@@ -54,13 +53,13 @@
       </Item>
     </Items>
   </NavigationItems>
-  <Options DataAccessMode="Server">
+  <Options DataAccessMode="Server" BoldTabsWithCounts="True" ShowCountsInTabs="True">
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
   <SchemaModules>
-    <SchemaModule Name="CloneObjectModule" Version="21.2.4.0" IsNewNode="True" />
-    <SchemaModule Name="SchedulerModuleBase" Version="21.2.4.0" IsNewNode="True" />
-    <SchemaModule Name="SystemModule" Version="21.2.4.0" IsNewNode="True" />
+    <SchemaModule Name="CloneObjectModule" Version="21.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SchedulerModuleBase" Version="21.2.5.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="21.2.5.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
     <ListView Id="ApplicationUser_ListView" Caption="Users" />

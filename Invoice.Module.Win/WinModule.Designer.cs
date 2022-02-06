@@ -1,4 +1,7 @@
-﻿namespace Invoice.Module.Win {
+﻿using LlamachantFramework.Module;
+using LlamachantFramework.Module.Win;
+
+namespace Invoice.Module.Win {
     partial class InvoiceWindowsFormsModule {
         /// <summary> 
         /// Required designer variable.
@@ -37,6 +40,10 @@
             this.AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.HCategory));
 
             this.RequiredModuleTypes.Add(typeof(DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase));
+
+
+            this.RequiredModuleTypes.Add(typeof(LlamachantFrameworkModule));
+            this.RequiredModuleTypes.Add(typeof(LlamachantFrameworkWindowsFormsModule));
         }
 
         #endregion

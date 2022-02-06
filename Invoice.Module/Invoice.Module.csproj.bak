@@ -18,26 +18,25 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Bogus" Version="34.0.1" />
-    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Dashboards" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Objects" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Office" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Scheduler" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Validation" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.5" />
-    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.5" />
-    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.AuditTrail.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.CloneObject.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Dashboards" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Objects" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Office" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.ReportsV2" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Scheduler" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Validation" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.ViewVariantsModule" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.4" />
     <PackageReference Include="Gus.Regon.BIR11.Proxy" Version="0.1.6" />
     <PackageReference Include="LiczbyNaSlowaNetCore" Version="1.0.5" />
-    <PackageReference Include="LlamachantFramework.Module" Version="21.2.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>

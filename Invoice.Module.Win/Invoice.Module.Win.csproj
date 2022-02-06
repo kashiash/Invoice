@@ -8,21 +8,23 @@
     <Configurations>Debug;Release;EasyTest</Configurations>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Dashboards.Win" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.FileAttachment.Win" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Office.Win" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Win" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Scheduler.Win" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors.Win" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Validation.Win" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Win" Version="21.2.4" />
-    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.4" />
-    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.4" />
-    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Dashboards.Win" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.FileAttachment.Win" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Office.Win" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.ReportsV2.Win" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Scheduler.Win" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Security.Xpo" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.TreeListEditors.Win" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Validation.Win" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Win" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.5" />
+    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.5" />
+    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.5" />
+    <PackageReference Include="LlamachantFramework.Module" Version="21.2.5" />
+    <PackageReference Include="LlamachantFramework.Module.Win" Version="21.2.5" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Model.DesignedDiffs.xafml" />

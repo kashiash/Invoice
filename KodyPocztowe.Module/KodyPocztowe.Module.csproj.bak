@@ -22,11 +22,11 @@
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Objects" Version="21.2.5" />
-    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.5" />
-    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.5" />
-    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.5" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Objects" Version="21.2.4" />
+    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.Base" Version="21.2.4" />
+    <PackageReference Include="DevExpress.Persistent.BaseImpl.Xpo" Version="21.2.4" />
     <PackageReference Include="RestSharp" Version="106.13.0" />
   </ItemGroup>
   <ItemGroup>
