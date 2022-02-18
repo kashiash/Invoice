@@ -118,7 +118,7 @@ namespace Invoice.Module.DatabaseUpdate
             //userAdmin.Roles.Add(adminRole);
 
 
-            // PrepareTestData();
+           // PrepareTestData();
             ObjectSpace.CommitChanges(); //This line persists created object(s).
         }
         public override void UpdateDatabaseBeforeUpdateSchema() {
@@ -229,10 +229,10 @@ namespace Invoice.Module.DatabaseUpdate
             var orderFaker = new Faker<Invoice.Module.BusinessObjects.Invoice>("pl")
             .CustomInstantiator(f => ObjectSpace.CreateObject<Invoice.Module.BusinessObjects.Invoice>())
                 .RuleFor(o => o.InvoiceNumber, f => f.Random.Int(0,24000000).ToString())
-                .RuleFor(o => o.InvoiceDate, f => f.Date.Past(2))
-                .RuleFor(o => o.DueDate, f => f.Date.Past(2))
+                .RuleFor(o => o.InvoiceDate, f => f.Date.Past(10))
+                
                 .RuleFor(o => o.Customer, f => f.PickRandom(customers));
-            var orders = orderFaker.Generate(customers.Count * 10);
+            var orders = orderFaker.Generate(customers.Count * 100);
 
             var products = ObjectSpace.GetObjectsQuery<Product>(true).ToList();
             ObjectSpace.CommitChanges(); //This line persists created object(s).

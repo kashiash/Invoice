@@ -26,6 +26,13 @@ namespace Invoice.Win {
                 e.Languages.Add(userLanguageName);
             }
         }
+
+        protected override void OnLoggedOn(LogonEventArgs args)
+        {
+            base.OnLoggedOn(args);
+            DevExpress.ExpressApp.ReportsV2.Win.ReportDesignerTypeDescriptionProvider.RemoveProvider();
+        }
+
         private void InvoiceWindowsFormsApplication_DatabaseVersionMismatch(object sender, DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs e) {
 #if EASYTEST
             e.Updater.Update();

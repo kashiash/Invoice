@@ -58,6 +58,7 @@ namespace Invoice.Module {
 			this.RequiredModuleTypes.Add(typeof(CarsDb.Module.CarsDbModule));
 
 			this.RequiredModuleTypes.Add(typeof(LlamachantFrameworkModule));
+			RequiredModuleTypes.Add(typeof(ControllerManagement.Module.ControllerManagementModule));
 		}
 
 		#endregion

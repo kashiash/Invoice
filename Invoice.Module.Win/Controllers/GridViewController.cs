@@ -23,25 +23,23 @@ namespace Invoice.Module.Win.Controllers
             gridListEditor = View.Editor as GridListEditor;
             if (gridListEditor != null)
             {
-
+                View.ControlsCreated += View_ControlsCreated;
                 View.ModelSaved += View_ModelSaved;
             }
         }
 
-
-        protected override void OnViewControlsCreated()
+        void View_ControlsCreated(object sender, EventArgs e)
         {
-            base.OnViewControlsCreated();
-
-            gridListEditor.GridView.OptionsMenu.ShowConditionalFormattingItem = true;
-
             GridView gridView = gridListEditor.GridView;
+            if (gridView != null)
+            {
+                gridListEditor.GridView.OptionsMenu.ShowConditionalFormattingItem = true;
+                SetListView(gridView);
 
-            SetListView(gridView);
-
-            InitializeFormatRules();
-
+                InitializeFormatRules();
+            }
         }
+
 
         private static void SetListView(GridView gridView)
         {
@@ -49,25 +47,21 @@ namespace Invoice.Module.Win.Controllers
             //  checkbox do zaznaczania rekordów
             //  gridView.OptionsSelection.MultiSelectMode = GridMultiSelectMode.CheckBoxRowSelect;
             //  gridView.Appearance.OddRow.BackColor = Color.FromArgb(244, 244, 244);
-            gridView.OptionsView.ShowFooter = true;
+            gridView.OptionsView.ShowFooter = false;
             gridView.OptionsView.GroupFooterShowMode = GroupFooterShowMode.VisibleIfExpanded;
-            gridView.OptionsMenu.ShowGroupSummaryEditorItem = true;
-            gridView.OptionsMenu.ShowConditionalFormattingItem = true;
-            gridView.OptionsPrint.ExpandAllGroups = false;
-            //  właczamy filtry pod nagłowkami
-            gridView.OptionsView.ShowAutoFilterRow = false;
-            //  właczamy scroll - ustaw false 
-            gridView.OptionsView.ColumnAutoWidth = false;
-            //  właczamy zmiane rozmiru kolumn
-            gridView.OptionsView.RowAutoHeight = true;
-
+            // gridView.OptionsMenu.ShowGroupSummaryEditorItem = true;
+            // gridView.OptionsMenu.ShowConditionalFormattingItem = true;
+            gridView.OptionsPrint.ExpandAllGroups  = false;
+            gridView.OptionsView.ShowAutoFilterRow = true;   //  właczamy filtry pod nagłowkami
+            gridView.OptionsView.ColumnAutoWidth   = false;  //  właczamy scroll - ustaw false 
+            gridView.OptionsView.RowAutoHeight     = true;   //  właczamy zmiane rozmiru kolumn
             gridView.OptionsView.ColumnHeaderAutoHeight = DefaultBoolean.True;
-
 
             gridView.OptionsFind.AlwaysVisible = true;
             gridView.OptionsFind.FindMode = FindMode.Always;
             gridView.OptionsFind.ClearFindOnClose = true;
             gridView.OptionsFind.FindDelay = 500;
+
             gridView.UserCellPadding = new System.Windows.Forms.Padding(0);
             gridView.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Default;
         }
@@ -81,6 +75,7 @@ namespace Invoice.Module.Win.Controllers
         {
             if (gridListEditor != null)
             {
+                View.ControlsCreated -= View_ControlsCreated;
                 View.ModelSaved -= View_ModelSaved;
 
                 gridListEditor = null;
