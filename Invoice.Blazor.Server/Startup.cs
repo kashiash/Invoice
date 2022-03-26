@@ -29,6 +29,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using DevExpress.ExpressApp.Dashboards.Blazor;
 using DevExpress.ExpressApp.Office.Blazor;
+using BlazorDownloadFile;
 
 namespace Invoice.Blazor.Server
 {
@@ -118,6 +119,8 @@ namespace Invoice.Blazor.Server
                         },
                 });
             });
+
+            services.AddBlazorDownloadFile(ServiceLifetime.Scoped);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

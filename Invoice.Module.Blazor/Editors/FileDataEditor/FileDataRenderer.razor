@@ -3,25 +3,34 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using DevExpress.ExpressApp
 @using Microsoft.JSInterop;
+@using BlazorDownloadFile;
 @inject IJSRuntime JSRuntime
 
 @if (!string.IsNullOrEmpty(content))
 {
+    if (ComponentModel.Value != null) {
+        <h2>@ComponentModel.Value.FileName</h2>
+    }
     if (!ComponentModel.ReadOnly)
     {
-        <div>
-            <button type="button" class="dxbs-toolbar-btn block-i btn btn-secondary my-2" @onclick="@ClearPdf">
-                <div class="xaf-image image xaf-toolbar-image" style="background-color: currentColor; -webkit-mask: url('IImageService/Action_Delete?hash=b5fdf6b3ce9fd4b95fc02cf159ed07a9'); mask: url('IImageService/Action_Delete?hash=b5fdf6b3ce9fd4b95fc02cf159ed07a9'); -webkit-mask-position: center; mask-position: center; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; height: 18px; width: 18px; mask-size: 18px; -webkit-mask-size: 18px; "></div>
-                <span>Usuń</span>
-            </button>
-        </div>
+        <button type="button" class="dxbs-toolbar-btn block-i btn btn-secondary my-2" @onclick="@ClearPdf">
+            <div class="xaf-image image xaf-toolbar-image" style="background-color: currentColor; -webkit-mask: url('IImageService/Action_Delete?hash=b5fdf6b3ce9fd4b95fc02cf159ed07a9'); mask: url('IImageService/Action_Delete?hash=b5fdf6b3ce9fd4b95fc02cf159ed07a9'); -webkit-mask-position: center; mask-position: center; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; height: 18px; width: 18px; mask-size: 18px; -webkit-mask-size: 18px; "></div>
+            <span>Usuń</span>
+        </button>
+    }
+    @if (ComponentModel.Value != null && ComponentModel.Value.Size > 0)
+    {
+        <button type="button" class="ml-2 dxbs-toolbar-btn block-i btn btn-secondary my-2" @onclick="@DownloadFile">
+            <div class="xaf-image image xaf-toolbar-image" style="background-color: currentColor; -webkit-mask: url('IImageService/Action_Save?hash=6de2bcc7db4be5df98c196c5e33d9ea3'); mask: url('IImageService/Action_Save?hash=6de2bcc7db4be5df98c196c5e33d9ea3'); -webkit-mask-position: center; mask-position: center; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; height: 18px; width: 18px; mask-size: 18px; -webkit-mask-size: 18px; "></div>
+            <span>Pobierz</span>
+        </button>
     }
     <div>
         @if (fileExtension == "pdf")
         {
             <object data="@content" width="800" height="800"></object>
         }
-        else if (!string.IsNullOrEmpty(fileExtension))
+        else if (@ImageExtensions.Contains(fileExtension))
         {
             <img src="@content" width="800" height="800" class="img-fluid"/>
         }
@@ -33,6 +42,8 @@
 }
 
 @code {
+    [Inject] IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
+
     [Parameter]
     public FileDataModel ComponentModel { get; set; }
 
@@ -58,7 +69,7 @@
     {
         var path = Path.GetFullPath(e.File.Name);
         fileExtension = Path.GetExtension(path).Replace(".", "");
-        MemoryStream ms = new MemoryStream();
+        using MemoryStream ms = new MemoryStream();
 
         try
         {
@@ -74,6 +85,13 @@
         ((dynamic)ComponentModel.Value).Content = bytes;
         Preview(ComponentModel.Value);
         StateHasChanged();
+    }
+
+    private async Task DownloadFile()
+    {
+        using MemoryStream ms = new MemoryStream();
+        ComponentModel.Value.SaveToStream(ms);
+        await BlazorDownloadFileService.DownloadFile(ComponentModel.Value.FileName, ms, "application/octet-stream");
     }
 
     private void Preview(dynamic fileData)
@@ -101,6 +119,8 @@
         content = "";
         StateHasChanged();
     }
+
+    private static readonly List<string> ImageExtensions = new List<string> { "jpg", "jpe", "bmp", "gif", "png" };
 
     public static RenderFragment Create(FileDataModel componentModel) =>
     @<FileDataRenderer ComponentModel=@componentModel />;

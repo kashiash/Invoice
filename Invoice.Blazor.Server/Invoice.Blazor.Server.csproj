@@ -26,6 +26,7 @@
     <PackageReference Include="DevExpress.ExpressApp.EasyTest.BlazorAdapter" Version="21.2.4" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="BlazorDownloadFile" Version="2.3.1.1" />
     <PackageReference Include="DevExpress.ExpressApp" Version="21.2.4" />
     <PackageReference Include="DevExpress.ExpressApp.Blazor" Version="21.2.4" />
     <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="21.2.4" />
