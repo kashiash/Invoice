@@ -7,6 +7,7 @@ using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.ReportsV2;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
 using DevExpress.Spreadsheet;
 using DevExpress.Xpo;
 using DevExpress.Xpo.DB;
@@ -22,6 +23,9 @@ using System.Threading.Tasks;
 
 namespace Invoice.Module.Controllers
 {
+    /// <summary>
+    /// Require DevExpress.ExpressApp.Office package
+    /// </summary>
     public class Sql2ExcelController : ViewController<ListView>
     {
 
@@ -34,19 +38,21 @@ namespace Invoice.Module.Controllers
 
         public Sql2ExcelController()
         {
-            exportSqlResult2ExcelAction = new SingleChoiceAction(this, $"{GetType().FullName}.{nameof(exportSqlResult2ExcelAction)}", PredefinedCategory.Filters);
-            exportSqlResult2ExcelAction.Caption = "Eksportuj";
-            exportSqlResult2ExcelAction.ToolTip = "Eksportuj do excela";
-            exportSqlResult2ExcelAction.ActionMeaning = ActionMeaning.Accept;
-            exportSqlResult2ExcelAction.EmptyItemsBehavior = EmptyItemsBehavior.Disable;
-            exportSqlResult2ExcelAction.PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.CaptionAndImage;
-            exportSqlResult2ExcelAction.ItemType = SingleChoiceActionItemType.ItemIsOperation;
-            exportSqlResult2ExcelAction.EmptyItemsBehavior = EmptyItemsBehavior.Deactivate;
-            exportSqlResult2ExcelAction.SelectionDependencyType = SelectionDependencyType.RequireSingleObject;
+            exportSqlResult2ExcelAction = new SingleChoiceAction(this, $"{GetType().FullName}.{nameof(exportSqlResult2ExcelAction)}", PredefinedCategory.Filters)
+            {
+                Caption = "Export to Excel",
+                ToolTip = "Export to Excel",
+                ImageName = "ExportToXLSX",
+                ImageMode = ImageMode.UseActionImage,
+                ActionMeaning = ActionMeaning.Unknown,
+                EmptyItemsBehavior = EmptyItemsBehavior.Deactivate,
+                PaintStyle = DevExpress.ExpressApp.Templates.ActionItemPaintStyle.CaptionAndImage,
+                ItemType = SingleChoiceActionItemType.ItemIsOperation,
+                SelectionDependencyType = SelectionDependencyType.RequireMultipleObjects
+            }
+        ;
             exportSqlResult2ExcelAction.Execute += new SingleChoiceActionExecuteEventHandler(
-                FilteringCriterionAction_Execute);
-
-
+                ExportAction_Execute);
         }
 
         public void RefreshFilter(string activeFilterString)
@@ -67,183 +73,76 @@ namespace Invoice.Module.Controllers
 
         }
 
-        private void FilteringCriterionAction_Execute(object sender, SingleChoiceActionExecuteEventArgs e)
+        private void ExportAction_Execute(object sender, SingleChoiceActionExecuteEventArgs e)
         {
             selectedExport = e.SelectedChoiceActionItem.Data as Sql2Excel;
             var rec = View.CurrentObject;
             if (selectedExport != null)
             {
-                var query = EvaluateField(ObjectSpace, selectedExport.ZapytanieSQL, rec, selectedExport.ObjectType);
-                IObjectSpace newObjectSpace = Application.CreateObjectSpace();
-                var newObject = newObjectSpace.CreateObject<DemoParameters>();
-                newObject.Query = query;
-                newObject.OdDnia = DateTime.Now;
-                newObject.DoDnia = DateTime.Now;
+                var query = Sql2ExcelExportHelper.EvaluateField(ObjectSpace, selectedExport.SqlQueryExpression, rec, selectedExport.ObjectType);
+                var filename = Sql2ExcelExportHelper.EvaluateField(ObjectSpace, selectedExport.ExportedFileName, rec, selectedExport.ObjectType);
 
-                e.ShowViewParameters.CreatedView = Application.CreateDetailView(newObjectSpace, newObject);
-                e.ShowViewParameters.TargetWindow = TargetWindow.NewModalWindow;
-                e.ShowViewParameters.Context = TemplateContext.PopupWindow;
-                DialogController dc = Application.CreateController<DialogController>();
-                dc.Accepting += new EventHandler<DialogControllerAcceptingEventArgs>(dc_Accepting);
-                e.ShowViewParameters.Controllers.Add(dc);
+                if (selectedExport.ParametersObjectType == null)
+                {
 
+                    Sql2ExcelExportHelper.ExportData(query, filename);
+                }
+                else
+                {
+
+                    var par = selectedExport.ParametersObjectType;
+
+
+
+                    IObjectSpace newObjectSpace = Application.CreateObjectSpace();
+                    var paramsView = newObjectSpace.CreateObject(par);
+
+                    ((ExportParametersObjectBase)paramsView).Query = query;
+                    ((ExportParametersObjectBase)paramsView).FileName = filename;
+                    ((ExportParametersObjectBase)paramsView).Description = selectedExport.Description;
+
+
+                    e.ShowViewParameters.CreatedView = Application.CreateDetailView(newObjectSpace, paramsView);
+                    e.ShowViewParameters.TargetWindow = TargetWindow.NewModalWindow;
+                    e.ShowViewParameters.Context = TemplateContext.PopupWindow;
+                    DialogController dc = Application.CreateController<DialogController>();
+                    dc.Accepting += new EventHandler<DialogControllerAcceptingEventArgs>(dc_Accepting);
+                    e.ShowViewParameters.Controllers.Add(dc);
+
+                }
             }
-            
+
         }
         void dc_Accepting(object sender, DialogControllerAcceptingEventArgs e)
         {
-      
+
 
             View popupView = ((Controller)sender).Frame.View;
-            var parameters = popupView.CurrentObject as DemoParameters;
+            var parameters = popupView.CurrentObject as ExportParametersObjectBase;
 
-            var filename = $"Test{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
-            EksportujDane(ReplaceParams(parameters.Query,parameters.OdDnia,parameters.DoDnia), filename);
+
+            Sql2ExcelExportHelper.ExportData(parameters.GetQuery(), parameters.FileName);
         }
 
-        private string ReplaceParams(string query, DateTime odDnia, DateTime doDnia)
-        {
-            var query1 = query.Replace("?OdDnia", $"'{odDnia.ToString("yyyy-MM-dd")}'");
-            var query2 = query1.Replace("?DoDnia", $"'{doDnia.ToString("yyyy-MM-dd")}'");
-            return query2;
-        }
+
 
         private void RefreshActionItems()
         {
             exportSqlResult2ExcelAction.Items.Clear();
-
-
-            var exports = ObjectSpace.GetObjects<Sql2Excel>().OrderBy(e => e.Nazwa);
-
+            var exports = ObjectSpace.GetObjects<Sql2Excel>().Where(e => e.InPlace && !e.Archived).OrderBy(e => e.Name);
 
             foreach (var exporter in exports)
             {
                 if (exporter.ObjectType != null &&
                     exporter.ObjectType.IsAssignableFrom(View.ObjectTypeInfo.Type))
                 {
-                    exportSqlResult2ExcelAction.Items.Add(new ChoiceActionItem(exporter.Nazwa, exporter));
+                    exportSqlResult2ExcelAction.Items.Add(new ChoiceActionItem(exporter.Name, exporter));
                 }
             }
-
-
         }
-
-
-
-
         private void View_ModelSaved(object sender, EventArgs e) { RefreshActionItems(); }
-
-
-        public static bool EksportujDane(string zapytanie, string filename)
-        {
-
-
-
-            Session _session = new Session() { ConnectionString = AppSettings.ConnectionString };
-            using (UnitOfWork unitOfWork = new UnitOfWork(_session.DataLayer))
-            {
-
-                var rekordy = GetRecordList(unitOfWork, zapytanie);
-
-
-                int rows = rekordy.ResultSet[0].Rows.Count();
-                if (rows == 0)
-                    return false;
-
-                Console.WriteLine($"Liczba rekordów w wyniku : {rows}");
-
-                using (var book = new DevExpress.Spreadsheet.Workbook())
-                {
-                    book.CreateNewDocument();
-
-                    int row = 0;
-                    foreach (var rec in rekordy.ResultSet[0].Rows)
-                    {
-
-                        var val = rec.Values[0];
-                        WriteCell(book, 0, row, val);
-                        row++;
-                    }
-                    int lk = 0;
-                    foreach (var rec in rekordy.ResultSet[1].Rows)
-                    {
-                        lk++;
-                        int colls = rec.Values.Length;
-
-                        for (int i = 0; i < colls; i++)
-                        {
-                            var val = rec.Values[i];
-                            WriteCell(book, lk, i, val);
-
-                        }
-                    }
-           
-                    book.SaveDocument(filename, DocumentFormat.OpenXml);
-
-                    var startInfo = new ProcessStartInfo($"{filename}")
-                    {
-                        UseShellExecute = true
-                    };
-                    Process.Start(startInfo);
-
-
-                }
-
-                return true;
-            }
-
-
-        }
-
-
-        private static void WriteCell(Workbook book, int row, int col, Object val)
-        {
-            if (val != null && val is not Guid)
-            {
-                book.Worksheets[0].Cells[row, col].SetValue(val);
-            }
-        }
-
-
-
-        private static SelectedData GetRecordList(Session session, string zapytanie)
-        {
-            var res = session.ExecuteQueryWithMetadata(zapytanie);
-            return res;
-        }
-
-        private string EvaluateField(IObjectSpace objectSpace, string expression, Object rec, Type criteriaObjectType)
-        {
-            if (string.IsNullOrEmpty(expression))
-            {
-                return string.Empty;
-            }
-            try
-            {
-                if (expression.Contains("!"))
-                    expression = expression.Replace("!", string.Empty);
-
-                ExpressionEvaluator evaluator = objectSpace.GetExpressionEvaluator(
-                    criteriaObjectType,
-                    CriteriaOperator.Parse(expression));
-                string subject = evaluator.Evaluate(rec).ToString();
-                return subject;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Bład wyrażenia:{expression}", ex);
-            }
-        }
-
     }
 
-    [DomainComponent]
-    public class DemoParameters
-    {
-        public DateTime OdDnia { get; set; }
-        public DateTime DoDnia { get; set; }
-        [Browsable(false)]
-        public string Query { get; set; }
-    }
+
 }
 
